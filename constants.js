@@ -8,6 +8,8 @@ import DR_BEN_YOUTUBE_PAYLOAD_MOCK from './YoutubeResponses/drben.js';
 import AMOS_YOUTUBE_PAYLOAD_MOCK from './YoutubeResponses/amoswilson.js';
 import DR_CLARKE_YOUTUBE_PAYLOAD_MOCK from './YoutubeResponses/johnhenrikclarke.js';
 
+export const NO_PHOTO_AVAILABLE_URI =  "https://static.wixstatic.com/media/84428b_aec5877604ff494295b3af5af0b27a67~mv2.png";
+
 
 export const REMOTE_RESOURCE_STRING ='maatel_artistrenaissance-dilzf';
 export const DBNAME = 'maat_el_renaissance';

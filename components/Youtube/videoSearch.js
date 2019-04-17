@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { StyleSheet, View, ListView, TextInput, ActivityIndicator,FlatList, Alert} from 'react-native';
-import { SwipeRow,Container, Subtitle, Header, Content, List, ListItem,Title,Icon, Thumbnail, Text, Left, Body, Right, Button } from 'native-base';
+import { SwipeRow,Container, Subtitle, Header, Content, List, ListItem,Title,Icon, Thumbnail, Text, Left, Body, Right, Button ,Accordion,Tab, Tabs} from 'native-base';
 import {resourceData,ALT_LISTVIEW_ITEM_SEPARATOR, COMMON_LISTVIEW_ITEM_SEPARATOR,COMMON_DARK_BACKGROUND,ACTIVE_TINT_COLOR, INACTIVE_TINT_COLOR} from '../../constants.js'
 import WebResourcesList from '../WebResources/webResourcesList.js';
 /**
@@ -105,9 +105,6 @@ _renderItem = (item) => { console.log(item);
 /*
 * 
 */
-  
-
-
 
 /** The Search field */
 renderSearchField = () =>(
@@ -119,33 +116,13 @@ renderSearchField = () =>(
           placeholder="Search Here"
         />)
 
-/** React Render **/
-  render() {
-
-    return (
-      //ListView to show with textinput used as search bar 
-      <Container>
-        <Header style={styles.innerHeaderStyle}>
-            <Body>
-              <Title style={styles.textStyle}>Our Elders</Title>
-<Subtitle>Malcom and Martin weren't our last leaders</Subtitle>
-            </Body>
-        </Header>
-
-<Content style={{margin:10, backgroundColor:COMMON_DARK_BACKGROUND}}>
-        {ALT_LISTVIEW_ITEM_SEPARATOR()}
-   <View style={{backgroundColor:"gold"}}><Text>Our Master Teachers</Text></View>
-           {ALT_LISTVIEW_ITEM_SEPARATOR()}
-        <FlatList
+renderElders = () =>(<FlatList
             
           data={this.state.record}
           renderItem={(record)=>{
-            return (<ListItem  style={{backgroundColor:"gold"}}>
+            return (<ListItem  style={{borderWidth:2}}>
               <Text>{record.item.title}</Text>
-              <Button transparent onPress={() => {
-                console.log("renderyoutubelistrenderitembuttonpress----",record.item);
-               this.props.navigation.push('YouTubeList',{record:record.item, title:record.item.title})
-              }}>
+              <Button transparent onPress={() => {this.props.navigation.push('YouTubeList',{record:record.item, title:record.item.title})}}>
                   <Text>View</Text>
                 </Button>
             </ListItem>);}
@@ -153,17 +130,15 @@ renderSearchField = () =>(
           keyExtractor={this._keyExtractor}
           ListHeaderComponent={this.renderSearchField}
            ItemSeparatorComponent = {COMMON_LISTVIEW_ITEM_SEPARATOR}
-        />
-        {ALT_LISTVIEW_ITEM_SEPARATOR()}
-   <View  style={{backgroundColor:"gold"}}><Text>Online Media Outlets</Text></View>
-           {ALT_LISTVIEW_ITEM_SEPARATOR()}
+        />)
 
-        <FlatList
-            horizontal
+
+renderOnlineMediaSources = () =>(<FlatList
+            
           data={resourceData.onlineMediaContent}
           renderItem={(record)=>{
             console.log(record.item);
-            return (<ListItem  style={{backgroundColor:"gold", borderWidth:2, paddingLeft:15}}>
+            return (<ListItem  style={{ borderWidth:2, paddingLeft:15}}>
               <Text>{record.item.title}</Text>
               <Button transparent onPress={() => {
                this.props.navigation.push('SimpleWebView', {url:record.item.url , title:record.item.title})
@@ -175,21 +150,31 @@ renderSearchField = () =>(
           keyExtractor={(item, index) => item.title}
       
         ItemSeparatorComponent = {COMMON_LISTVIEW_ITEM_SEPARATOR}
-        />
-        {ALT_LISTVIEW_ITEM_SEPARATOR()}
-   <View  style={{backgroundColor:"gold"}}><Text>Roads to the Community</Text></View>
-           {ALT_LISTVIEW_ITEM_SEPARATOR()}
-<WebResourcesList navigation={this.props.navigation} resourceData={resourceData.webResources}/>
+        />)
 
+/** React Render **/
+  render() {
 
-        </Content>
+    return (
+      //ListView to show with textinput used as search bar 
+      <Container>
+<Content style={{margin:10, backgroundColor:COMMON_DARK_BACKGROUND}}>
+  <Tabs>
+    <Tab heading="Our Master Teachers">{this.renderElders()}</Tab>
+    <Tab heading="Media Outlets">{this.renderOnlineMediaSources()}</Tab>
+    <Tab heading="Roads to the Community"><WebResourcesList navigation={this.props.navigation} resourceData={resourceData.webResources}/></Tab>
+  </Tabs>
+</Content>
 
       </Container>
     );
   }
 }
 
-
+ //       {ALT_LISTVIEW_ITEM_SEPARATOR()}
+   //<View style={{backgroundColor:"gold"}}><Text>Our Master Teachers</Text></View>
+     //      {ALT_LISTVIEW_ITEM_SEPARATOR()}
+       
 
 const mapStateToProps = state => {
 console.log('stateevents',state.events)

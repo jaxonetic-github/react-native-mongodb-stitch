@@ -12,8 +12,9 @@ import Authentication from './Authentication/authenticationComponent.js';
 import {NEED_AT_LEAST_ANONYMOUS_LOGIN, COMMON_DARK_BACKGROUND, ACTIVE_TINT_COLOR, INACTIVE_TINT_COLOR} from './../constants.js'
  
 const sideBarData = [{routeName:"Home", label:"Home", requiresVerification:false, icon:"home"}, {routeName:"ProfileView", label:"Profile", requiresVerification:true, icon:"person"}, 
-                      {routeName:"SearchLayout", label:"Events & Creators", requiresVerification:false, icon:"search"},{routeName:"VideoSearch", label:"Library", requiresVerification:false, icon:"hourglass"},
-                      {routeName:"Community", label:"Community", requiresVerification:false, icon:'business'}];
+                      {routeName:"SearchLayout", label:"Events & Creators", requiresVerification:false, icon:"search"},{routeName:"VideoSearch", label:"Library", requiresVerification:false, icon:"business"},
+                      {routeName:"TimelineView", label:"Timeline", requiresVerification:false, icon:'hourglass'}
+                      ];
 
 /** sideBar component manages the drawer sidebar */
 class SideBar extends React.Component {
