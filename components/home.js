@@ -81,6 +81,9 @@ locations : LOCATION_LIST,categories:CATEGORY_LIST,
       selectedState: this.state.selectedState,
     });
   }
+  onSeeVideo() {
+   console.log("user attempting to see video");
+  }
 
    renderHeader = () => {
         return(
@@ -102,7 +105,20 @@ locations : LOCATION_LIST,categories:CATEGORY_LIST,
          <Container>
      
         <Content padder>
-       
+                 <Card><CardItem>
+<Text>“When I read history, I cannot read it as the conquerer, I must read it as the conquered; therefore, I have to read history as it affects me.  I have to put myself as the centroid figure, and how does that history affect me.Therefore the solution must come up in my perspective not in the conquerers perspective.” </Text>
+          </CardItem>
+          <CardItem>
+<TouchableOpacity  style={styles.touchable} onPress={() => this.props.navigation.push('SimpleWebView', {url:"https://youtu.be/K_nOQ9y4eT8?t=4710" , title:"Dr Ben quote"})} >
+
+<Image style={{width:220 , height:220, borderRadius:15}} 
+source={{uri:'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Dr_Ben.jpg/220px-Dr_Ben.jpg'}}/>
+<Title>Dr Ben</Title>
+              </TouchableOpacity>
+
+          </CardItem>
+    </Card>
+    
           <Card>
             <CardItem>
               <Body>
@@ -115,17 +131,8 @@ locations : LOCATION_LIST,categories:CATEGORY_LIST,
               </Body>
             </CardItem>
           </Card>
-          <Card><CardItem>
-<Text>“When I read history, I cannot read it as the conquerer, I must read it as the conquered; therefore, I have to read history as it affects me.  I have to put myself as the centroid figure, and how does that history affect me.Therefore the solution must come up in my perspective not in the conquerers perspective.  Like Malcom said, when the slave got to the bed of the dying master and he said “are we sick, boss?”  The slave could not distinguish between himself and the  master” </Text>
-<Title>Dr Ben</Title>
-<Text>- https://www.youtube.com/watch?v=K_nOQ9y4eT8</Text>
-<Text>T1:18:30 ish</Text>
-          </CardItem></Card>
-<Card>
-<CardItem style={{width:400, height:400}}><Content>
- <MapScreen />
- </Content>
-      </CardItem></Card>
+
+
         </Content>
       </Container>
     );
