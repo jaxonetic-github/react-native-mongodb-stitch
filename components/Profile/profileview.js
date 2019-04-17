@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import { updateProfileRequest, addProfileRequest } from './Redux/Actions/profile.js';
-import { getDefaultProfile, NEED_AT_LEAST_ANONYMOUS_LOGIN, TEXT_SAVE, TEXT_UPDATE} from '../../constants.js';
+import { getDefaultProfile, NEED_AT_LEAST_ANONYMOUS_LOGIN, TEXT_SAVE, TEXT_UPDATE, NO_PHOTO_AVAILABLE_URI} from '../../constants.js';
 
 import { UPDATE_PROFILE_NAME_BY_KEY, UPDATE_PROFILE_WEBSITE_BY_KEY, UPDATE_PROFILE_PHONE_BY_KEY,UPDATE_PROFILE_EMAIL_BY_KEY, UPDATE_PROFILE_IMAGE_BY_KEY, ADD_NAME, ADD_PROFILE, ADD_DESC, ADD_EMAIL, ADD_PHONE, ADD_WEBSITE, ADD_IMAGE} from '../../redux/types';
 
@@ -26,7 +26,7 @@ class ProfileView extends Component {
     this.state = { dataIndex: this.props.navigation.state.params.id, text: ''};
    
     else
-      this.state = {newEntry:"PrepareToCreate"}
+      this.state = {}
            }
 
 
@@ -88,85 +88,30 @@ ImagePicker.showImagePicker(options, (response) => {
 
 }
 
+
+displayName = () => ( this.state.dataIndex? this.props.profiles[this.state.dataIndex].name: '');
+displayEmail = () => (this.state.dataIndex? this.props.profiles[this.state.dataIndex].email: '');
+displayPhone = () => (this.state.dataIndex? this.props.profiles[this.state.dataIndex].phone: '');
+displayWebsite = () => (this.state.dataIndex? this.props.profiles[this.state.dataIndex].website: '');
+displayDescription = () => (this.state.dataIndex? this.props.profiles[this.state.dataIndex].description: '');
+displayImageURI = () => (this.state.dataIndex? this.props.profiles[this.state.dataIndex].imageURI: '');
+displayEmail = () => (this.state.dataIndex? this.props.profiles[this.state.dataIndex].email: '');
+
 /** helper function to get the name of the profile at a specific index, if ani index  was provided as a property.
 *.  If there is no data index then it checks if this has a parameter indicating a user profile, and returns the logged in user info
 */
-displayName = () =>{ 
- 
-let _name;
-//if 
-if(this.state.dataIndex)
-{
-_name = this.props.profiles[this.state.dataIndex].name
-
-}
-else
- _name = this.props.name;
-
-return _name;
-
-}
-
-
-displayPhone = () =>(this.state.dataIndex?this.props.profiles[this.state.dataIndex].phone:this.props.phone)
-
-displayWebsite = () =>(this.state.dataIndex?this.props.profiles[this.state.dataIndex].website:this.props.website)
-
-displayEmail = () =>{
-let _email;
-//if 
-if(this.state.dataIndex)
-{
-_email = this.props.profiles[this.state.dataIndex].email
-
-}else
- _email = this.props.email;
-
-return _email;
-
-  }
-
-displayDescription = () =>
-{
-  let _desc;
-//if 
-if(this.state.dataIndex)
-{
-_desc = this.props.profiles[this.state.dataIndex].desc;
-
-}else 
- _desc = this.props.description;
-
-return _desc;
-}
-
-displayImageURI = () =>
-{
-  let _photo;
-//if 
-if(this.state.dataIndex)
-{
-_photo = this.props.profiles[this.state.dataIndex]._photo
-
-}
-else
- _photo = this.props.imageURI;
-
-return _photo;
-
-}
 
 
   addButton = (isPersonalProfile)=>{
-   console.log("this.props.isConnected ", this.props.isConnected );
+   const isNewProfile = !this.state.dataIndex;
    //determine whether to add or update when user clicks button
    const onPressAction =()=>( isPersonalProfile ? this.updateProfile() :this._onPress()) ;
    //determine whether to show "Save" or "Update" depending on ownership
    const buttonText    = isPersonalProfile ?   TEXT_UPDATE :TEXT_SAVE;
-    const _saveButton = ( <Button transparent  onPress={onPressAction } >
+    const _saveButton = isPersonalProfile || isNewProfile ? ( <Button transparent  onPress={onPressAction } >
              <Icon ios='ios-add-circle' android="md-add-circle" style={{fontSize: 20, color: 'blue'}}/>
                <Text>{buttonText}</Text>
-            </Button>);
+            </Button>):null;
 
       return _saveButton; };
 
@@ -174,7 +119,8 @@ return _photo;
 
   render(){
     const isPersonalProfile = (typeof this.state.dataIndex !== 'undefined')&& (this.state.dataIndex == this.props.profileIndex);
-    const headerTitle = isPersonalProfile ? "Personal Profile" : "Divine Profile" ;
+    const headerTitle = isPersonalProfile ? "Personal Profile" : "New Divine Profile" ;
+    const imageURI = this.state.dataIndex? this.props.profiles[this.state.dataIndex].imageURI: this.props.imageURI;
     return (
       <Container>
          <Header style={{backgroundColor: '#a9c3d2'}}>
@@ -294,15 +240,15 @@ return _photo;
             <Text></Text>
           </Separator>
 
-          <ListItem thumbnail>
+          <ListItem >
               <Left>
-              <Text>Current Image:::</Text>
+              <Text>Current Image</Text>
               </Left>
-              <Body>
-                <Thumbnail large square source={{ uri: this.displayImageURI()}} />                
+              <Body style={{backgroundColor:"pink"}} >
+                <Image style={{width:205, height:250}} source={{uri:( this.state.dataIndex? this.props.profiles[this.state.dataIndex].imageURI:NO_PHOTO_AVAILABLE_URI)}} />              
               </Body>
             <Right>
-              <Button transparent onPress={() => this.onPressImagePicker()}>
+              <Button transparent disabled onPress={() => this.onPressImagePicker()}>
                  <Text>Edit</Text>
                  <Icon active name="arrow-forward" />
               </Button>
@@ -319,18 +265,20 @@ return _photo;
 
 const mapStateToProps = state => {
    const isConnected =  ((state.auth!= NEED_AT_LEAST_ANONYMOUS_LOGIN) && state.auth.auth &&  (state.auth.auth.loggedInProviderName=="oauth2-google"));
-
+   const profileIndex =  isConnected? state.auth.auth.userProfile.identities[0].id :null;
+   const profiles = state.profiles.profiles;
+   console.log(profileIndex, "----",profiles[profileIndex]);
   return {
-    profileIndex:  isConnected? state.auth.auth.userProfile.identities[0].id :null,
+    profileIndex: profileIndex,
     isConnected : isConnected,
     isGoogleUser: (isConnected && state.auth.auth.userProfile.identities[0].id),
-    profiles: state.profiles.profiles,
-    email: state.profiles.tmpProfile.email,
-    name: state.profiles.tmpProfile.name,
-    phone: state.profiles.tmpProfile.phone,
-    website: state.profiles.tmpProfile.website,
-    description: state.profiles.tmpProfile.description,
-    imageURI: state.profiles.tmpProfile.imageURI
+    profiles: profiles,
+    email: profileIndex ? profiles[profileIndex].email : state.profiles.tmpProfile.email,
+    name: profileIndex ? profiles[profileIndex].name : state.profiles.tmpProfile.name,
+    phone: profileIndex ? profiles[profileIndex].phone : state.profiles.tmpProfile.phone,
+    website: profileIndex ? profiles[profileIndex].website : state.profiles.tmpProfile.website,
+    description: profileIndex ? profiles[profileIndex].description : state.profiles.tmpProfile.description,
+    imageURI: profileIndex ? profiles[profileIndex].imageURI : state.profiles.tmpProfile.imageURI
   }
 }
 
