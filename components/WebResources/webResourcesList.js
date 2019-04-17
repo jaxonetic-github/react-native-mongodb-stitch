@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { StyleSheet, View, ListView, TextInput, ActivityIndicator,FlatList,Image, Alert,TouchableOpacity} from 'react-native';
 import { Container, Subtitle, Header, Content, List, ListItem,Title,Icon, Thumbnail, Text, Left, Body, Right, Button } from 'native-base';
-import {resourceData, COMMON_DARK_BACKGROUND} from '../../constants.js'
+import {resourceData, COMMON_DARK_BACKGROUND, NO_PHOTO_AVAILABLE_URI} from '../../constants.js'
 
 /**
  * A list of imaged links .
@@ -105,7 +105,7 @@ _renderItem = (item) =>
  
           <Text>{item.item.title}</Text>
             <View style={styles.view}>
-          <Image  source={{uri:item.item.imageURI}} style={{padding:0,width: 250, height: 110}}/>
+          <Image  source={{uri:(item.item.imageURI||NO_PHOTO_AVAILABLE_URI)}} style={{padding:0,width: 250, height: 110}}/>
 
             </View>
           </TouchableOpacity>
@@ -133,7 +133,7 @@ _renderItem = (item) =>
 <Content>
 
         <FlatList
-          horizontal
+          
           data={resourceData.webResources}
           renderItem={this._renderItem}
           keyExtractor={this._keyExtractor}
