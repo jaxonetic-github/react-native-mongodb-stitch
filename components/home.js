@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import { TouchableHighlight, StyleSheet,Error, View ,Image, TouchableOpacity,TouchableIcon, FlatList,
-Picker} from 'react-native';
+Picker, Modal} from 'react-native';
 import axios from "axios";
+import SimpleWebView from './WebResources/simpleWebView.js';
+
 import {resourceData, COMMON_DARK_BACKGROUND,TEXT_EVERYWHERE,TEXT_All, LOCATION_LIST,CATEGORY_LIST,
       TEXT_CHOOSE_VIBE, TEXT_WHATS_GOING_ON } from '../constants.js';
 import WebResourcesList from './WebResources/webResourcesList.js';
@@ -23,9 +25,38 @@ export default class Home extends React.Component {
       locations : LOCATION_LIST,categories:CATEGORY_LIST,
       selectedCategory:undefined,
       selectedState: undefined,
+      modalVisible: false,
     };
   }
+  showModal = ()=>(
+        <Modal
+          animationType="slide"
+          transparent={false}
+          visible={this.state.modalVisible}
+          onRequestClose={() => {
+            Alert.alert('Modal has been closed.');
+          }}>
+          <View style={{marginTop: 22}}>
+          <SimpleWebView style={{width:300, height:300}} url="https://youtu.be/K_nOQ9y4eT8?t=4710" title="Dr Ben quote" />
+
+            <View>
+
+              <TouchableHighlight
+                onPress={() => {
+                  this.toggleModalVisibility()}
+                }>
+                <Text>Back</Text>
+              </TouchableHighlight>
+            </View>
+          </View>
+        </Modal>)
  
+/** toggle the modal view */
+ toggleModalVisibility = ()=>{this.setState({modalVisible:!this.state.modalVisible})}
+
+
+
+
     async componentWillMount() {
        
 //const base_url = 'https://www.googleapis.com/youtube/v3/search';//?part=snippet&channelId=UCNprjQ-mnD5816kx6SEfgfg&key=AIzaSyCSXLM0pMb0GCPvNtVdd1GeSa0UCl6zAEM';
@@ -81,8 +112,8 @@ locations : LOCATION_LIST,categories:CATEGORY_LIST,
       selectedState: this.state.selectedState,
     });
   }
-  onSeeVideo() {
-   console.log("user attempting to see video");
+  async onSeeVideo() {
+   this.setState({modalVisible:true});
   }
 
    renderHeader = () => {
@@ -109,7 +140,8 @@ locations : LOCATION_LIST,categories:CATEGORY_LIST,
 <Text>“When I read history, I cannot read it as the conquerer, I must read it as the conquered; therefore, I have to read history as it affects me.  I have to put myself as the centroid figure, and how does that history affect me.Therefore the solution must come up in my perspective not in the conquerers perspective.” </Text>
           </CardItem>
           <CardItem>
-<TouchableOpacity  style={styles.touchable} onPress={() => this.props.navigation.push('SimpleWebView', {url:"https://youtu.be/K_nOQ9y4eT8?t=4710" , title:"Dr Ben quote"})} >
+<TouchableOpacity  style={styles.touchable} onPress= {async ()=>{this.onSeeVideo()}} >
+
 
 <Image style={{width:220 , height:220, borderRadius:15}} 
 source={{uri:'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Dr_Ben.jpg/220px-Dr_Ben.jpg'}}/>
@@ -118,7 +150,7 @@ source={{uri:'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Dr_Ben.j
 
           </CardItem>
     </Card>
-    
+
           <Card>
             <CardItem>
               <Body>
@@ -132,7 +164,7 @@ source={{uri:'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Dr_Ben.j
             </CardItem>
           </Card>
 
-
+{this.showModal()}
         </Content>
       </Container>
     );
