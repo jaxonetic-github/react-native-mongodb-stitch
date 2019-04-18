@@ -5,7 +5,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { StyleSheet, View, ListView, TextInput, ActivityIndicator,FlatList,Image, Alert,TouchableOpacity} from 'react-native';
 import { Container, Subtitle, Header, Content, List, ListItem,Title,Icon, Thumbnail, Text, Left, Body, Right, Button } from 'native-base';
-import {resourceData, COMMON_DARK_BACKGROUND, NO_PHOTO_AVAILABLE_URI} from '../../constants.js'
+import {resourceData,COMMON_ICON_STYLE, COMMON_DARK_BACKGROUND, NO_PHOTO_AVAILABLE_URI, COMMON_LISTVIEW_ITEM_SEPARATOR,
+ ROUTE_SIMPLE_WEB_VIEW} from '../../constants.js'
 
 /**
  * A list of imaged links .
@@ -15,7 +16,6 @@ import {resourceData, COMMON_DARK_BACKGROUND, NO_PHOTO_AVAILABLE_URI} from '../.
 
   constructor(props) {
     super(props);
-console.log("props;;",props);
     this.state = { webResources :props? props.resourceData: {}};
   }
 
@@ -44,7 +44,6 @@ console.log("props;;",props);
       // ignore undefined rows brought from DB
       if (!item) 
       { 
-        console.log('Todo: Log this (Undefined Events from DB)');
         return false;
       }
       //applying filter for the inserted text in search bar
@@ -64,32 +63,11 @@ console.log("props;;",props);
   }
 
 
-  ListViewItemSeparator = () => {
-    //Item sparator view
-    return (
-      <View
-        style={{
-          height: 5,
-          
-          backgroundColor: COMMON_DARK_BACKGROUND,
-        }}
-      />
-    );
-  };
 
  /** Exract a key from an object for the List */
     _keyExtractor = (item, index) =>{console.log(item); 
       return (item.url ? item.url.toString() : Math.floor(Math.random() * Math.floor(999999)))};
 
-/** Navigate to event-creation screen  */
-   _onPress = (itemId) => {
-   this.props.navigation.navigate('EventView',{id:itemId})
-  };
-  
-/** Navigate to event-creation screen  */
-   _onPressDelete = (itemId) => {
-  this.props.deleteEventRequest({id:itemId})
-  };
 
 /**
   * A component to display a summary of an individual event from the list of events
@@ -101,11 +79,11 @@ _renderItem = (item) =>
  return (
             <ListItem thumbnail>
  
-<TouchableOpacity  style={styles.touchable} onPress={() => this.props.navigation.push('SimpleWebView', {url:item.item.url , title:item.item.title})} >
+<TouchableOpacity  onPress={() => this.props.navigation.push(ROUTE_SIMPLE_WEB_VIEW, {url:item.item.url , title:item.item.title})} >
  
           <Text>{item.item.title}</Text>
             <View style={styles.view}>
-          <Image  source={{uri:(item.item.imageURI||NO_PHOTO_AVAILABLE_URI)}} style={{padding:0,width: 250, height: 110}}/>
+          <Image  source={{uri:(item.item.imageURI||NO_PHOTO_AVAILABLE_URI)}} style={styles.imageStyle}/>
 
             </View>
           </TouchableOpacity>
@@ -125,7 +103,7 @@ _renderItem = (item) =>
             </Body>
             <Right>             
             <Button transparent  onPress={() => this.props.navigation.push('EventView', { })} >
-             <Icon ios='ios-information-circle' android="md-information-circle" style={{fontSize: 30,  color: COMMON_DARK_BACKGROUND}}/>
+             <Icon ios='ios-information-circle' android="md-information-circle" style={COMMON_ICON_STYLE}/>
             </Button>
             </Right>
 
@@ -133,12 +111,11 @@ _renderItem = (item) =>
 <Content>
 
         <FlatList
-          
           data={resourceData.webResources}
           renderItem={this._renderItem}
           keyExtractor={this._keyExtractor}
 
-           ItemSeparatorComponent = {this.ListViewItemSeparator}
+           ItemSeparatorComponent = {COMMON_LISTVIEW_ITEM_SEPARATOR}
         />
               </Content>
 
@@ -149,22 +126,13 @@ _renderItem = (item) =>
 
 
 const styles = StyleSheet.create({
-  viewStyle: {
+  view: {
     justifyContent: 'center',
     flex: 1,
     padding: 10,
   },
+imageStyle:{padding:0,width: 250, height: 110}
 
-  textStyle: {
-    padding: 10,
-  },
-
-  textInputStyle: {
-    textAlign: 'center',
-    height: 40,
-    borderWidth: 1,
-    borderColor: '#009688',
-  },
 });
 
 

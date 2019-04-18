@@ -5,7 +5,7 @@ import { GoogleSignin } from 'react-native-google-signin';
 import DBService from '../../services/dbService.js'
 import { googleSigninSuccess } from '../../components/Authentication/Redux/Actions/authActions.js'
 import { AsyncStorage } from 'react-native'
-
+import { LOGOUT_USER_FAILURE } from '../types.js'
 
 
 export  function* googleSilentLogin(service, initialCheck) {

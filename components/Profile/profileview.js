@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import { updateProfileRequest, addProfileRequest } from './Redux/Actions/profile.js';
-import { getDefaultProfile, NEED_AT_LEAST_ANONYMOUS_LOGIN, TEXT_SAVE, TEXT_UPDATE, NO_PHOTO_AVAILABLE_URI} from '../../constants.js';
+import { getDefaultProfile,COMMON_ICON_STYLE, NEED_AT_LEAST_ANONYMOUS_LOGIN, TEXT_SAVE, TEXT_UPDATE, NO_PHOTO_AVAILABLE_URI} from '../../constants.js';
 
 import { UPDATE_PROFILE_NAME_BY_KEY, UPDATE_PROFILE_WEBSITE_BY_KEY, UPDATE_PROFILE_PHONE_BY_KEY,UPDATE_PROFILE_EMAIL_BY_KEY, UPDATE_PROFILE_IMAGE_BY_KEY, ADD_NAME, ADD_PROFILE, ADD_DESC, ADD_EMAIL, ADD_PHONE, ADD_WEBSITE, ADD_IMAGE} from '../../redux/types';
 
@@ -29,10 +29,17 @@ class ProfileView extends Component {
       this.state = {}
            }
 
+           componentWillMount =()=>{console.log("ProfileView Component Will Mount")}
+           componentDidMount =()=>{console.log("ProfileView Component Did Mount")}
+
 
     updateProfile = () => {
     // updater functions are preferred for transactional updates
     console.log("Attempting to update personal profile");
+
+    //const tmp = this.props.addProfile(tmpProfile);
+    const request = this.props.updateProfileRequest(this.props.profiles[this.state.dataIndex]);
+
     Toast.show({
               text: 'Attempting to update personal profile',
               buttonText: 'ok'
@@ -41,7 +48,6 @@ class ProfileView extends Component {
 
     _onPress = () => {
     // updater functions are preferred for transactional updates
-    let newProfileKey = Math.floor(Math.random() * Math.floor(999999));
     const tmpProfile = getDefaultProfile({ website:this.props.website, name:this.props.name, phone:this.props.phone, email:this.props.email,
                description:this.props.description, imageURI:(this.state.avatarSource||this.props.imageURI)});
 
@@ -89,13 +95,13 @@ ImagePicker.showImagePicker(options, (response) => {
 }
 
 
-displayName = () => ( this.state.dataIndex? this.props.profiles[this.state.dataIndex].name: '');
-displayEmail = () => (this.state.dataIndex? this.props.profiles[this.state.dataIndex].email: '');
-displayPhone = () => (this.state.dataIndex? this.props.profiles[this.state.dataIndex].phone: '');
-displayWebsite = () => (this.state.dataIndex? this.props.profiles[this.state.dataIndex].website: '');
-displayDescription = () => (this.state.dataIndex? this.props.profiles[this.state.dataIndex].description: '');
-displayImageURI = () => (this.state.dataIndex? this.props.profiles[this.state.dataIndex].imageURI: '');
-displayEmail = () => (this.state.dataIndex? this.props.profiles[this.state.dataIndex].email: '');
+displayName = () => ( this.state.dataIndex && this.props.profiles[this.state.dataIndex] ? this.props.profiles[this.state.dataIndex].name: '');
+displayEmail = () => (this.state.dataIndex && this.props.profiles[this.state.dataIndex] ? this.props.profiles[this.state.dataIndex].email: '');
+displayPhone = () => (this.state.dataIndex && this.props.profiles[this.state.dataIndex] ? this.props.profiles[this.state.dataIndex].phone: '');
+displayWebsite = () => (this.state.dataIndex && this.props.profiles[this.state.dataIndex] ? this.props.profiles[this.state.dataIndex].website: '');
+displayDescription = () => (this.state.dataIndex  && this.props.profiles[this.state.dataIndex] ? this.props.profiles[this.state.dataIndex].description: '');
+displayImageURI = () => (this.state.dataIndex && this.props.profiles[this.state.dataIndex] ? this.props.profiles[this.state.dataIndex].imageURI: '');
+//displayEmail = () => (this.state.dataIndex? this.props.profiles[this.state.dataIndex].email: '');
 
 /** helper function to get the name of the profile at a specific index, if ani index  was provided as a property.
 *.  If there is no data index then it checks if this has a parameter indicating a user profile, and returns the logged in user info
@@ -109,7 +115,7 @@ displayEmail = () => (this.state.dataIndex? this.props.profiles[this.state.dataI
    //determine whether to show "Save" or "Update" depending on ownership
    const buttonText    = isPersonalProfile ?   TEXT_UPDATE :TEXT_SAVE;
     const _saveButton = isPersonalProfile || isNewProfile ? ( <Button transparent  onPress={onPressAction } >
-             <Icon ios='ios-add-circle' android="md-add-circle" style={{fontSize: 20, color: 'blue'}}/>
+             <Icon ios='ios-add-circle' android="md-add-circle" style={COMMON_ICON_STYLE}/>
                <Text>{buttonText}</Text>
             </Button>):null;
 
@@ -120,7 +126,7 @@ displayEmail = () => (this.state.dataIndex? this.props.profiles[this.state.dataI
   render(){
     const isPersonalProfile = (typeof this.state.dataIndex !== 'undefined')&& (this.state.dataIndex == this.props.profileIndex);
     const headerTitle = isPersonalProfile ? "Personal Profile" : "New Divine Profile" ;
-    const imageURI = this.state.dataIndex? this.props.profiles[this.state.dataIndex].imageURI: this.props.imageURI;
+    const imageURI = this.state.dataIndex && this.props.profiles[this.state.dataIndex]? this.props.profiles[this.state.dataIndex].imageURI: this.props.imageURI;
     return (
       <Container>
          <Header style={{backgroundColor: '#a9c3d2'}}>
@@ -146,8 +152,8 @@ displayEmail = () => (this.state.dataIndex? this.props.profiles[this.state.dataI
           </ListItem>
           <ListItem icon>
             <Left>
-              <Button style={{ backgroundColor: "#007AFF" }}>
-               <Icon ios='ios-person' android="md-person" style={{fontSize: 20, color: 'blue'}}/>
+              <Button transparent>
+               <Icon ios='ios-person' android="md-person" style={COMMON_ICON_STYLE}/>
               </Button>
               <Text>Name :</Text>
             </Left>
@@ -157,8 +163,8 @@ displayEmail = () => (this.state.dataIndex? this.props.profiles[this.state.dataI
             </Body>
             <Right>
             {!isPersonalProfile ?
-            <Button onPress={() => this.props.navigation.navigate('SimpleInput', { inputType:(this.state.dataIndex?UPDATE_PROFILE_NAME_BY_KEY: ADD_NAME), profileIndex: this.state.dataIndex, inputInitialValue:this.displayName()})} >
-              <Icon active name="arrow-forward" />
+            <Button trasnparent onPress={() => this.props.navigation.navigate('SimpleInput', { inputType:(this.state.dataIndex?UPDATE_PROFILE_NAME_BY_KEY: ADD_NAME), profileIndex: this.state.dataIndex, inputInitialValue:this.displayName()})} >
+              <Icon  name="arrow-forward" />
             </Button>
             :null}
             </Right>
@@ -166,8 +172,8 @@ displayEmail = () => (this.state.dataIndex? this.props.profiles[this.state.dataI
 
           <ListItem icon>
             <Left>
-              <Button style={{ backgroundColor: "#007AFF" }}>
-               <Icon ios='ios-mail' android="md-mail" style={{fontSize: 20, color: 'blue'}}/>
+              <Button transparent>
+               <Icon ios='ios-mail' android="md-mail" style={COMMON_ICON_STYLE}/>
               </Button>
               <Text>Email</Text>
             </Left>
@@ -178,7 +184,7 @@ displayEmail = () => (this.state.dataIndex? this.props.profiles[this.state.dataI
             <Right>
              {!isPersonalProfile?
             <Button onPress={() => this.props.navigation.navigate('SimpleInput', { inputType: (this.state.dataIndex?UPDATE_PROFILE_EMAIL_BY_KEY: ADD_EMAIL), profileIndex: this.state.dataIndex, inputInitialValue:this.displayEmail() })} >
-              <Icon active name="arrow-forward" />
+              <Icon style={COMMON_ICON_STYLE} name="arrow-forward" />
             </Button>
              :null}
             </Right>
@@ -186,8 +192,8 @@ displayEmail = () => (this.state.dataIndex? this.props.profiles[this.state.dataI
           </ListItem>
           <ListItem icon>
             <Left>
-              <Button style={{ backgroundColor: "#007AFF" }}>
-               <Icon ios='ios-phone-portrait' android="md-phone-portrait" style={{fontSize: 20, color: 'blue'}}/>
+              <Button transparent>
+               <Icon ios='ios-phone-portrait' android="md-phone-portrait" style={COMMON_ICON_STYLE}/>
               </Button>
               <Text>Phone</Text>
             </Left>
@@ -195,15 +201,15 @@ displayEmail = () => (this.state.dataIndex? this.props.profiles[this.state.dataI
               <Text>{this.displayPhone()}</Text>
             </Body>
             <Right>
-              <Button onPress={() => this.props.navigation.navigate('SimpleInput', { inputType: (this.state.dataIndex?UPDATE_PROFILE_PHONE_BY_KEY: ADD_PHONE), profileIndex: this.state.dataIndex, inputInitialValue:this.displayPhone()  })} >
-              <Icon active name="arrow-forward"  />
+              <Button transparent onPress={() => this.props.navigation.navigate('SimpleInput', { inputType: (this.state.dataIndex?UPDATE_PROFILE_PHONE_BY_KEY: ADD_PHONE), profileIndex: this.state.dataIndex, inputInitialValue:this.displayPhone()  })} >
+              <Icon  name="arrow-forward" style={COMMON_ICON_STYLE}  />
               </Button>
             </Right>
           </ListItem>
           <ListItem icon>
             <Left>
-              <Button style={{ backgroundColor: "#007AFF" }}>
-             <Icon ios='ios-globe' android="md-phone-portrait" style={{fontSize: 20, color: 'blue'}}/>
+              <Button transparent>
+             <Icon ios='ios-globe' android="md-phone-portrait" style={COMMON_ICON_STYLE}/>
               </Button>
                <Text>Website</Text>
             </Left>
@@ -212,9 +218,9 @@ displayEmail = () => (this.state.dataIndex? this.props.profiles[this.state.dataI
               <Text>{this.displayWebsite()}</Text>
             </Body>
             <Right>
-              <Button onPress={() => this.props.navigation.navigate('SimpleInput',  { inputType: (this.state.dataIndex?UPDATE_PROFILE_WEBSITE_BY_KEY: ADD_WEBSITE), profileIndex: this.state.dataIndex, inputInitialValue:this.displayWebsite()  })} >
+              <Button transparent onPress={() => this.props.navigation.navigate('SimpleInput',  { inputType: (this.state.dataIndex?UPDATE_PROFILE_WEBSITE_BY_KEY: ADD_WEBSITE), profileIndex: this.state.dataIndex, inputInitialValue:this.displayWebsite()  })} >
 
-              <Icon active name="arrow-forward" />
+              <Icon  name="arrow-forward" />
              </Button>
 
             </Right>
@@ -222,8 +228,8 @@ displayEmail = () => (this.state.dataIndex? this.props.profiles[this.state.dataI
 
           <ListItem icon>
             <Left>
-              <Button style={{ backgroundColor: "#007AFF" }}>
-                <Icon ios='ios-list-box' android="md-list-box" style={{fontSize: 20, color: 'blue'}}/>
+              <Button transparent>
+                <Icon ios='ios-list-box' android="md-list-box" style={COMMON_ICON_STYLE}/>
               </Button>
               <Text>Description</Text>
             </Left>
@@ -245,12 +251,12 @@ displayEmail = () => (this.state.dataIndex? this.props.profiles[this.state.dataI
               <Text>Current Image</Text>
               </Left>
               <Body style={{backgroundColor:"pink"}} >
-                <Image style={{width:205, height:250}} source={{uri:( this.state.dataIndex? this.props.profiles[this.state.dataIndex].imageURI:NO_PHOTO_AVAILABLE_URI)}} />              
+                <Image style={{width:205, height:250}} source={{uri:( this.state.dataIndex && this.props.profiles[this.state.dataIndex]? this.props.profiles[this.state.dataIndex].imageURI:NO_PHOTO_AVAILABLE_URI)}} />              
               </Body>
             <Right>
               <Button transparent disabled onPress={() => this.onPressImagePicker()}>
                  <Text>Edit</Text>
-                 <Icon active name="arrow-forward" />
+                 <Icon  name="arrow-forward" />
               </Button>
             </Right>
             </ListItem>
@@ -267,18 +273,19 @@ const mapStateToProps = state => {
    const isConnected =  ((state.auth!= NEED_AT_LEAST_ANONYMOUS_LOGIN) && state.auth.auth &&  (state.auth.auth.loggedInProviderName=="oauth2-google"));
    const profileIndex =  isConnected? state.auth.auth.userProfile.identities[0].id :null;
    const profiles = state.profiles.profiles;
-   console.log(profileIndex, "----",profiles[profileIndex]);
+   console.log(profileIndex, "----",profiles,"-------",profiles[profileIndex]);
   return {
     profileIndex: profileIndex,
     isConnected : isConnected,
     isGoogleUser: (isConnected && state.auth.auth.userProfile.identities[0].id),
     profiles: profiles,
-    email: profileIndex ? profiles[profileIndex].email : state.profiles.tmpProfile.email,
-    name: profileIndex ? profiles[profileIndex].name : state.profiles.tmpProfile.name,
-    phone: profileIndex ? profiles[profileIndex].phone : state.profiles.tmpProfile.phone,
-    website: profileIndex ? profiles[profileIndex].website : state.profiles.tmpProfile.website,
-    description: profileIndex ? profiles[profileIndex].description : state.profiles.tmpProfile.description,
-    imageURI: profileIndex ? profiles[profileIndex].imageURI : state.profiles.tmpProfile.imageURI
+
+    email: profileIndex && profiles[profileIndex] ? profiles[profileIndex].email : state.profiles.tmpProfile.email,
+    name: profileIndex && profiles[profileIndex]  ? profiles[profileIndex].name : state.profiles.tmpProfile.name,
+    phone: profileIndex && profiles[profileIndex] ? profiles[profileIndex].phone : state.profiles.tmpProfile.phone,
+    website: profileIndex && profiles[profileIndex] ? profiles[profileIndex].website : state.profiles.tmpProfile.website,
+    description: profileIndex && profiles[profileIndex] ? profiles[profileIndex].description : state.profiles.tmpProfile.description,
+    imageURI: profileIndex && profiles[profileIndex] ? profiles[profileIndex].imageURI : state.profiles.tmpProfile.imageURI
   }
 }
 

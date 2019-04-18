@@ -125,6 +125,7 @@ renderSearchField = () =>(
                 </Button>
             }
             body={
+              
               <View style={styles.bodyViewStyle}>
                 <Text style={styles.textStyle}>{profile.item.name}</Text>
                 <Text note numberOfLines={2}>{profile.item.description}</Text>

@@ -26,7 +26,11 @@ export const MAATUSER_COLLECTION = 'MaatUsers';
 export const STATE = require('./redux/state.js');
 export const TYPES = require('./redux/types.js');
 
-
+export const ROUTE_EVENTVIEW = '';
+export const ROUTE_MAPVIEW = 'MapView';
+export const ROUTE_EVENT_CALENDAR = 'EventCalendar';
+export const ROUTE_SIMPLE_INPUT_VIEW = 'SimpleEventInput';
+export const ROUTE_SIMPLE_WEB_VIEW = 'SimpleWebView';
 
 
 // Label Text
@@ -50,11 +54,11 @@ export const INACTIVE_TINT_COLOR = '#9ab';
 export const ACTIVE_TINT_COLOR = '#b8bb49';
 
 //************ Common Components
-const listItemSeparatorStyle = { height: 1, backgroundColor:COMMON_DARK_BACKGROUND  };
+const listItemSeparatorStyle = { height: 2, backgroundColor:COMMON_DARK_BACKGROUND  };
 export const COMMON_ACTIVITY_INDICATOR = <View style={{ flex: 1, paddingTop: 20 ,justifyContent: 'space-around'}}><ActivityIndicator /></View>;
 export const COMMON_LISTVIEW_ITEM_SEPARATOR = ()=> <View style={listItemSeparatorStyle} />;
 export const ALT_LISTVIEW_ITEM_SEPARATOR = ()=> <View style={{flex:1,paddingTop:10, height: 20, backgroundColor:COMMON_DARK_BACKGROUND  }} />;
-
+export const COMMON_ICON_STYLE = {fontSize: 20, color: 'black'};
 
 /*
  * If the user has logged out "too much", meaning out of Stitch,
@@ -151,7 +155,7 @@ export const TEST_PROFILE_ACTION = {
 export const getDefaultEvent = (eventObject) => {
   const event = eventObject ? eventObject: { ...DEFAULT_EVENT };
   event.id = random(RANDOM_NUMBER_SEED);
-  event.name = `Default Name_${event.id}`;
+  event.name = eventObject ? event.name : `Default Name_${event.id}`;
   return event;
 };
 
@@ -161,7 +165,7 @@ export const getDefaultEvent = (eventObject) => {
 export const getDefaultProfile = (eventProfile) => {
   const profile = eventProfile ? eventProfile : { ...DEFAULT_PROFILE };
   profile.id = random(RANDOM_NUMBER_SEED);
-  profile.name = `Default Name_${profile.id}`;
+  profile.name = eventProfile ? eventProfile.name : `Default Name_${profile.id}`;
   return profile;
 };
 

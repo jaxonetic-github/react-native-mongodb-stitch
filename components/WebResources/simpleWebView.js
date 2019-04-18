@@ -15,9 +15,10 @@ export default class SimpleWebView extends React.Component {
 
   constructor(props) {
     super(props);
+    console.log(props);
     this.state = {
-      url : props.navigation.state.params.url,
-      title:props.navigation.state.params.title,
+      url : this.props.url || props.navigation.state.params.url,
+      title:this.props.title || props.navigation.state.params.title,
     };
   }
   

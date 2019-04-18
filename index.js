@@ -66,7 +66,7 @@ export default class App extends React.Component {
     //this.subscription = eventEmitter.addListener('onUserAuthenticated',(event)=>{sagaMiddleware.run(saveAuthCode,{payload:event});});
     // this.subscription = eventEmitter.addListener('onUserAuthenticated',this._grabAuthCode);
 
-    };
+    }
   componentWillUnmount() {
     sagaMiddleware.run(clean/*subscription*/);
   }

@@ -101,8 +101,8 @@ console.log(region);
    
     // res is an Array of geocoding object (see below)
     console.log(region,'>>>>>>>>>>>>>>>>>>>>>.',geo);
-    this.setState({position:{"longitude":geo[0].geometry.location.lng, "latitude":geo[0].geometry.location.lat, "formattedAddress":geo[0].formattedAddress} })
-    this.props.updateEventLocationByKey(geo[0].formattedAddress, this.props.navigation.state.params.id);
+    this.setState({position:{"longitude":geo.results[0].geometry.location.lng, "latitude":geo.results[0].geometry.location.lat, "formattedAddress":geo.results[0].formattedAddress} })
+    this.props.updateEventLocationByKey(geo.results[0].formattedAddress, this.props.navigation.state.params.id);
 }catch(error){
   console.log(error)
 }
@@ -125,6 +125,8 @@ if(!this.state)  return (COMMON_ACTIVITY_INDICATOR)
          </MapView>
           <Item stackedLabel>
             <Label>Address</Label>
+<Text>{this.state.position.longitude}</Text>
+<Text>{this.state.position.latitude}</Text>
 <Text>{this.state.position.formattedAddress}</Text>
             <Input  inputInitialValue='' inputType={this.state.inputType} onInputBlur={this.onAddressChange} />
           </Item>

@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { StyleSheet, View, ListView, TextInput, ActivityIndicator,FlatList, Alert} from 'react-native';
 import { SwipeRow,Container, Subtitle, Header, Content, List, ListItem,Title,Icon, Thumbnail, Text, Left, Body, Right, Button ,Accordion,Tab, Tabs} from 'native-base';
-import {resourceData,ALT_LISTVIEW_ITEM_SEPARATOR, COMMON_LISTVIEW_ITEM_SEPARATOR,COMMON_DARK_BACKGROUND,ACTIVE_TINT_COLOR, INACTIVE_TINT_COLOR} from '../../constants.js'
+import {resourceData,ALT_LISTVIEW_ITEM_SEPARATOR, COMMON_LISTVIEW_ITEM_SEPARATOR,COMMON_DARK_BACKGROUND,ACTIVE_TINT_COLOR, INACTIVE_TINT_COLOR,GOOGLE_PROVIDER_NAME,NEED_AT_LEAST_ANONYMOUS_LOGIN } from '../../constants.js'
 import WebResourcesList from '../WebResources/webResourcesList.js';
 /**
  * Represents a component that allows a user to search for events.
@@ -15,18 +15,14 @@ import WebResourcesList from '../WebResources/webResourcesList.js';
   constructor(props) {
     super(props);
     //setting default state
-    console.log("props", props);
-    console.log("this.params",this.props.navigation.state.params.record );
           this.state={record:null}
     }
 
   /** Loads events into the component */
   async componentDidMount() {
         
-          const videoData = resourceData.youTubeResources;
-          this.setState({
-            record:videoData
-          })   
+    const videoData = resourceData.youTubeResources;
+   this.setState({record:videoData})   
   }
 
 /**
@@ -55,7 +51,6 @@ import WebResourcesList from '../WebResources/webResourcesList.js';
       // ignore undefined rows brought from DB
       if (!item) 
       { 
-        console.log('Todo: Log this (Undefined Events from DB)');
         return false;
       }
       //applying filter for the inserted text in search bar
@@ -120,7 +115,7 @@ renderElders = () =>(<FlatList
             
           data={this.state.record}
           renderItem={(record)=>{
-            return (<ListItem  style={{borderWidth:2}}>
+            return (<ListItem >
               <Text>{record.item.title}</Text>
               <Button transparent onPress={() => {this.props.navigation.push('YouTubeList',{record:record.item, title:record.item.title})}}>
                   <Text>View</Text>
@@ -138,7 +133,7 @@ renderOnlineMediaSources = () =>(<FlatList
           data={resourceData.onlineMediaContent}
           renderItem={(record)=>{
             console.log(record.item);
-            return (<ListItem  style={{ borderWidth:2, paddingLeft:15}}>
+            return (<ListItem  >
               <Text>{record.item.title}</Text>
               <Button transparent onPress={() => {
                this.props.navigation.push('SimpleWebView', {url:record.item.url , title:record.item.title})
@@ -156,32 +151,24 @@ renderOnlineMediaSources = () =>(<FlatList
   render() {
 
     return (
-      //ListView to show with textinput used as search bar 
       <Container>
-<Content style={{margin:10, backgroundColor:COMMON_DARK_BACKGROUND}}>
-  <Tabs>
+    <Tabs>
     <Tab heading="Our Master Teachers">{this.renderElders()}</Tab>
     <Tab heading="Media Outlets">{this.renderOnlineMediaSources()}</Tab>
     <Tab heading="Roads to the Community"><WebResourcesList navigation={this.props.navigation} resourceData={resourceData.webResources}/></Tab>
   </Tabs>
-</Content>
 
       </Container>
     );
   }
 }
 
- //       {ALT_LISTVIEW_ITEM_SEPARATOR()}
-   //<View style={{backgroundColor:"gold"}}><Text>Our Master Teachers</Text></View>
-     //      {ALT_LISTVIEW_ITEM_SEPARATOR()}
-       
 
 const mapStateToProps = state => {
-console.log('stateevents',state.events)
    const eventKeys = Object.keys(state.events.events)
-console.log('mapstatetoprops events',eventKeys.map(pkey => state.events.events[pkey]));
+
   return {
-        canAddEvent : (state.auth.auth!=1) && (state.auth.auth.auth.loggedInProviderName=="oauth2-google"),
+        canAddEvent : (state.auth.auth!=NEED_AT_LEAST_ANONYMOUS_LOGIN) && (state.auth.auth.auth.loggedInProviderName==GOOGLE_PROVIDER_NAME),
 
     eventCount: eventKeys.length, 
     events: eventKeys.map(pkey => state.events.events[pkey])
@@ -190,25 +177,12 @@ console.log('mapstatetoprops events',eventKeys.map(pkey => state.events.events[p
 }
 
 
-
-
 function matchDispatchToProps(dispatch){
   return bindActionCreators({deleteEventRequest: deleteEventRequest}, dispatch)
 }
 
 const styles = StyleSheet.create({
-  viewStyle: {
-    justifyContent: 'center',
-    flex: 1,
-    padding: 10,
-  },
-innerHeaderStyle:{backgroundColor: COMMON_DARK_BACKGROUND},
-
-  textStyle: {
-    padding: 10, color:ACTIVE_TINT_COLOR
-  },
-bodyViewStyle:{flex:1},
-
+  innerHeaderStyle:{backgroundColor: COMMON_DARK_BACKGROUND},
   textInputStyle: {
     textAlign: 'center',
     height: 40,

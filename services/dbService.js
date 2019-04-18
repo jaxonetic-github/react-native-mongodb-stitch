@@ -210,7 +210,7 @@ return authorizedUser;
   //expect Promise<void>
 
 // Now remove user1
-await client.auth.removeUser();
+//await client.auth.removeUser();
 
 // User has been removed from the list
   const unAuthorizedUser = await client.auth.logout();
