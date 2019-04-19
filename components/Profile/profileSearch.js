@@ -7,7 +7,8 @@ import { ScrollView, RefreshControl, StyleSheet, View, TextInput, ActivityIndica
 import { SwipeRow, Container, Subtitle, Header, Content, List, ListItem,Title, Thumbnail,Icon, Text, Left, Body, Right, Button } from 'native-base';
 import { NavigationEvents } from 'react-navigation';
  import {deleteProfileRequest,fetchProfileRequest} from './Redux/Actions/profile.js'
-import {COMMON_DARK_BACKGROUND,ACTIVE_TINT_COLOR, INACTIVE_TINT_COLOR} from '../../constants.js'
+import {COMMON_DARK_BACKGROUND,COMMON_ACTIVITY_INDICATOR, ACTIVE_TINT_COLOR, INACTIVE_TINT_COLOR, ROUTE_PROFILE_VIEW,
+        COMMON_LISTVIEW_ITEM_SEPARATOR, GOOGLE_PROVIDER_NAME} from '../../constants.js'
 
 /**
  * A List component with search abilities
@@ -74,22 +75,16 @@ console.log("------------", item);
   }
 
 
-  ListViewItemSeparator = () => {
-    //Item sparator view
-    return (
-      <View style={styles.listItemSeparatorStyle} />
-    );
-  };
 
  /** Exract a key from an object for the List */
     _keyExtractor = (item, index) =>(item.id ? item.id.toString() : Math.floor(Math.random() * Math.floor(999999)));
 
 
 /** Navigate to artist-creation screen on [add] buttonpress  */
-  _onPress = (itemId) => (this.props.navigation.push('ProfileView',{id:itemId}))
+  _onPress = (itemId) => (this.props.navigation.push(ROUTE_PROFILE_VIEW,{id:itemId}))
 
 /** Navigate to artist-creation screen on [add] buttonpress  */
-  _onPressNew = () => (this.props.navigation.push('ProfileView' ))
+  _onPressNew = () => (this.props.navigation.push(ROUTE_PROFILE_VIEW ))
 
 
 /** Navigate to event-creation screen  */
@@ -127,6 +122,8 @@ renderSearchField = () =>(
             body={
               
               <View style={styles.bodyViewStyle}>
+              <Thumbnail style={styles.thumbnailStyle} 
+source={{uri:profile.item.imageURI}}/>
                 <Text style={styles.textStyle}>{profile.item.name}</Text>
                 <Text note numberOfLines={2}>{profile.item.description}</Text>
               </View>
@@ -145,24 +142,18 @@ renderSearchField = () =>(
 * duplicate code also found in eventsearch
 */
   addButton = ()=>{
-   console.log("this.props.canAddProfile ", this.props.canAddProfile );
     const _addButton = this.props.canAddProfile 
       ?  (<Button transparent  onPress={()=>this._onPressNew()} >
-             <Icon ios='ios-add-circle' android="md-add-circle" style={{fontSize: 20, color: INACTIVE_TINT_COLOR}}/>
+             <Icon ios='ios-add-circle' android="md-add-circle" style={COMMON_ICON_STYLE}/>
                <Text style={styles.textStyle}>Add Artist</Text>
             </Button>)
       : null;
       return _addButton; }
 
   render() {
-    console.log("canaddprofile::",this.props.canAddProfile);
     if (this.state.isLoading) {
       //Loading View while data is loading
-      return (
-        <View style={{ flex: 1, paddingTop: 20 }}>
-          <ActivityIndicator />
-        </View>
-      );
+      return (COMMON_ACTIVITY_INDICATOR);
     }
 
     return (
@@ -170,17 +161,11 @@ renderSearchField = () =>(
         <Header  style={styles.innerHeaderStyle}>
             <Body>
               <Title style={styles.textStyle}>{this.props.profileCount} Artists</Title>
-<Subtitle>Subtitle</Subtitle>
             </Body>
-            <Right>  
-                   
-{this.addButton()}
-            </Right>
-
+            <Right>{this.addButton()}</Right>
         </Header>
-<Content>
-
-        <FlatList
+        <Content>
+        <FlatList   //<--- test/fix
          refreshControl={
           <RefreshControl
             refreshing={this.state.refreshing}
@@ -191,11 +176,9 @@ renderSearchField = () =>(
           renderItem={this._renderItem}
           keyExtractor={this._keyExtractor}
           ListHeaderComponent={this.renderSearchField}
-
-           ItemSeparatorComponent = {this.ListViewItemSeparator}
+           ItemSeparatorComponent = {COMMON_LISTVIEW_ITEM_SEPARATOR}
         />
-              </Content>
-
+        </Content>
       </Container>
     );
   }
@@ -207,11 +190,9 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 10,
   },
+  thumbnailStyle:{width:70 , height:70, borderRadius:15},
 innerHeaderStyle:{backgroundColor: COMMON_DARK_BACKGROUND},
-listItemSeparatorStyle:{
-          height: 1,
-          backgroundColor: '#080808',
-        },
+
   textStyle: {
     padding: 10, color:ACTIVE_TINT_COLOR
   },
@@ -231,8 +212,8 @@ const mapStateToProps = state => {
   const profileKeys = Object.keys(state.profiles.profiles);
 
   return {
-    canAddProfile : (state.auth!=1) && (state.auth.auth.loggedInProviderName=="oauth2-google"),
-    profileIndex : (state.auth!=1) && (state.auth.auth.loggedInProviderName=="oauth2-google") ? state.auth.auth.userProfile.identities[0].id: null,
+    canAddProfile : (state.auth!=1) && (state.auth.auth.loggedInProviderName==GOOGLE_PROVIDER_NAME),
+    profileIndex : (state.auth!=1) && (state.auth.auth.loggedInProviderName==GOOGLE_PROVIDER_NAME) ? state.auth.auth.userProfile.identities[0].id: null,
     profileCount: profileKeys.length, 
     profiles: profileKeys.map(pkey => state.profiles.profiles[pkey])
   }

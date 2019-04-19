@@ -97,10 +97,6 @@ _renderItem = (item) =>
       //ListView to show with textinput used as search bar 
       <Container style={styles.viewStyle}>
         <Header >
-            <Body>
-              <Title>Community</Title>
-<Subtitle>Keep it in the community</Subtitle>
-            </Body>
             <Right>             
             <Button transparent  onPress={() => this.props.navigation.push('EventView', { })} >
              <Icon ios='ios-information-circle' android="md-information-circle" style={COMMON_ICON_STYLE}/>

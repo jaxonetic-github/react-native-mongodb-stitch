@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import {Icon } from 'native-base';
+import {Icon, Button } from 'native-base';
 import {  createStackNavigator,createAppContainer, createSwitchNavigator,createBottomTabNavigator, createMaterialTopTabNavigator } from 'react-navigation';
-import { createDrawerNavigator } from 'react-navigation-drawer';
+import { createDrawerNavigator,DrawerActions } from 'react-navigation-drawer';
 
-//import TimelineView from "./components/timeline.js";
+import TimelineView from "./components/timeline.js";
 import VideoSearch from './components/Youtube/videoSearch.js';
 import YouTubeList from './components/Youtube/youtubeList.js';
 import SimpleWebView from './components/WebResources/simpleWebView.js';
@@ -56,7 +56,7 @@ function createTopStack(options = {}) {
   Drawer: {screen:createDrawerExample(), navigationOptions : { title: 'Black Arts Renaissance'} },
   VideoSearch:{screen:VideoSearch, navigationOptions: ({ navigation }) => ({title: `Debates Lectures Interviews`})  },
   YouTubeList:{screen:YouTubeList, navigationOptions: ({ navigation }) => ({title: `${navigation.state.params.title}`})  },
-  //TimelineView:{screen:TimelineView, navigationOptions: ({ navigation }) => ({title: "Timeline"})  },
+  TimelineView:{screen:TimelineView, navigationOptions: ({ navigation }) => ({title: "Timeline"})  },
   SimpleWebView:{screen:SimpleWebView, navigationOptions: ({ navigation }) => ({title: `${navigation.state.params.title}`}) },
   Community:{screen:CommunityView, navigationOptions : { title: 'Community'} },
   EventView:{screen:EventView, navigationOptions : { title: 'New Event  Screen'} },
@@ -69,16 +69,16 @@ function createTopStack(options = {}) {
   MapView: {screen: MapView, navigationOptions :{ title: 'MapView'}},
 },
   {initialRouteName: "Drawer",
-    defaultNavigationOptions: {
+/*    defaultNavigationOptions: {
       headerStyle: {
         backgroundColor:COMMON_DARK_BACKGROUND ,
       },
-      headerRight:<Icon ios='ios-menu' android="md-menu" style={{fontSize: 25, margin:10, color: 'white'}}/>,
+      headerRight:<Button transparent onPress={()=>{console.log("button presssssssses!", this); DrawerActions.toggleDrawer();}}><Icon ios='ios-menu' android="md-menu" style={{fontSize: 25, margin:10, color: 'white'}}/></Button>,
       headerTintColor: '#fff',
       headerTitleStyle: {
         fontWeight: 'bold',
       },
-    }})
+    }*/})
   return innerNav;
 
 
@@ -101,7 +101,9 @@ export default mainStack = createSwitchNavigator({
    // SearchLayout:TabNavigator 
  },
   {
-    initialRouteName: 'Inner',headerStyle: {
+    initialRouteName: 'Inner',
+    
+    headerStyle: {
         backgroundColor: COMMON_DARK_BACKGROUND,
       }
   });

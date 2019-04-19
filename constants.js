@@ -1,5 +1,6 @@
-import React from "react";
-import { View ,ActivityIndicator } from 'react-native';
+
+  import React from 'react'
+  import { View ,ActivityIndicator } from 'react-native';
 
 
 import SERTIMA_YOUTUBE_PAYLOAD_MOCK from './YoutubeResponses/ivansertima.js';
@@ -10,6 +11,21 @@ import DR_CLARKE_YOUTUBE_PAYLOAD_MOCK from './YoutubeResponses/johnhenrikclarke.
 
 export const NO_PHOTO_AVAILABLE_URI =  "https://static.wixstatic.com/media/84428b_aec5877604ff494295b3af5af0b27a67~mv2.png";
 
+/*************  Stitch **************/
+
+export const FUNCTION_INSERTPROFILE = "insertProfile";
+export const FUNCTION_INSERTEVENT   = "insertEvent";
+export const FUNCTION_QUERYPROFILE = "queryProfiles";
+export const FUNCTION_QUERYEVENTS = "queryEvents";
+export const FUNCTION_UPDATEPROFILE = "updateProfile";
+export const FUNCTION_UPDATEEVENT = "updateEvent";
+export const FUNCTION_RETRIEVE_GOOGLE_WEBCLIENTID = "retrieveGoogleWebClientID";
+export const FUNCTION_RETRIEVE_GOOGLE_IOSCLIENTID = "retrieveGoogleIosClientID";
+export const FUNCTION_RETRIEVE_GOOGLE_APIKEY = "retrieveGoogleApiKey";
+
+//Needed for react-native-google-signin
+export const GOOGLESIGNIN_OPTION_SCOPE = "openid email profile";
+export const GOOGLESIGNIN_OPTION_RESPONSE_TYPE = "code";
 
 export const REMOTE_RESOURCE_STRING ='maatel_artistrenaissance-dilzf';
 export const DBNAME = 'maat_el_renaissance';
@@ -31,7 +47,7 @@ export const ROUTE_MAPVIEW = 'MapView';
 export const ROUTE_EVENT_CALENDAR = 'EventCalendar';
 export const ROUTE_SIMPLE_INPUT_VIEW = 'SimpleEventInput';
 export const ROUTE_SIMPLE_WEB_VIEW = 'SimpleWebView';
-
+export const ROUTE_PROFILE_VIEW = 'ProfileView';
 
 // Label Text
 export const TEXT_SAVE = 'Save';
@@ -108,12 +124,32 @@ const drClarke_url = 'https://www.googleapis.com/youtube/v3/search?part=snippet&
 const drBen_url = 'https://www.googleapis.com/youtube/v3/search?part=snippet&q=dr+ben+jochannan&key=AIzaSyCSXLM0pMb0GCPvNtVdd1GeSa0UCl6zAEM';
 const drsertima_url = 'https://www.googleapis.com/youtube/v3/search?part=snippet&q=dr+ivan+sertima&key=AIzaSyCSXLM0pMb0GCPvNtVdd1GeSa0UCl6zAEM';
 
-const youTubeResources = [{title:"Dr Ivan Sertima", url:drsertima_url, payload:SERTIMA_YOUTUBE_PAYLOAD_MOCK},
-                          {title:"Dr Ben Jochannan", url:drBen_url, payload:DR_BEN_YOUTUBE_PAYLOAD_MOCK},
-                          {title:"Dr Amos Wilson", url:amos_url, payload:AMOS_YOUTUBE_PAYLOAD_MOCK},
-                          {title:"Dr Claud Anderson", url:amos_url, payload:AMOS_YOUTUBE_PAYLOAD_MOCK},
-                          {title:"Dr John Henrik Clarke", url:drClarke_url, payload:DR_CLARKE_YOUTUBE_PAYLOAD_MOCK}
+const youTubeResources = [{title:"Dr Ivan Sertima", url:drsertima_url, generalCategory:"History", payload:SERTIMA_YOUTUBE_PAYLOAD_MOCK},
+                          {title:"Dr Ben Jochannan", url:drBen_url, generalCategory:"History", payload:DR_BEN_YOUTUBE_PAYLOAD_MOCK},
+                          {title:"Dr Amos Wilson", url:amos_url, generalCategory:"Psychology", payload:AMOS_YOUTUBE_PAYLOAD_MOCK},
+                          {title:"Dr Claud Anderson", url:amos_url,generalCategory:"Economics", payload:AMOS_YOUTUBE_PAYLOAD_MOCK},
+                          {title:"Dr John Henrik Clarke", url:drClarke_url, generalCategory:"History", payload:DR_CLARKE_YOUTUBE_PAYLOAD_MOCK},
+                          {title:"Dr James Smalls", url:'', payload:'', generalCategory:"History"},
+                         {title:"Dr Wade Nobles", url:'', payload:'', generalCategory:"History"},                       
+                         {title:"Dr Leonard Jeffries", url:'', payload:'', generalCategory:"History"},
+                         {title:"Dr Edwin Nichols", url:'', payload:'', generalCategory:"Philosophy"},
+                         {title:"Dr Degruy", url:'', payload:'', generalCategory:"Psychology"},
+                         {title:"Sevan Bomar", url:'', payload:'',generalCategory:"Mover"},
+                         {title:"Krs One", url:'', payload:'',generalCategory:"Mover"},
+                         {title:"Kwame Toure", url:'', payload:'',generalCategory:"Mover"},
+                         {title:"Dr El Malik El Shabaz", url:'',generalCategory:"Warrior", payload:''}
                           ]
+
+
+const digitalResources = [{key:"1", title:"Hidden Colors"}, {key:"2", title:"Out of Darkness"}];
+
+const faqs=[{question:'Where did "white" people come from?',
+               answers:[{url:"https://www.youtube.com/watch?v=YLgK0xzK_2U", desc:""},{url:"https://www.youtube.com/watch?v=I_v77StW7tM", desc:"Drs Imhotep and Hiawatha", title:"Ancient African History and the Six Physical Transmutations of the Human Family"}]},
+            {question:'Why do we call some people white and others black?',
+               answers:[
+                {url:"https://www.youtube.com/watch?v=HhAjycvAN8k", desc:"Dr Jaqueline Battalora and Jane Elliot", title:"Dr. Jacqueline Battalora and Jane Elliott Debate White Privilege"},
+               ,{url:"https://www.youtube.com/watch?v=rPhlteY1knA", desc:"Dr Jaqueline Battalora", title:"1681 - The Invention of Race: The Laws that Changed the World!"}]}
+            ];
 
 const webResources = [
   { title: "Africa_Town", url:"https://africatownseattle.com",  imageURI:"https://blackmonk-saas.s3.amazonaws.com/media/schema_africatownseattlecom/sitelogo/3442af33-4c17-4f37-be96-07088fc18182.png" },
@@ -123,7 +159,8 @@ const webResources = [
   { title: "National Black Guide", url:"http://www.nationalblackguide.com/black-directory/", imageURI:"http://www.nationalblackguide.com/wp-content/uploads/2015/10/NationalBlackGuide_invert_logo-300x93.png"},
   { title: "Support Black Owned", featureDescription:"The name pretty much speaks for itself.", url:"https://www.supportblackowned.com/", imageURI:"https://www.supportblackowned.com/images/sitelogo2.png"}];
 
-export const resourceData ={youTubeResources: youTubeResources, webResources:webResources, onlineMediaContent:onlineMediaContent};
+export const resourceData ={youTubeResources: youTubeResources, webResources:webResources,
+                             onlineMediaContent:onlineMediaContent, digitalResources:digitalResources};
 
  const DEFAULT_EVENT = STATE.initialStoreState.events.tmpEvent;
  const DEFAULT_PROFILE = STATE.initialStoreState.profiles.tmpProfile;

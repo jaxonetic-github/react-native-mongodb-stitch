@@ -1,9 +1,11 @@
-
+/**
+*  TODO:  Documentation
+*/
 import {REMOVE_LOCAL_PROFILE, FETCH_PROFILE_SUCCESS, FETCH_PROFILE_FAILURE, FETCH_PROFILE_REQUEST, ADD_NAME,
  ADD_PROFILE_REQUEST, ADD_PROFILE_SUCCESS, ADD_PROFILE_FAILURE, DELETE_PROFILE_SUCCESS,DELETE_PROFILE_FAILURE,DELETE_PROFILE_REQUEST,
  ADD_DESC, ADD_EMAIL, ADD_PHONE, ADD_WEBSITE, ADD_IMAGE, ADD_PROFILE,ADD_PROFILE_TO_USERPROFILES,
 UPDATE_PROFILE_NAME_BY_KEY, UPDATE_PROFILE_WEBSITE_BY_KEY, UPDATE_PROFILE_PHONE_BY_KEY, UPDATE_PROFILE_EMAIL_BY_KEY,UPDATE_PROFILE_IMAGE_BY_KEY,
-UPDATE_EVENT_REQUEST,UPDATE_PROFILE_REQUEST } from '../../../../redux/types';
+UPDATE_EVENT_REQUEST,UPDATE_PROFILE_REQUEST,UPDATE_PROFILE_FAILURE, UPDATE_PROFILE_SUCCESS } from '../../../../redux/types';
 
 /*
  * action creators
@@ -15,7 +17,6 @@ export function removeLocalProfile(id) {
 export function updateProfileNameByKey(text, key) {
   return { type: UPDATE_PROFILE_NAME_BY_KEY, payload:text, key:key}
 }
-
 export function updateProfileWebsiteByKey(text, key) {
   return { type: UPDATE_PROFILE_WEBSITE_BY_KEY, payload:text, key:key}
 }
@@ -27,6 +28,16 @@ export function updateProfileEmailByKey(text, key) {
 }
 export function updateProfileImageByKey(text, key) {
   return { type: UPDATE_PROFILE_IMAGE_BY_KEY, payload:text, key:key}
+}
+/**
+* @param results: results from backend update
+*/
+export function updateProfileSuccess(results) {
+  return { type: UPDATE_PROFILE_SUCCESS, payload:results }
+}
+
+export function updateProfileFailure(updatedEventError) {
+  return { type: UPDATE_PROFILE_FAILURE, payload:updatedEventError }
 }
 
 export function updateProfileRequest(updatedEvent) {

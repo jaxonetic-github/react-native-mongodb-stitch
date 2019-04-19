@@ -132,7 +132,6 @@ renderOnlineMediaSources = () =>(<FlatList
             
           data={resourceData.onlineMediaContent}
           renderItem={(record)=>{
-            console.log(record.item);
             return (<ListItem  >
               <Text>{record.item.title}</Text>
               <Button transparent onPress={() => {

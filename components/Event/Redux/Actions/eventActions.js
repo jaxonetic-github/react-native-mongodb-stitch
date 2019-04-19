@@ -61,10 +61,16 @@ export function addEventImage(text) {
 export function addEventLocation(text) {
   return { type: ADD_EVENT_LOCATION, payload:text }
 }
-export function addEvent(eventObj) {
+export function addEventsToLocal(eventObj) {
   return { type: ADD_EVENTS_TO_USEREVENTS, payload:eventObj }
 }
 
+export function updateEventSuccess(results) {
+  return { type: UPDATE_EVENT_SUCCESS, payload:results }
+}
+export function updateEventFailure(results) {
+  return { type: UPDATE_EVENT_FAILURE, payload:results }
+}
 export function updateEventRequest(updatedEvent) {
   return { type: UPDATE_EVENT_REQUEST, payload:updatedEvent }
 }

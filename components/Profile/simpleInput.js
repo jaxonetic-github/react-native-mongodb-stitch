@@ -8,7 +8,9 @@ import { updateProfileImageByKey, updateProfileEmailByKey, updateProfilePhoneByK
 import { UPDATE_PROFILE_IMAGE_BY_KEY, UPDATE_PROFILE_EMAIL_BY_KEY, UPDATE_PROFILE_PHONE_BY_KEY, UPDATE_PROFILE_WEBSITE_BY_KEY, UPDATE_PROFILE_NAME_BY_KEY, ADD_NAME, ADD_DESC, ADD_EMAIL, ADD_PHONE, ADD_WEBSITE, ADD_IMAGE} from '../../redux/types';
 
 
-
+/**
+ *A custom html input textfield
+ */
 class SimpleInputEdit extends Component {
 
    constructor(props) {
