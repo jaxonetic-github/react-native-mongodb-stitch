@@ -13,7 +13,7 @@ FETCH_EVENT_FAILURE,LOGIN_SUCCESS,LOGIN_FAILURE, LOGIN_USER_REQUEST, LOGOUT_USER
 import {loginFailed, loginSucceeded, logout,loginUserRequest,dbClientInitialized, dbClientAlreadyInitialized } from '../../components/Authentication/Redux/Actions/authActions.js';
  
 import { updateEventSuccess, addEventsToLocal, requestFetchEvent, fetchEventFailure, fetchEventSuccess,updateEventFailure } from '../../components/Event/Redux/Actions/eventActions.js'
-import { removeLocalProfile, addProfile,fetchProfileFailure, addProfileSuccess,addProfileFailure,fetchProfileRequest } from '../../components/Profile/Redux/Actions/profile.js'
+import { fetchProfileSuccess, removeLocalProfile, addProfile,fetchProfileFailure, addProfileSuccess,addProfileFailure,fetchProfileRequest } from '../../components/Profile/Redux/Actions/profile.js'
 
 import DBService from '../../services/dbService.js'
 import {googleAuthenticationPress, _onPressLogout,googleSilentLogin} from './googleSaga.js'
@@ -271,11 +271,11 @@ export function* actionWatcher(service) {
 /*
  * clean 
  * meant to be a cleanup function
- */
+ *
 export function *clean(emitterListener) {
   emitterListener.remove();
 
-}
+}*/
 
 /*
  * 

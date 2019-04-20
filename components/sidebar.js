@@ -9,32 +9,21 @@ import {deleteProfileRequest,fetchProfileRequest} from './Profile/Redux/Actions/
 //components
 import Authentication from './Authentication/authenticationComponent.js';
 //constants
-import {NEED_AT_LEAST_ANONYMOUS_LOGIN, COMMON_DARK_BACKGROUND, ACTIVE_TINT_COLOR, INACTIVE_TINT_COLOR} from './../constants.js'
+import {COMMON_LISTVIEW_ITEM_SEPARATOR, NEED_AT_LEAST_ANONYMOUS_LOGIN, COMMON_DARK_BACKGROUND, ACTIVE_TINT_COLOR, INACTIVE_TINT_COLOR} from './../constants.js'
  
 const sideBarData = [{routeName:"Home", label:"Home", requiresVerification:false, icon:"home"}, {routeName:"ProfileView", label:"Profile", requiresVerification:true, icon:"person"}, 
                       {routeName:"SearchLayout", label:"Events & Creators", requiresVerification:false, icon:"search"},{routeName:"VideoSearch", label:"Library", requiresVerification:false, icon:"business"},
                       {routeName:"TimelineView", label:"Timeline", requiresVerification:false, icon:'hourglass'}
                       ];
 
-/** sideBar component manages the drawer sidebar */
+/**
+ * sideBar component manages the drawer sidebar
+ */
 class SideBar extends React.Component {
     constructor(props) {
     super(props);
-    this.state = {
-                  dataArray : sideBarData
-                  };
+    this.state = { dataArray : sideBarData};
   }
-
-/** The separator for the FlatList */
-  ListViewItemSeparator = () => {
-    //Item sparator view
-    return (
-      <View
-        style={styles.listLineSeparator}
-      />
-    );
-  };
-
 
 /** Only show the rows that the user is entitled  to see.  This will be  moved into Stitch User roles later
 */
@@ -47,7 +36,6 @@ _listDataFilter= (data) =>{
 
   return tmpData;
 }
-
 
 /** The Header  section */
 renderHeader = () =>{return(
@@ -82,9 +70,15 @@ renderHeader = () =>{return(
              }
 
 
- /** Exract a key from an object for the List */
+ /**
+  * Exract a key from an object for the List
+  */
     _keyExtractor = (item, index) =>{  return item.routeName};
 
+
+ /**
+  * Render
+  */
   render() {
     return (
       <Container>
@@ -96,7 +90,7 @@ renderHeader = () =>{return(
           data={this._listDataFilter(this.state.dataArray)}
           renderItem={this._renderRow}
           keyExtractor={this._keyExtractor}
-           ItemSeparatorComponent = {this.ListViewItemSeparator}
+           ItemSeparatorComponent = {COMMON_LISTVIEW_ITEM_SEPARATOR}
         />
  </CardItem>  
  <CardItem>      
@@ -110,7 +104,6 @@ renderHeader = () =>{return(
 }
 
 
-
 const styles = StyleSheet.create({
   headerImageStyles:{
               height: 120,
@@ -119,28 +112,20 @@ const styles = StyleSheet.create({
               alignSelf: "stretch",
               top: 10
             },
-  listItemStyles:{ flex: 1, padding: 0,borderRadius: 15 },
- listLineSeparator:{  height: 1,
-          backgroundColor: COMMON_DARK_BACKGROUND},
+  listItemStyles:{ flex: 1, padding: 0, borderRadius: 15 },
   container: {
-    //flex: 1,
-    //justifyContent: 'center',
     backgroundColor:COMMON_DARK_BACKGROUND,
         borderRadius: 14,
-    padding:0,
-    borderColor:'black',
+    
     alignItems: 'center',
     height:125
   }
 })
 
-
-
 const mapStateToProps = state => (
     {isLoggedIn: (state.auth!=1) && (state.auth.auth.loggedInProviderName=="oauth2-google"),
     profileIndex: ((state.auth!= NEED_AT_LEAST_ANONYMOUS_LOGIN) &&  (state.auth.auth.loggedInProviderName=="oauth2-google") && state.auth.auth.userProfile.identities[0].id) ?state.auth.auth.userProfile.identities[0].id:null,
-}
-)
+})
 
 
 export default connect(mapStateToProps, null)(SideBar)

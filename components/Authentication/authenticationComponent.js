@@ -65,7 +65,6 @@ if (this.props.isConnected) {
     _renderHeader=(item, expanded)=> {
 
      const title = this._titleIfConnected();
-console.log(title);
     return (
       <View style={{
         //flexDirection: "row",

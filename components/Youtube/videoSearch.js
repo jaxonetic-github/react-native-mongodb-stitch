@@ -5,7 +5,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { StyleSheet, View, ListView, TextInput, ActivityIndicator,FlatList, Alert} from 'react-native';
 import { SwipeRow,Container, Subtitle, Header, Content, List, ListItem,Title,Icon, Thumbnail, Text, Left, Body, Right, Button ,Accordion,Tab, Tabs} from 'native-base';
-import {resourceData,ALT_LISTVIEW_ITEM_SEPARATOR, COMMON_LISTVIEW_ITEM_SEPARATOR,COMMON_DARK_BACKGROUND,ACTIVE_TINT_COLOR, INACTIVE_TINT_COLOR,GOOGLE_PROVIDER_NAME,NEED_AT_LEAST_ANONYMOUS_LOGIN } from '../../constants.js'
+import {resourceData,ALT_LISTVIEW_ITEM_SEPARATOR, COMMON_LISTVIEW_ITEM_SEPARATOR,
+        COMMON_DARK_BACKGROUND,ACTIVE_TINT_COLOR, INACTIVE_TINT_COLOR,GOOGLE_PROVIDER_NAME,NEED_AT_LEAST_ANONYMOUS_LOGIN, NO_PHOTO_AVAILABLE_URI} from '../../constants.js'
 import WebResourcesList from '../WebResources/webResourcesList.js';
 /**
  * Represents a component that allows a user to search for events.
@@ -116,10 +117,16 @@ renderElders = () =>(<FlatList
           data={this.state.record}
           renderItem={(record)=>{
             return (<ListItem >
-              <Text>{record.item.title}</Text>
-              <Button transparent onPress={() => {this.props.navigation.push('YouTubeList',{record:record.item, title:record.item.title})}}>
+            <View  style={{ margin:0,padding:0, flexDirection: 'row',flex:1, justifyContent: 'center'}}>
+
+              <Thumbnail source={{uri:/*item.item.imageURI||*/NO_PHOTO_AVAILABLE_URI}}/>
+              <Text style={{flex:1, alignSelf:"center"}}>{record.item.title}</Text>
+              <View style={{flex:1}}>
+              <Button style={{flex:1, alignSelf:"flex-end"}} transparent onPress={() => {this.props.navigation.push('YouTubeList',{record:record.item, title:record.item.title})}}>
                   <Text>View</Text>
                 </Button>
+                </View>
+                </View>
             </ListItem>);}
             }
           keyExtractor={this._keyExtractor}
@@ -132,13 +139,18 @@ renderOnlineMediaSources = () =>(<FlatList
             
           data={resourceData.onlineMediaContent}
           renderItem={(record)=>{
-            return (<ListItem  >
-              <Text>{record.item.title}</Text>
-              <Button transparent onPress={() => {
+            return (<ListItem >
+              <View  style={{ margin:0,padding:0, flexDirection: 'row',flex:1, justifyContent: 'center'}}>
+              <Thumbnail style={{ flex:1}} source={{uri:/*item.item.imageURI||*/NO_PHOTO_AVAILABLE_URI}}/>
+              <Text style={{flex:1, alignSelf:"center"}}>{record.item.title}</Text>
+              <View style={{flex:1}}>
+              <Button transparent style={{flex:1,alignSelf:"flex-end"}} onPress={() => {
                this.props.navigation.push('SimpleWebView', {url:record.item.url , title:record.item.title})
               }}>
                   <Text>View</Text>
                 </Button>
+                </View >
+                </View>
             </ListItem>);}
             }
           keyExtractor={(item, index) => item.title}

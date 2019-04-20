@@ -8,7 +8,7 @@ import { SwipeRow, Container, Subtitle, Header, Content, List, ListItem,Title, T
 import { NavigationEvents } from 'react-navigation';
  import {deleteProfileRequest,fetchProfileRequest} from './Redux/Actions/profile.js'
 import {COMMON_DARK_BACKGROUND,COMMON_ACTIVITY_INDICATOR, ACTIVE_TINT_COLOR, INACTIVE_TINT_COLOR, ROUTE_PROFILE_VIEW,
-        COMMON_LISTVIEW_ITEM_SEPARATOR, GOOGLE_PROVIDER_NAME} from '../../constants.js'
+        COMMON_LISTVIEW_ITEM_SEPARATOR, GOOGLE_PROVIDER_NAME, NO_PHOTO_AVAILABLE_URI} from '../../constants.js'
 
 /**
  * A List component with search abilities
@@ -23,7 +23,6 @@ import {COMMON_DARK_BACKGROUND,COMMON_ACTIVITY_INDICATOR, ACTIVE_TINT_COLOR, INA
  _onRefresh = () => {
     this.setState({refreshing: true});
     this.props.fetchProfileRequest();
-   // fetchData().then(() => {this.setState({refreshing: false});});
   }
 
   /** Loads profiles into the component */
@@ -52,7 +51,6 @@ import {COMMON_DARK_BACKGROUND,COMMON_ACTIVITY_INDICATOR, ACTIVE_TINT_COLOR, INA
   SearchFilterFunction(text) {
     //passing the inserted text in textinput
     const newData = this.props.profiles.filter(function(item) {
-console.log("------------", item);
      if (!item) 
       { 
         console.log('Todo: Log this (Undefined Profiles from DB)');
@@ -112,7 +110,7 @@ renderSearchField = () =>(
 
      <SwipeRow
             leftOpenValue={100}
-            rightOpenValue={-75}
+            rightOpenValue={0}
             left={
               <Button iconLeft danger transparent onPress={()=>this._onPressDelete(profile.item.id)}>
                  <Icon name='trash' />
@@ -121,19 +119,21 @@ renderSearchField = () =>(
             }
             body={
               
-              <View style={styles.bodyViewStyle}>
-              <Thumbnail style={styles.thumbnailStyle} 
-source={{uri:profile.item.imageURI}}/>
-                <Text style={styles.textStyle}>{profile.item.name}</Text>
+              <View style={{margin:0,padding:0, flexDirection: 'row',flex:1, justifyContent: 'center'}}>
+              <Thumbnail source={{uri:profile.item.imageURI||NO_PHOTO_AVAILABLE_URI}}/>
+    
+    <View style={{flex:1,alignSelf:"flex-start"}}>
+     <View style={{flex:1,alignSelf:"flex-end"}}>    
+                  <Button transparent onPress={() => this._onPress(profile.item.id)}>
+                  <Text>View</Text>
+                </Button></View>
+                <Text style={{flex:1,alignSelf:"center"}}>{profile.item.name}</Text>
                 <Text note numberOfLines={2}>{profile.item.description}</Text>
               </View>
+             
+              </View>
             }
-            right={
-                <Button transparent onPress={() => this._onPress(profile.item.id)}>
-                  <Text>View</Text>
-                </Button>
 
-            }
           />
   );
 
@@ -150,6 +150,9 @@ source={{uri:profile.item.imageURI}}/>
       : null;
       return _addButton; }
 
+/*
+* Render component
+*/
   render() {
     if (this.state.isLoading) {
       //Loading View while data is loading
@@ -192,6 +195,7 @@ const styles = StyleSheet.create({
   },
   thumbnailStyle:{width:70 , height:70, borderRadius:15},
 innerHeaderStyle:{backgroundColor: COMMON_DARK_BACKGROUND},
+  rightText:{alignSelf:"flex-end"},
 
   textStyle: {
     padding: 10, color:ACTIVE_TINT_COLOR

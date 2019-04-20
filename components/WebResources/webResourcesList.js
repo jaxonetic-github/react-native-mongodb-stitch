@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 //import react in our code. 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { StyleSheet, View, ListView, TextInput, ActivityIndicator,FlatList,Image, Alert,TouchableOpacity} from 'react-native';
+import { StyleSheet, View, ListView, TextInput, ActivityIndicator,FlatList,Image, Alert,TouchableOpacity, ImageBackground} from 'react-native';
 import { Container, Subtitle, Header, Content, List, ListItem,Title,Icon, Thumbnail, Text, Left, Body, Right, Button } from 'native-base';
 import {resourceData,COMMON_ICON_STYLE, COMMON_DARK_BACKGROUND, NO_PHOTO_AVAILABLE_URI, COMMON_LISTVIEW_ITEM_SEPARATOR,
  ROUTE_SIMPLE_WEB_VIEW} from '../../constants.js'
@@ -16,7 +16,7 @@ import {resourceData,COMMON_ICON_STYLE, COMMON_DARK_BACKGROUND, NO_PHOTO_AVAILAB
 
   constructor(props) {
     super(props);
-    this.state = { webResources :props? props.resourceData: {}};
+    this.state = { webResources :resourceData.webResources};
   }
 
 
@@ -73,20 +73,23 @@ import {resourceData,COMMON_ICON_STYLE, COMMON_DARK_BACKGROUND, NO_PHOTO_AVAILAB
   * A component to display a summary of an individual event from the list of events
   * available to the component
   * @param {object} item - event Data item
+  
   */
 _renderItem = (item) => 
  {
  return (
-            <ListItem thumbnail>
+            <ListItem thumbnail>  
+            <ImageBackground source={{uri:(item.item.imageURI||NO_PHOTO_AVAILABLE_URI)}} style={{width: '100%', height: 120}}>
+    <View>
+  
  
 <TouchableOpacity  onPress={() => this.props.navigation.push(ROUTE_SIMPLE_WEB_VIEW, {url:item.item.url , title:item.item.title})} >
  
           <Text>{item.item.title}</Text>
-            <View style={styles.view}>
-          <Image  source={{uri:(item.item.imageURI||NO_PHOTO_AVAILABLE_URI)}} style={styles.imageStyle}/>
-
-            </View>
+       
           </TouchableOpacity>
+          </View>
+          </ImageBackground>
             </ListItem>
     );
 }
@@ -97,6 +100,9 @@ _renderItem = (item) =>
       //ListView to show with textinput used as search bar 
       <Container style={styles.viewStyle}>
         <Header >
+        <Body>
+           <Text>Keeping it in the Community</Text> 
+        </Body>
             <Right>             
             <Button transparent  onPress={() => this.props.navigation.push('EventView', { })} >
              <Icon ios='ios-information-circle' android="md-information-circle" style={COMMON_ICON_STYLE}/>
@@ -107,7 +113,7 @@ _renderItem = (item) =>
 <Content>
 
         <FlatList
-          data={resourceData.webResources}
+          data={this.state.webResources}
           renderItem={this._renderItem}
           keyExtractor={this._keyExtractor}
 

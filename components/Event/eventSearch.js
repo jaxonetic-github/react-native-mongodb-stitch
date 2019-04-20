@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux';
 import { StyleSheet, View, ListView, TextInput, ActivityIndicator,FlatList, Alert} from 'react-native';
 import { SwipeRow,Container, Subtitle, Header, Content, List, ListItem,Title,Icon, Thumbnail, Text, Left, Body, Right, Button } from 'native-base';
 import {deleteEventRequest} from './Redux/Actions/eventActions.js'
-import {COMMON_DARK_BACKGROUND,ACTIVE_TINT_COLOR, INACTIVE_TINT_COLOR} from '../../constants.js'
+import {COMMON_ACTIVITY_INDICATOR, NO_PHOTO_AVAILABLE_URI, COMMON_DARK_BACKGROUND,ACTIVE_TINT_COLOR, INACTIVE_TINT_COLOR} from '../../constants.js'
 
 /**
  * Represents a component that allows a user to search for events.
@@ -99,6 +99,7 @@ import {COMMON_DARK_BACKGROUND,ACTIVE_TINT_COLOR, INACTIVE_TINT_COLOR} from '../
   * @param {object} item - event Data item
   */
 _renderItem = (item) => { console.log(item);
+//                
 
   return(
 
@@ -113,9 +114,13 @@ _renderItem = (item) => { console.log(item);
                 </Button>
             }
             body={
-              <View style={styles.bodyViewStyle}>
-                  <Text style={styles.textStyle}>{item.item.name}</Text>
-                <Text note numberOfLines={2}>{item.item.description}</Text>
+              <View style={styles.viewStyle}>
+              <Thumbnail source={{uri:/*item.item.imageURI||*/NO_PHOTO_AVAILABLE_URI}}/>
+              <View style={styles.innerViewStyle}>
+                  <Title style={styles.rightText} >{item.item.name}</Title>
+                  <Text style={styles.rightText} >{item.item.calendar}</Text>
+             <Text note numberOfLines={2}>{item.item.description}</Text>
+              </View>
               </View>
             }
             right={
@@ -134,7 +139,6 @@ _renderItem = (item) => { console.log(item);
 * 
 */
   addButton = ()=>{
-    console.log(" this.props.canAddEvent ", this.props.canAddEvent );
     const _addButton = this.props.canAddEvent 
       ?  (<Button transparent  onPress={()=>this._onPressNew()} >
              <Icon ios='ios-add-circle' android="md-add-circle" style={{fontSize: 20, color: INACTIVE_TINT_COLOR}}/>
@@ -159,11 +163,7 @@ renderSearchField = () =>(
   render() {
     if (this.state.isLoading) {
       //Loading View while data is loading
-      return (
-        <View style={{ flex: 1, paddingTop: 20 }}>
-          <ActivityIndicator />
-        </View>
-      );
+      return (COMMON_ACTIVITY_INDICATOR );
     }
 
     return (
@@ -229,14 +229,12 @@ const styles = StyleSheet.create({
     padding: 10,
   },
 innerHeaderStyle:{backgroundColor: COMMON_DARK_BACKGROUND},
-listItemSeparatorStyle:{
-          height: 1,
-          backgroundColor: '#080808',
-        },
   textStyle: {
     padding: 10, color:ACTIVE_TINT_COLOR
   },
+  innerViewStyle:{margin:5,padding:5, borderRadius:20,alignSelf:"flex-end", position:"absolute", top:0},
 bodyViewStyle:{flex:1},
+  rightText:{alignSelf:"flex-end"},
 
   textInputStyle: {
     textAlign: 'center',
