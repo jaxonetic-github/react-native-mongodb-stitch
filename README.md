@@ -5,6 +5,12 @@ Mongo Stitch Cloud for the backend.
 React Native for the front end 
    --redux saga, Native Module, Google Signin, Apple Maps, MongdDB Stitch integration
 
+### Component Screenshot
+```
+npm run dev
+```
+produces:
+![alt screenshot](https://github.com/jaxonetic-github/react-native-mongodb-stitch/blob/master/images/profileDemoUpdate.gif)
 
 
 ** Test Cases
