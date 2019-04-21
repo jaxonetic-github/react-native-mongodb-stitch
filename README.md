@@ -10,8 +10,8 @@ React Native for the front end
 npm run dev
 ```
 produces:
-![alt screenshot](https://github.com/jaxonetic-github/react-native-mongodb-stitch/blob/master/images/profileDemoUpdate.gif)
 
+<img src="https://github.com/jaxonetic-github/react-native-mongodb-stitch/blob/master/images/profileDemoUpdate.gif" align="left" height="400" width="200" >
 
 ** Test Cases
  Testcases can be found in __tests__. There are examples of unit tests, integration tests, and e2e tests with Jest and Detox. [https://github.com/wix/Detox]
