@@ -6,7 +6,8 @@ import { bindActionCreators } from 'redux';
 import { StyleSheet, View, ListView, TextInput, ActivityIndicator,FlatList, Alert} from 'react-native';
 import { SwipeRow,Container, Subtitle, Header, Content, List, ListItem,Title,Icon, Thumbnail, Text, Left, Body, Right, Button ,Accordion,Tab, Tabs} from 'native-base';
 import {resourceData,ALT_LISTVIEW_ITEM_SEPARATOR, COMMON_LISTVIEW_ITEM_SEPARATOR,
-        COMMON_DARK_BACKGROUND,ACTIVE_TINT_COLOR, INACTIVE_TINT_COLOR,GOOGLE_PROVIDER_NAME,NEED_AT_LEAST_ANONYMOUS_LOGIN, NO_PHOTO_AVAILABLE_URI} from '../../constants.js'
+        COMMON_DARK_BACKGROUND,ACTIVE_TINT_COLOR, INACTIVE_TINT_COLOR,GOOGLE_PROVIDER_NAME,NEED_AT_LEAST_ANONYMOUS_LOGIN, NO_PHOTO_AVAILABLE_URI,
+         ROUTE_EVENT_VIEW, ROUTE_SIMPLE_WEB_VIEW, ROUTE_YOUTUBELIST_VIEW,TEXT_VIEW} from '../../constants.js'
 import WebResourcesList from '../WebResources/webResourcesList.js';
 /**
  * Represents a component that allows a user to search for events.
@@ -29,7 +30,7 @@ import WebResourcesList from '../WebResources/webResourcesList.js';
 /**
  * Filter events based on what the user types in the search field
  * and updates the local state text
- * @Rreturn events with the text parameter in part of it's data fields
+ * @return events with the text parameter in part of it's data fields
  */ 
   SearchFilterAndUpdateStateFunction(text) {
     //passing the inserted text from textinput to filter user's viewable events
@@ -44,7 +45,7 @@ import WebResourcesList from '../WebResources/webResourcesList.js';
 /**
  * Filter events based on what the user types in the search field
  *
- * @Rreturn events with the text parameter in part of it's data fields
+ * @return events with the text parameter in part of it's data fields
  */
   SearchFilterFunction(text) {
     //passing the inserted text in textinput
@@ -75,32 +76,16 @@ import WebResourcesList from '../WebResources/webResourcesList.js';
 
 /** Navigate to event-creation screen  */
    _onPress = (itemId) => {
-   this.props.navigation.navigate('EventView',{id:itemId})
+   this.props.navigation.navigate(ROUTE_EVENT_VIEW,{id:itemId})
   };
   /* Navigate to artist-creation screen on [add] buttonpress  */
-  _onPressNew = () => (this.props.navigation.push('EventView', { } ))
+  _onPressNew = () => (this.props.navigation.push(ROUTE_EVENT_VIEW, { } ))
 //onPress={() => this.props.navigation.push('EventView', { })} 
 /** Navigate to event-creation screen  */
    _onPressDelete = (itemId) => {
   this.props.deleteEventRequest({id:itemId})
   };
 
-/**
-  * A component to display a summary of an individual event from the list of events
-  * available to the component
-  * @param {object} item - event Data item
-  *
-_renderItem = (item) => { console.log(item);
-
-  return(
-
-
-    );
-}
-
-/*
-* 
-*/
 
 /** The Search field */
 renderSearchField = () =>(
@@ -112,51 +97,39 @@ renderSearchField = () =>(
           placeholder="Search Here"
         />)
 
-renderElders = () =>(<FlatList
+/**
+ * Displays a list, where each element of the list must have a title,url, and imageURI variable
+ * @param keyExtractor: records of the form {title:, imageURI:...,}
+ * @param listData: records of the form {title:, imageURI:...,}
+ * @param navigation: a react navigation for the passed in route
+ *.@param outerViewStyle : responsive styles  for outer View object
+ * @param titleStyle :     responsive styles for title element
+ * @param route : the routing navigation constant 
+ * @param buttonText : the text for the view Button
+ * @param altPhotoURI : a URI for an image in case none is specified by the data
+ * @param separator : a component/View for separator
+ */
+renderListView = (keyExtractor,listData,navigation,separator,outerViewStyle, titleStyle, route, buttonText, altPhotoURI ) =>(<FlatList
             
-          data={this.state.record}
+          data={listData}
           renderItem={(record)=>{
             return (<ListItem >
-            <View  style={{ margin:0,padding:0, flexDirection: 'row',flex:1, justifyContent: 'center'}}>
-
-              <Thumbnail source={{uri:/*item.item.imageURI||*/NO_PHOTO_AVAILABLE_URI}}/>
-              <Text style={{flex:1, alignSelf:"center"}}>{record.item.title}</Text>
-              <View style={{flex:1}}>
-              <Button style={{flex:1, alignSelf:"flex-end"}} transparent onPress={() => {this.props.navigation.push('YouTubeList',{record:record.item, title:record.item.title})}}>
-                  <Text>View</Text>
+            <View  style={outerViewStyle}>
+              <Thumbnail  source={{uri:/*item.item.imageURI||*/altPhotoURI}}/>
+              <Title style={titleStyle}>{record.item.title}</Title>
+              <View>
+              <Button  transparent onPress={() => {navigation.push(route, {record:record.item, title:record.item.title})}}>
+                  <Text>{buttonText}</Text>
                 </Button>
                 </View>
                 </View>
             </ListItem>);}
             }
-          keyExtractor={this._keyExtractor}
+          keyExtractor={keyExtractor}
           ListHeaderComponent={this.renderSearchField}
-           ItemSeparatorComponent = {COMMON_LISTVIEW_ITEM_SEPARATOR}
+           ItemSeparatorComponent = {separator}
         />)
 
-
-renderOnlineMediaSources = () =>(<FlatList
-            
-          data={resourceData.onlineMediaContent}
-          renderItem={(record)=>{
-            return (<ListItem >
-              <View  style={{ margin:0,padding:0, flexDirection: 'row',flex:1, justifyContent: 'center'}}>
-              <Thumbnail style={{ flex:1}} source={{uri:/*item.item.imageURI||*/NO_PHOTO_AVAILABLE_URI}}/>
-              <Text style={{flex:1, alignSelf:"center"}}>{record.item.title}</Text>
-              <View style={{flex:1}}>
-              <Button transparent style={{flex:1,alignSelf:"flex-end"}} onPress={() => {
-               this.props.navigation.push('SimpleWebView', {url:record.item.url , title:record.item.title})
-              }}>
-                  <Text>View</Text>
-                </Button>
-                </View >
-                </View>
-            </ListItem>);}
-            }
-          keyExtractor={(item, index) => item.title}
-      
-        ItemSeparatorComponent = {COMMON_LISTVIEW_ITEM_SEPARATOR}
-        />)
 
 /** React Render **/
   render() {
@@ -164,8 +137,8 @@ renderOnlineMediaSources = () =>(<FlatList
     return (
       <Container>
     <Tabs>
-    <Tab heading="Our Master Teachers">{this.renderElders()}</Tab>
-    <Tab heading="Media Outlets">{this.renderOnlineMediaSources()}</Tab>
+    <Tab heading="Our Master Teachers">{this.renderListView(this._keyExtractor, this.state.record,this.props.navigation, COMMON_LISTVIEW_ITEM_SEPARATOR, styles.outerViewStyle, styles.title,ROUTE_YOUTUBELIST_VIEW, TEXT_VIEW,NO_PHOTO_AVAILABLE_URI  )}</Tab>
+    <Tab heading="Media Outlets">{this.renderListView( ((item, index) => item.title), resourceData.onlineMediaContent,this.props.navigation, COMMON_LISTVIEW_ITEM_SEPARATOR,styles.outerViewStyle, styles.title, ROUTE_SIMPLE_WEB_VIEW, TEXT_VIEW,NO_PHOTO_AVAILABLE_URI)}</Tab>
     <Tab heading="Roads to the Community"><WebResourcesList navigation={this.props.navigation} resourceData={resourceData.webResources}/></Tab>
   </Tabs>
 
@@ -193,7 +166,9 @@ function matchDispatchToProps(dispatch){
 }
 
 const styles = StyleSheet.create({
+  title:{flex:1, alignSelf:"center"},
   innerHeaderStyle:{backgroundColor: COMMON_DARK_BACKGROUND},
+  outerViewStyle:{ margin:0,padding:0, flexDirection: 'row',flex:1, justifyContent: 'center'},
   textInputStyle: {
     textAlign: 'center',
     height: 40,
