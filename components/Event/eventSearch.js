@@ -223,12 +223,9 @@ function matchDispatchToProps(dispatch){
 }
 
 const styles = StyleSheet.create({
-  viewStyle: {
-    justifyContent: 'center',
-    flex: 1,
-    padding: 10,
+  viewStyle: {justifyContent: 'center',flex: 1,padding: 10,
   },
-innerHeaderStyle:{backgroundColor: COMMON_DARK_BACKGROUND},
+innerHeaderStyle:{backgroundColor: COMMON_DARK_BACKGROUND},height:50,
   textStyle: {
     padding: 10, color:ACTIVE_TINT_COLOR
   },

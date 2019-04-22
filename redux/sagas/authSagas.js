@@ -12,8 +12,8 @@ FETCH_EVENT_FAILURE,LOGIN_SUCCESS,LOGIN_FAILURE, LOGIN_USER_REQUEST, LOGOUT_USER
     
 import {loginFailed, loginSucceeded, logout,loginUserRequest,dbClientInitialized, dbClientAlreadyInitialized } from '../../components/Authentication/Redux/Actions/authActions.js';
  
-import { updateEventSuccess, addEventsToLocal, requestFetchEvent, fetchEventFailure, fetchEventSuccess,updateEventFailure } from '../../components/Event/Redux/Actions/eventActions.js'
-import { fetchProfileSuccess, removeLocalProfile, addProfile,fetchProfileFailure, addProfileSuccess,addProfileFailure,fetchProfileRequest } from '../../components/Profile/Redux/Actions/profile.js'
+import { addEventSuccess,addEventFailure,removeLocalEvent,deleteEventSuccess,updateEventSuccess, addEventsToLocal, requestFetchEvent, fetchEventFailure, fetchEventSuccess,updateEventFailure,deleteEventFailure } from '../../components/Event/Redux/Actions/eventActions.js'
+import { updateProfileSuccess,updateProfileFailure,fetchProfileSuccess, removeLocalProfile, addProfile,fetchProfileFailure, addProfileSuccess,addProfileFailure,fetchProfileRequest } from '../../components/Profile/Redux/Actions/profile.js'
 
 import DBService from '../../services/dbService.js'
 import {googleAuthenticationPress, _onPressLogout,googleSilentLogin} from './googleSaga.js'

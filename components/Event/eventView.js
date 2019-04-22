@@ -31,14 +31,14 @@ export class EventView extends Component {
     const request = this.state.dataIndex?this.props.updateEventRequest(this.props.events[this.state.dataIndex]) : this.props.addEventRequest(tmpEvt);
   };
 
-displayName = () =>(this.state.dataIndex?this.props.events[this.state.dataIndex].name:this.props.name)
-displayPhone = () =>(this.state.dataIndex?this.props.events[this.state.dataIndex].phone:this.props.phone)
-displayWebsite = () =>(this.state.dataIndex?this.props.events[this.state.dataIndex].website:this.props.website)
-displayLocation= () =>(this.state.dataIndex?this.props.events[this.state.dataIndex].location:this.props.location)
-displayCalendar= () =>(this.state.dataIndex?this.props.events[this.state.dataIndex].calendar:this.props.calendar)
-displayEmail = () =>(this.state.dataIndex?this.props.events[this.state.dataIndex].email:this.props.email)
-displayDescription = () =>(this.state.dataIndex?this.props.events[this.state.dataIndex].description:this.props.description)
-displayImageURI = () =>(this.state.dataIndex?this.props.profiles[this.state.dataIndex].imageURI:this.props.imageURI)
+displayName = () =>(this.state.dataIndex && this.props.events[this.state.dataIndex]?this.props.events[this.state.dataIndex].name:this.props.name)
+displayPhone = () =>(this.state.dataIndex && this.props.events[this.state.dataIndex]?this.props.events[this.state.dataIndex].phone:this.props.phone)
+displayWebsite = () =>(this.state.dataIndex && this.props.events[this.state.dataIndex]?this.props.events[this.state.dataIndex].website:this.props.website)
+displayLocation= () =>(this.state.dataIndex && this.props.events[this.state.dataIndex]?this.props.events[this.state.dataIndex].location:this.props.location)
+displayCalendar= () =>(this.state.dataIndex && this.props.events[this.state.dataIndex]?this.props.events[this.state.dataIndex].calendar:this.props.calendar)
+displayEmail = () =>(this.state.dataIndex && this.props.events[this.state.dataIndex]?this.props.events[this.state.dataIndex].email:this.props.email)
+displayDescription = () =>(this.state.dataIndex && this.props.events[this.state.dataIndex]?this.props.events[this.state.dataIndex].description:this.props.description)
+displayImageURI = () =>(this.state.dataIndex && this.props.events[this.state.dataIndex]?this.props.profiles[this.state.dataIndex].imageURI:this.props.imageURI)
 
   render() {
     return (

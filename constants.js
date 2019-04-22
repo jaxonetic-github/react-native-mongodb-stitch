@@ -48,8 +48,10 @@ export const ROUTE_EVENT_CALENDAR = 'EventCalendar';
 export const ROUTE_SIMPLE_INPUT_VIEW = 'SimpleEventInput';
 export const ROUTE_SIMPLE_WEB_VIEW = 'SimpleWebView';
 export const ROUTE_PROFILE_VIEW = 'ProfileView';
+export const ROUTE_YOUTUBELIST_VIEW = 'YouTubeList';
 
 // Label Text
+export const TEXT_VIEW = 'View';
 export const TEXT_SAVE = 'Save';
 export const TEXT_UPDATE = 'Update';
 export const WEBVIEW_CONNECTION_ERROR = "Unable to display WebView, please check your internet connection";
@@ -125,31 +127,39 @@ const drClarke_url = 'https://www.googleapis.com/youtube/v3/search?part=snippet&
 const drBen_url = 'https://www.googleapis.com/youtube/v3/search?part=snippet&q=dr+ben+jochannan&key=AIzaSyCSXLM0pMb0GCPvNtVdd1GeSa0UCl6zAEM';
 const drsertima_url = 'https://www.googleapis.com/youtube/v3/search?part=snippet&q=dr+ivan+sertima&key=AIzaSyCSXLM0pMb0GCPvNtVdd1GeSa0UCl6zAEM';
 
-const youTubeResources = [{title:"Dr Ivan Sertima", url:drsertima_url, generalCategory:"History", payload:SERTIMA_YOUTUBE_PAYLOAD_MOCK},
-                          {title:"Dr Ben Jochannan", url:drBen_url, generalCategory:"History", payload:DR_BEN_YOUTUBE_PAYLOAD_MOCK},
-                          {title:"Dr Amos Wilson", url:amos_url, generalCategory:"Psychology", payload:AMOS_YOUTUBE_PAYLOAD_MOCK},
-                          {title:"Dr Claud Anderson", url:amos_url,generalCategory:"Economics", payload:AMOS_YOUTUBE_PAYLOAD_MOCK},
-                          {title:"Dr John Henrik Clarke", url:drClarke_url, generalCategory:"History", payload:DR_CLARKE_YOUTUBE_PAYLOAD_MOCK},
-                          {title:"Dr James Smalls", url:'', payload:'', generalCategory:"History"},
-                         {title:"Dr Wade Nobles", url:'', payload:'', generalCategory:"History"},                       
-                         {title:"Dr Leonard Jeffries", url:'', payload:'', generalCategory:"History"},
-                         {title:"Dr Edwin Nichols", url:'', payload:'', generalCategory:"Philosophy"},
-                         {title:"Dr Degruy", url:'', payload:'', generalCategory:"Psychology"},
-                         {title:"Sevan Bomar", url:'', payload:'',generalCategory:"Mover"},
-                         {title:"Krs One", url:'', payload:'',generalCategory:"Mover"},
-                         {title:"Kwame Toure", url:'', payload:'',generalCategory:"Mover"},
-                         {title:"Dr El Malik El Shabaz", url:'',generalCategory:"Warrior", payload:''}
+const youTubeResources = [{title:"Dr Ivan Sertima", url:drsertima_url, generalCategory:["History"], payload:SERTIMA_YOUTUBE_PAYLOAD_MOCK},
+                          {title:"Dr Ben Jochannan", url:drBen_url, generalCategory:["History"], payload:DR_BEN_YOUTUBE_PAYLOAD_MOCK},
+                          {title:"Dr John Henrik Clarke", url:drClarke_url, generalCategory:["History"], payload:DR_CLARKE_YOUTUBE_PAYLOAD_MOCK},
+                          {title:"Dr James Smalls", url:'', payload:'', generalCategory:["History"]},
+                         {title:"Dr Wade Nobles", url:'', payload:'', generalCategory:["History"]},                       
+                         {title:"Dr Leonard Jeffries", url:'', payload:'', generalCategory:["History"]},
+                          {title:"Dr Amos Wilson", url:amos_url, generalCategory:["Psychology"], payload:AMOS_YOUTUBE_PAYLOAD_MOCK},
+                          {title:"Dr Claud Anderson", url:amos_url,generalCategory:["Economics"], payload:AMOS_YOUTUBE_PAYLOAD_MOCK},
+                          {title:"Dr Llaila Afrika", url:amos_url,generalCategory:["Economics"], payload:AMOS_YOUTUBE_PAYLOAD_MOCK},
+                         {title:"Dr Edwin Nichols", url:'', payload:'', generalCategory:["Philosophy"]},
+                         {title:"Dr Degruy", url:'', payload:'', generalCategory:["Psychology"]},
+                         {title:"Sevan Bomar", url:'', payload:'',generalCategory:["Mover"]},
+                         {title:"Santos Bonacci", url:'', payload:'',generalCategory:["Occult"]},
+                         {title:"Phil Valentine", url:'', payload:'',generalCategory:["Occult"]},
+                         {title:"Bobby Hemmit", url:'', payload:'',generalCategory:["Occult"]},
+                         {title:"Krs One", url:'', payload:'',generalCategory:["Mover"]},
+                         {title:"Kwame Toure", url:'', payload:'',generalCategory:["Mover"]},
+                         {title:"Dr El Malik El Shabaz", url:'',generalCategory:["Warrior"], payload:''}
                           ]
 
+const subjects=[{etymology:"", description:"language has been weaponized"}];
 
 const digitalResources = [{key:"1", title:"Hidden Colors"}, {key:"2", title:"Out of Darkness"}];
-
+const misConceptions =["India didn't exist before 1940's Hindustan, so why did he label the Africans that he found as Indians", ""];
 const faqs=[{question:'Where did "white" people come from?',
-               answers:[{url:"https://www.youtube.com/watch?v=YLgK0xzK_2U", desc:""},{url:"https://www.youtube.com/watch?v=I_v77StW7tM", desc:"Drs Imhotep and Hiawatha", title:"Ancient African History and the Six Physical Transmutations of the Human Family"}]},
+                answers:[{url:"https://www.youtube.com/watch?v=YLgK0xzK_2U", desc:""},{url:"https://www.youtube.com/watch?v=I_v77StW7tM", desc:"Drs Imhotep and Hiawatha", title:"Ancient African History and the Six Physical Transmutations of the Human Family"}]},
             {question:'Why do we call some people white and others black?',
-               answers:[
+               answers:
+               [
                 {url:"https://www.youtube.com/watch?v=HhAjycvAN8k", desc:"Dr Jaqueline Battalora and Jane Elliot", title:"Dr. Jacqueline Battalora and Jane Elliott Debate White Privilege"},
-               ,{url:"https://www.youtube.com/watch?v=rPhlteY1knA", desc:"Dr Jaqueline Battalora", title:"1681 - The Invention of Race: The Laws that Changed the World!"}]}
+                {url:"https://www.youtube.com/watch?v=rPhlteY1knA", desc:"Dr Jaqueline Battalora", title:"1681 - The Invention of Race: The Laws that Changed the World!"}
+               ]
+             }
             ];
 
 const webResources = [

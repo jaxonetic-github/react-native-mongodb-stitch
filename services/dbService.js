@@ -344,7 +344,7 @@ return results;
 
    try {
     const client =  await DBService.getDBClient(REMOTE_RESOURCE_STRING);
-    const profileCollection = await client.callFunction(FUNCTION_QUERYPROFILE);  
+    const profileCollection = await client.callFunction(FUNCTION_QUERYPROFILE,[profile]);  
     return profileCollection;
   }
   catch(error) {
@@ -363,7 +363,7 @@ return results;
       const client =  await DBService.getDBClient(REMOTE_RESOURCE_STRING);
 
    try {   
-    const eventsCollection = await client.callFunction(FUNCTION_INSERTEVENT);//mongodb.db(DBNAME).collection(EVENT_COLLECTION).insertOne(event);
+    const eventsCollection = await client.callFunction(FUNCTION_INSERTEVENT,[event]);//mongodb.db(DBNAME).collection(EVENT_COLLECTION).insertOne(event);
     return eventsCollection;
   }
   catch(error) {

@@ -89,7 +89,7 @@ export function deleteEventRequest(query) {
   return { type: DELETE_EVENT_REQUEST, payload:query }
 }
 export function deleteEventSuccess(results) {
-  return { type: DELETE_EVENT_SUCCESS, payload:eventsFromDB }
+  return { type: DELETE_EVENT_SUCCESS, payload:results }
 }
 export function deleteEventFailure(err) {
   return { type: DELETE_EVENT_FAILURE, payload:err }
