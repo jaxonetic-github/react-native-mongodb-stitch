@@ -1,7 +1,7 @@
 
   import React from 'react'
-  import { View ,ActivityIndicator } from 'react-native';
-
+  import { View ,ActivityIndicator,FlatList, Text } from 'react-native';
+import {ListItem, Thumbnail, Title, Button} from 'native-base';
 
 import SERTIMA_YOUTUBE_PAYLOAD_MOCK from './YoutubeResponses/ivansertima.js';
 import DR_BEN_YOUTUBE_PAYLOAD_MOCK from './YoutubeResponses/drben.js';
@@ -48,6 +48,8 @@ export const ROUTE_EVENT_CALENDAR = 'EventCalendar';
 export const ROUTE_SIMPLE_INPUT_VIEW = 'SimpleEventInput';
 export const ROUTE_SIMPLE_WEB_VIEW = 'SimpleWebView';
 export const ROUTE_PROFILE_VIEW = 'ProfileView';
+export const ROUTE_EVENT_VIEW = 'EventView';
+
 export const ROUTE_YOUTUBELIST_VIEW = 'YouTubeList';
 
 // Label Text
@@ -77,6 +79,40 @@ export const COMMON_ACTIVITY_INDICATOR = <View style={{ flex: 1, paddingTop: 20 
 export const COMMON_LISTVIEW_ITEM_SEPARATOR = ()=> <View style={listItemSeparatorStyle} />;
 export const ALT_LISTVIEW_ITEM_SEPARATOR = ()=> <View style={{flex:1,paddingTop:10, height: 20, backgroundColor:COMMON_DARK_BACKGROUND  }} />;
 export const COMMON_ICON_STYLE = {fontSize: 20, color: 'black'};
+
+/**
+ * Displays a list, where each element of the list must have a title,url, and imageURI variable
+ * @param keyExtractor: records of the form {title:, imageURI:...,}
+ * @param listData: records of the form {title:, imageURI:...,}
+ * @param navigation: a react navigation for the passed in route
+ *.@param outerViewStyle : responsive styles  for outer View object
+ * @param titleStyle :     responsive styles for title element
+ * @param route : the routing navigation constant 
+ * @param buttonText : the text for the view Button
+ * @param altPhotoURI : a URI for an image in case none is specified by the data
+ * @param separator : a component/View for separator
+ */
+export const renderListView = (keyExtractor,listData,navigation,separator,outerViewStyle, titleStyle, route, buttonText, altPhotoURI ) =>(<FlatList
+            
+          data={listData}
+          renderItem={(record)=>{
+            return (<ListItem >
+            <View  style={outerViewStyle}>
+              <Thumbnail  source={{uri:/*item.item.imageURI||*/altPhotoURI}}/>
+              <Title style={titleStyle}>{record.item.title}</Title>
+              <View>
+              <Button  transparent onPress={() => {navigation.push(route, {record:record.item, title:record.item.title})}}>
+                  <Text>{buttonText}</Text>
+                </Button>
+                </View>
+                </View>
+            </ListItem>);}
+            }
+          keyExtractor={keyExtractor}
+          ListHeaderComponent={this.renderSearchField}
+           ItemSeparatorComponent = {separator}
+        />)
+
 
 /*
  * If the user has logged out "too much", meaning out of Stitch,

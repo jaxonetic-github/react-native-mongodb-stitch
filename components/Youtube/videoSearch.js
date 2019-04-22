@@ -7,7 +7,8 @@ import { StyleSheet, View, ListView, TextInput, ActivityIndicator,FlatList, Aler
 import { SwipeRow,Container, Subtitle, Header, Content, List, ListItem,Title,Icon, Thumbnail, Text, Left, Body, Right, Button ,Accordion,Tab, Tabs} from 'native-base';
 import {resourceData,ALT_LISTVIEW_ITEM_SEPARATOR, COMMON_LISTVIEW_ITEM_SEPARATOR,
         COMMON_DARK_BACKGROUND,ACTIVE_TINT_COLOR, INACTIVE_TINT_COLOR,GOOGLE_PROVIDER_NAME,NEED_AT_LEAST_ANONYMOUS_LOGIN, NO_PHOTO_AVAILABLE_URI,
-         ROUTE_EVENT_VIEW, ROUTE_SIMPLE_WEB_VIEW, ROUTE_YOUTUBELIST_VIEW,TEXT_VIEW} from '../../constants.js'
+         ROUTE_EVENT_VIEW, ROUTE_SIMPLE_WEB_VIEW, ROUTE_YOUTUBELIST_VIEW,TEXT_VIEW,
+        renderListView} from '../../constants.js'
 import WebResourcesList from '../WebResources/webResourcesList.js';
 /**
  * Represents a component that allows a user to search for events.
@@ -97,39 +98,6 @@ renderSearchField = () =>(
           placeholder="Search Here"
         />)
 
-/**
- * Displays a list, where each element of the list must have a title,url, and imageURI variable
- * @param keyExtractor: records of the form {title:, imageURI:...,}
- * @param listData: records of the form {title:, imageURI:...,}
- * @param navigation: a react navigation for the passed in route
- *.@param outerViewStyle : responsive styles  for outer View object
- * @param titleStyle :     responsive styles for title element
- * @param route : the routing navigation constant 
- * @param buttonText : the text for the view Button
- * @param altPhotoURI : a URI for an image in case none is specified by the data
- * @param separator : a component/View for separator
- */
-renderListView = (keyExtractor,listData,navigation,separator,outerViewStyle, titleStyle, route, buttonText, altPhotoURI ) =>(<FlatList
-            
-          data={listData}
-          renderItem={(record)=>{
-            return (<ListItem >
-            <View  style={outerViewStyle}>
-              <Thumbnail  source={{uri:/*item.item.imageURI||*/altPhotoURI}}/>
-              <Title style={titleStyle}>{record.item.title}</Title>
-              <View>
-              <Button  transparent onPress={() => {navigation.push(route, {record:record.item, title:record.item.title})}}>
-                  <Text>{buttonText}</Text>
-                </Button>
-                </View>
-                </View>
-            </ListItem>);}
-            }
-          keyExtractor={keyExtractor}
-          ListHeaderComponent={this.renderSearchField}
-           ItemSeparatorComponent = {separator}
-        />)
-
 
 /** React Render **/
   render() {
@@ -137,8 +105,8 @@ renderListView = (keyExtractor,listData,navigation,separator,outerViewStyle, tit
     return (
       <Container>
     <Tabs>
-    <Tab heading="Our Master Teachers">{this.renderListView(this._keyExtractor, this.state.record,this.props.navigation, COMMON_LISTVIEW_ITEM_SEPARATOR, styles.outerViewStyle, styles.title,ROUTE_YOUTUBELIST_VIEW, TEXT_VIEW,NO_PHOTO_AVAILABLE_URI  )}</Tab>
-    <Tab heading="Media Outlets">{this.renderListView( ((item, index) => item.title), resourceData.onlineMediaContent,this.props.navigation, COMMON_LISTVIEW_ITEM_SEPARATOR,styles.outerViewStyle, styles.title, ROUTE_SIMPLE_WEB_VIEW, TEXT_VIEW,NO_PHOTO_AVAILABLE_URI)}</Tab>
+    <Tab heading="Our Master Teachers">{renderListView(this._keyExtractor, this.state.record,this.props.navigation, COMMON_LISTVIEW_ITEM_SEPARATOR, styles.outerViewStyle, styles.title,ROUTE_YOUTUBELIST_VIEW, TEXT_VIEW,NO_PHOTO_AVAILABLE_URI  )}</Tab>
+    <Tab heading="Media Outlets">{renderListView( ((item, index) => item.title), resourceData.onlineMediaContent,this.props.navigation, COMMON_LISTVIEW_ITEM_SEPARATOR,styles.outerViewStyle, styles.title, ROUTE_SIMPLE_WEB_VIEW, TEXT_VIEW,NO_PHOTO_AVAILABLE_URI)}</Tab>
     <Tab heading="Roads to the Community"><WebResourcesList navigation={this.props.navigation} resourceData={resourceData.webResources}/></Tab>
   </Tabs>
 
