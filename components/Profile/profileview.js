@@ -46,6 +46,9 @@ class ProfileView extends Component {
             });
   };
 
+   arrowIcon = ()=>isGoogleUser ? <Icon style={COMMON_ICON_STYLE}  name="arrow-forward" /> : null;
+
+
     _onPress = () => {
     // updater functions are preferred for transactional updates
     const tmpProfile = getDefaultProfile({ website:this.props.website, name:this.props.name, phone:this.props.phone, email:this.props.email,
@@ -158,13 +161,12 @@ displayImageURI = () => (this.state.dataIndex && this.props.profiles[this.state.
               <Text>Name :</Text>
             </Left>
             <Body>
-              
               <Text>{this.displayName()}</Text>
             </Body>
             <Right>
             {!isPersonalProfile ?
-            <Button trasnparent onPress={() => this.props.navigation.navigate('SimpleInput', { inputType:(this.state.dataIndex?UPDATE_PROFILE_NAME_BY_KEY: ADD_NAME), profileIndex: this.state.dataIndex, inputInitialValue:this.displayName()})} >
-              <Icon  name="arrow-forward" />
+            <Button transparent onPress={() => this.props.navigation.navigate('SimpleInput', { inputType:(this.state.dataIndex?UPDATE_PROFILE_NAME_BY_KEY: ADD_NAME), profileIndex: this.state.dataIndex, inputInitialValue:this.displayName()})} >
+             {this.arrowIcon}
             </Button>
             :null}
             </Right>
@@ -183,8 +185,8 @@ displayImageURI = () => (this.state.dataIndex && this.props.profiles[this.state.
              
             <Right>
              {!isPersonalProfile?
-            <Button onPress={() => this.props.navigation.navigate('SimpleInput', { inputType: (this.state.dataIndex?UPDATE_PROFILE_EMAIL_BY_KEY: ADD_EMAIL), profileIndex: this.state.dataIndex, inputInitialValue:this.displayEmail() })} >
-              <Icon style={COMMON_ICON_STYLE} name="arrow-forward" />
+            <Button transparent onPress={() => this.props.navigation.navigate('SimpleInput', { inputType: (this.state.dataIndex?UPDATE_PROFILE_EMAIL_BY_KEY: ADD_EMAIL), profileIndex: this.state.dataIndex, inputInitialValue:this.displayEmail() })} >
+               {this.arrowIcon}
             </Button>
              :null}
             </Right>
@@ -202,7 +204,7 @@ displayImageURI = () => (this.state.dataIndex && this.props.profiles[this.state.
             </Body>
             <Right>
               <Button transparent onPress={() => this.props.navigation.navigate('SimpleInput', { inputType: (this.state.dataIndex?UPDATE_PROFILE_PHONE_BY_KEY: ADD_PHONE), profileIndex: this.state.dataIndex, inputInitialValue:this.displayPhone()  })} >
-              <Icon  name="arrow-forward" style={COMMON_ICON_STYLE}  />
+              {this.arrowIcon}
               </Button>
             </Right>
           </ListItem>
@@ -219,8 +221,7 @@ displayImageURI = () => (this.state.dataIndex && this.props.profiles[this.state.
             </Body>
             <Right>
               <Button transparent onPress={() => this.props.navigation.navigate('SimpleInput',  { inputType: (this.state.dataIndex?UPDATE_PROFILE_WEBSITE_BY_KEY: ADD_WEBSITE), profileIndex: this.state.dataIndex, inputInitialValue:this.displayWebsite()  })} >
-
-              <Icon  name="arrow-forward" />
+                    {this.arrowIcon}
              </Button>
 
             </Right>
@@ -236,10 +237,11 @@ displayImageURI = () => (this.state.dataIndex && this.props.profiles[this.state.
             <Body>
               <Text>{this.displayDescription()}</Text>
             </Body>
-            <Right>   
-                 <Icon onPress={() => this.props.navigation.navigate("EditDescription")}
-                 active name="arrow-forward" />
-          
+            <Right>
+            <Button transparent onPress={() => this.props.navigation.navigate("EditDescription")}>   
+                 
+                  {this.arrowIcon}
+          </Button>
             </Right>
           </ListItem>
           <Separator bordered>
@@ -256,7 +258,7 @@ displayImageURI = () => (this.state.dataIndex && this.props.profiles[this.state.
             <Right>
               <Button transparent disabled onPress={() => this.onPressImagePicker()}>
                  <Text>Edit</Text>
-                 <Icon  name="arrow-forward" />
+                 {this.arrowIcon}
               </Button>
             </Right>
             </ListItem>

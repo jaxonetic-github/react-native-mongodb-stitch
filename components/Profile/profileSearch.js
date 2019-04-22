@@ -7,7 +7,7 @@ import { ScrollView, RefreshControl, StyleSheet, View, TextInput, ActivityIndica
 import { SwipeRow, Container, Subtitle, Header, Content, List, ListItem,Title, Thumbnail,Icon, Text, Left, Body, Right, Button } from 'native-base';
 import { NavigationEvents } from 'react-navigation';
  import {deleteProfileRequest,fetchProfileRequest} from './Redux/Actions/profile.js'
-import {COMMON_DARK_BACKGROUND,COMMON_ACTIVITY_INDICATOR, ACTIVE_TINT_COLOR, INACTIVE_TINT_COLOR, ROUTE_PROFILE_VIEW,
+import {COMMON_ICON_STYLE, COMMON_DARK_BACKGROUND,COMMON_ACTIVITY_INDICATOR, ACTIVE_TINT_COLOR, INACTIVE_TINT_COLOR, ROUTE_PROFILE_VIEW,
         COMMON_LISTVIEW_ITEM_SEPARATOR, GOOGLE_PROVIDER_NAME, NO_PHOTO_AVAILABLE_URI} from '../../constants.js'
 
 /**
@@ -118,7 +118,23 @@ renderSearchField = () =>(
                 </Button>
             }
             body={
-              
+                            
+              <View  style={{ margin:0,padding:0, flexDirection: 'row',flex:1, justifyContent: 'center'}}>
+              <Thumbnail style={{ flex:1}} source={{uri:/*item.item.imageURI||*/NO_PHOTO_AVAILABLE_URI}}/>
+              <Text style={{flex:1, alignSelf:"center"}}>{profile.item.name}</Text>
+              <View style={{flex:1}}>
+              <Button transparent  onPress={() => this._onPress(profile.item.id)} style={{flex:1,alignSelf:"flex-end"}}>
+                  <Text>View</Text>
+                </Button>
+                </View >
+                </View>
+
+            }
+
+          />
+  );
+
+/*
               <View style={{margin:0,padding:0, flexDirection: 'row',flex:1, justifyContent: 'center'}}>
               <Thumbnail source={{uri:profile.item.imageURI||NO_PHOTO_AVAILABLE_URI}}/>
     
@@ -130,13 +146,7 @@ renderSearchField = () =>(
                 <Text style={{flex:1,alignSelf:"center"}}>{profile.item.name}</Text>
                 <Text note numberOfLines={2}>{profile.item.description}</Text>
               </View>
-             
-              </View>
-            }
-
-          />
-  );
-
+    */         
 
 /*
 * duplicate code also found in eventsearch
