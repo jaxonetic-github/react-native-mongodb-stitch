@@ -22,7 +22,6 @@ import resourcesReducer from './redux/resourcesReducer.js';
 import profilesReducer from './components/Profile/Redux/Reducers/profileReducer.js';
 import authReducer from './components/Authentication/Redux/Reducers/authReducer.js';
 import eventsReducer from './components/Event/Redux/Reducers/eventReducer.js';
-import eventsCRUD from './components/Event/Redux/Reducers/eventsCRUD.js';
 import createSagaMiddleware from 'redux-saga'
 
 // Logger with default options

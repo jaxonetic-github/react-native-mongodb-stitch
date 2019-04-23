@@ -21,7 +21,6 @@ class ProfileView extends Component {
 
   constructor(props) {
 super(props);
-console.log("2:",props.navigation.state.params);
     //setting default state
     if(props.navigation.state.params && props.navigation.state.params.id)
     //setting default state
