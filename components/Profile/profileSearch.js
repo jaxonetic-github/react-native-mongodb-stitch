@@ -1,5 +1,6 @@
 //This is an example code to Add Search Bar Filter on Listview// 
 import React, { Component } from 'react';
+
 //import react in our code. 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -8,7 +9,8 @@ import { SwipeRow, Container, Subtitle, Header, Content, List, ListItem,Title, T
 import { NavigationEvents } from 'react-navigation';
  import {deleteProfileRequest,fetchProfileRequest} from './Redux/Actions/profile.js'
 import {COMMON_ICON_STYLE, COMMON_DARK_BACKGROUND,COMMON_ACTIVITY_INDICATOR, ACTIVE_TINT_COLOR, INACTIVE_TINT_COLOR, ROUTE_PROFILE_VIEW,
-        COMMON_LISTVIEW_ITEM_SEPARATOR, GOOGLE_PROVIDER_NAME, NO_PHOTO_AVAILABLE_URI} from '../../constants.js'
+        COMMON_LISTVIEW_ITEM_SEPARATOR, GOOGLE_PROVIDER_NAME, ROUTE_YOUTUBELIST_VIEW, TEXT_VIEW,NO_PHOTO_AVAILABLE_URI,
+      renderListView} from '../../constants.js'
 
 /**
  * A List component with search abilities
@@ -120,7 +122,7 @@ renderSearchField = () =>(
             body={
                             
               <View  style={{ margin:0,padding:0, flexDirection: 'row',flex:1, justifyContent: 'center'}}>
-              <Thumbnail style={{ flex:1}} source={{uri:/*item.item.imageURI||*/NO_PHOTO_AVAILABLE_URI}}/>
+              <Thumbnail source={{uri:profile.item.imageURI||NO_PHOTO_AVAILABLE_URI}}/>
               <Text style={{flex:1, alignSelf:"center"}}>{profile.item.name}</Text>
               <View style={{flex:1}}>
               <Button transparent  onPress={() => this._onPress(profile.item.id)} style={{flex:1,alignSelf:"flex-end"}}>
@@ -178,19 +180,7 @@ renderSearchField = () =>(
             <Right>{this.addButton()}</Right>
         </Header>
         <Content>
-        <FlatList   //<--- test/fix
-         refreshControl={
-          <RefreshControl
-            refreshing={this.state.refreshing}
-            onRefresh={this._onRefresh}
-          />
-        }
-          data={this.SearchFilterFunction(this.state.text)}
-          renderItem={this._renderItem}
-          keyExtractor={this._keyExtractor}
-          ListHeaderComponent={this.renderSearchField}
-           ItemSeparatorComponent = {COMMON_LISTVIEW_ITEM_SEPARATOR}
-        />
+        {renderListView(this._keyExtractor, this.renderSearchField,this._renderItem, this.SearchFilterFunction(this.state.text), COMMON_LISTVIEW_ITEM_SEPARATOR, styles.outerViewStyle, styles.title,ROUTE_YOUTUBELIST_VIEW, TEXT_VIEW,NO_PHOTO_AVAILABLE_URI  )}
         </Content>
       </Container>
     );
@@ -198,6 +188,10 @@ renderSearchField = () =>(
 }
 
 const styles = StyleSheet.create({
+   title:{flex:1, alignSelf:"center"},
+  innerHeaderStyle:{backgroundColor: COMMON_DARK_BACKGROUND},
+  outerViewStyle:{ margin:0,padding:0, flexDirection: 'row',flex:1, justifyContent: 'center'},
+
   viewStyle: {
     justifyContent: 'center',
     flex: 1,
@@ -210,7 +204,7 @@ innerHeaderStyle:{backgroundColor: COMMON_DARK_BACKGROUND},
   textStyle: {
     padding: 10, color:ACTIVE_TINT_COLOR
   },
-bodyViewStyle:{flex:1},
+
   textInputStyle: {
     textAlign: 'center',
     height: 40,

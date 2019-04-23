@@ -6,19 +6,13 @@ import { bindActionCreators } from 'redux';
 import { StyleSheet, View, ListView, TextInput, ActivityIndicator,FlatList,Image, Alert,TouchableOpacity, ImageBackground} from 'react-native';
 import { Container, Subtitle, Header, Content, List, ListItem,Title,Icon, Thumbnail, Text, Left, Body, Right, Button } from 'native-base';
 import {resourceData,COMMON_ICON_STYLE, COMMON_DARK_BACKGROUND, NO_PHOTO_AVAILABLE_URI, COMMON_LISTVIEW_ITEM_SEPARATOR,
- ROUTE_SIMPLE_WEB_VIEW} from '../../constants.js'
+        ROUTE_SIMPLE_WEB_VIEW, ROUTE_EVENT_VIEW} from '../../constants.js'
 
 /**
  * A list of imaged links .
  *  <WebResourcesList/>
  */
  class WebResourcesList extends Component {
-
-  constructor(props) {
-    super(props);
-    this.state = { webResources :resourceData.webResources};
-  }
-
 
 /**
  * Filter events based on what the user types in the search field
@@ -62,12 +56,9 @@ import {resourceData,COMMON_ICON_STYLE, COMMON_DARK_BACKGROUND, NO_PHOTO_AVAILAB
     return newData;
   }
 
-
-
  /** Exract a key from an object for the List */
     _keyExtractor = (item, index) =>{console.log(item); 
       return (item.url ? item.url.toString() : Math.floor(Math.random() * Math.floor(999999)))};
-
 
 /**
   * A component to display a summary of an individual event from the list of events
@@ -78,18 +69,13 @@ import {resourceData,COMMON_ICON_STYLE, COMMON_DARK_BACKGROUND, NO_PHOTO_AVAILAB
 _renderItem = (item) => 
  {
  return (
-            <ListItem thumbnail>  
-            <ImageBackground source={{uri:(item.item.imageURI||NO_PHOTO_AVAILABLE_URI)}} style={{width: '100%', height: 120}}>
-    <View>
-  
- 
-<TouchableOpacity  onPress={() => this.props.navigation.push(ROUTE_SIMPLE_WEB_VIEW, {url:item.item.url , title:item.item.title})} >
- 
-          <Text>{item.item.title}</Text>
-       
-          </TouchableOpacity>
-          </View>
-          </ImageBackground>
+            <ListItem style={{backgroundColor:"transparent",  justifyContent:"center", flex:1}}>  
+            <Thumbnail  large source={{uri:(item.item.imageURI||NO_PHOTO_AVAILABLE_URI)}} style={{padding:30, width:190}}/>
+    <View style={{flex:1, alignSelf:"flex-end"}}>
+      <TouchableOpacity  onPress={() => this.props.navigation.push(ROUTE_SIMPLE_WEB_VIEW, {url:item.item.url , title:item.item.title})} >
+      <Text>{item.item.title}</Text>   
+      </TouchableOpacity>
+    </View>
             </ListItem>
     );
 }
@@ -104,7 +90,7 @@ _renderItem = (item) =>
            <Text>Keeping it in the Community</Text> 
         </Body>
             <Right>             
-            <Button transparent  onPress={() => this.props.navigation.push('EventView', { })} >
+            <Button transparent disabled onPress={() => this.props.navigation.push('EventView', { })} >
              <Icon ios='ios-information-circle' android="md-information-circle" style={COMMON_ICON_STYLE}/>
             </Button>
             </Right>
@@ -112,8 +98,8 @@ _renderItem = (item) =>
         </Header>
 <Content>
 
-        <FlatList
-          data={this.state.webResources}
+        <FlatList style={{backgroundColor:"transparent", margin:0, padding:0}}
+          data={this.props.webResources}
           renderItem={this._renderItem}
           keyExtractor={this._keyExtractor}
 
@@ -137,8 +123,8 @@ imageStyle:{padding:0,width: 250, height: 110}
 
 });
 
-
-export default connect(null,null )(WebResourcesList)
+const mapStateToProps = state => ({webResources: state.resourcesData.webResources})
+export default connect(mapStateToProps,null )(WebResourcesList)
 
 
 

@@ -1,10 +1,11 @@
 import React, { Component } from "react";
+
 import { TouchableHighlight, StyleSheet,Error, View ,Image, TouchableOpacity,TouchableIcon, FlatList,
 Picker, Modal} from 'react-native';
 import axios from "axios";
 import SimpleWebView from './WebResources/simpleWebView.js';
 //import { WebGLView } from "react-native-webgl";
-import {resourceData, COMMON_DARK_BACKGROUND,TEXT_EVERYWHERE,TEXT_All, LOCATION_LIST,CATEGORY_LIST,
+import { ROUTE_SIMPLE_WEB_VIEW, COMMON_DARK_BACKGROUND,TEXT_EVERYWHERE,TEXT_All, LOCATION_LIST,CATEGORY_LIST,
       TEXT_CHOOSE_VIBE, TEXT_WHATS_GOING_ON,COMMON_ICON_STYLE, COMMON_LISTVIEW_ITEM_SEPARATOR } from '../constants.js';
 import WebResourcesList from './WebResources/webResourcesList.js';
 //import FitImage from 'react-native-fit-image';
@@ -12,12 +13,14 @@ import { Container, Header, Content, Card, CardItem,ListItem, Thumbnail,Button, 
 //import { Provider } from 'react-redux'
 //import rootReducer from './reducers'
 //import { createStore } from 'redux'
+//redux 
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
-//const store = createStore(rootReducer)
 import MapView from 'react-native-maps';
 import MapScreen from './mapview.js';
 
-export default class Home extends React.Component {
+class Home extends React.Component {
 static navigationOptions = {
     headerTitle: <Button  onPress={()=>{console.log("buttonnnnnninnnnnn!", this); DrawerActions.toggleDrawer();}}><Icon ios='ios-menu' android="md-menu" style={{fontSize: 25, margin:10, color: 'white'}}/></Button>,
     headerRight: (
@@ -51,33 +54,6 @@ static navigationOptions = {
     console.log("-----------------------------------",this.props.navigation);
   }
 
-
-  showModal = ()=>(
-        <Modal
-          animationType="slide"
-          transparent={false}
-          visible={this.state.modalVisible}
-          onRequestClose={() => {
-            Alert.alert('Modal has been closed.');
-          }}>
-          <View style={{marginTop: 22}}>
-          <SimpleWebView style={{width:300, height:300}} url="https://youtu.be/K_nOQ9y4eT8?t=4710" title="Dr Ben quote" />
-
-            <View>
-
-              <TouchableHighlight
-                onPress={() => {
-                  this.toggleModalVisibility()}
-                }>
-                <Text>Back</Text>
-              </TouchableHighlight>
-            </View>
-          </View>
-        </Modal>)
- 
-/** toggle the modal view */
- toggleModalVisibility = ()=>{this.setState({modalVisible:!this.state.modalVisible})}
-
     async componentWillMount() {
        
       this.watchID = navigator.geolocation.watchPosition((position) => {
@@ -86,11 +62,38 @@ static navigationOptions = {
          this.setState({ lastPosition });
       });
     }
-  
+moundBuilders=()=>(<View><Card><CardItem>
+    <TouchableOpacity style={{position:"absolute", top:5, right:0}}>
+ <Icon ios='ios-information-circle' android="md-information-circle" style={COMMON_ICON_STYLE}/>
+   </TouchableOpacity>
+    <View style={{alignItems:"center", margin:5}}>
+    <Image style={{width:280 ,height:250}} source={{uri:"https://dasg7xwmldix6.cloudfront.net/episodes/521925_fDB81ij7.jpg"}} />
+    <Thumbnail style={{borderRadius:15, width:200}}
+    source={{uri:"http://www.harvestinstitute.org/publishImages/index~~element138.png"}}/>
+    <Title>The Harvest Institute</Title>
+    <Text>The  Thinktanks to looking out for us. Learn about Dr Claud Anderson and how to build and keep wealth in the community.</Text>
+    </View>
+       </CardItem>
+    </Card>
+        <Card>
+           <CardItem>
+               <TouchableOpacity  style={{position:"absolute", top:5, right:0}}>
+ <Icon ios='ios-information-circle' android="md-information-circle" style={COMMON_ICON_STYLE}/>
+   </TouchableOpacity>
+    <View style={{alignItems:"center", margin:5}}>
+    <Thumbnail style={{borderRadius:15, width:200}}
+    source={{uri:"https://s3-us-west-1.amazonaws.com/secretenergy-2019/wp-content/uploads/2018/11/secret-energy-banner-8.jpg"}}/>
+    <Text>Secret Energy</Text>
+
+    <Text>The Innerstanding movement in Costa Rica</Text>
+  <Thumbnail style={{borderRadius:15, width:200}}
+    source={{uri:"https://astralquest.com/"}}/>
+    </View>
+      </CardItem></Card></View>)
 
   render() {
 
-    return (<Container>
+    return (<Container style={{backgroundColor:COMMON_DARK_BACKGROUND}}>
     
         <Content padder>
   <Text>               
@@ -104,7 +107,7 @@ static navigationOptions = {
 <TouchableOpacity style={{position:"absolute", top:5, right:0}}>
  <Icon ios='ios-information-circle' android="md-information-circle" style={COMMON_ICON_STYLE}/>
    </TouchableOpacity>
-<TouchableOpacity  style={styles.touchable} onPress= {async ()=>{this.onSeeVideo()}} >
+<TouchableOpacity  style={styles.touchable} onPress= { ()=>{this.props.navigation.push(ROUTE_SIMPLE_WEB_VIEW, {url:"https://youtu.be/K_nOQ9y4eT8?t=4710" , title:"Dr Ben"})}} >
 <Thumbnail style={{width:220 , height:220, borderRadius:15}} 
 source={{uri:'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Dr_Ben.jpg/220px-Dr_Ben.jpg'}}/>
 <Title>Dr Ben</Title>
@@ -115,11 +118,11 @@ source={{uri:'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Dr_Ben.j
         <Card><CardItem>
 
 <Text>Our Story... Truth</Text>
-<Subtitle>These videos are priceless.  Gift them</Subtitle>
+<Subtitle>These videos are priceless.  Buy them, watch them, gift them, watch them again!!!</Subtitle>
           </CardItem>
           <CardItem>
           <View style={{flex:1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around'}}>
-          <FlatList horizontal data={resourceData.digitalResources}
+          <FlatList horizontal data={this.props.digitalResources}
           renderItem={(item)=>{
             return(<ListItem style={{flex:1, borderRadius:15, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around' }}>
             <View style={{flex:1,padding:5, backgroundColor:COMMON_DARK_BACKGROUND, borderRadius:5}}><TouchableOpacity style={{ borderWidth:1, borderRadius:10, backgroundColor:"maroon"}} >
@@ -157,37 +160,8 @@ source={{uri:'https://s3.amazonaws.com/classconnection/480/flashcards/2867480/pn
  </CardItem>
     </Card>
 
-    <Card><CardItem>
-    
-    <TouchableOpacity style={{position:"absolute", top:5, right:0}}>
- <Icon ios='ios-information-circle' android="md-information-circle" style={COMMON_ICON_STYLE}/>
-   </TouchableOpacity>
-    <View style={{alignItems:"center", margin:5}}>
-    <Image style={{width:280 ,height:250}} source={{uri:"https://dasg7xwmldix6.cloudfront.net/episodes/521925_fDB81ij7.jpg"}} />
-    <Thumbnail style={{borderRadius:15, width:200}}
-    source={{uri:"http://www.harvestinstitute.org/publishImages/index~~element138.png"}}/>
-    <Title>The Harvest Institute</Title>
-    <Text>The Tamhu have 100's of Thinktanks to continue their genocide.  We only have one looking out for us. Learn about Dr Claud Anderson and how to build and keep wealth in the community.</Text>
-    </View>
-       </CardItem>
-    </Card>
-        <Card>
-           <CardItem>
-               <TouchableOpacity style={{position:"absolute", top:5, right:0}}>
- <Icon ios='ios-information-circle' android="md-information-circle" style={COMMON_ICON_STYLE}/>
-   </TouchableOpacity>
-    <View style={{alignItems:"center", margin:5}}>
-    <Thumbnail style={{borderRadius:15, width:200}}
-    source={{uri:"https://s3-us-west-1.amazonaws.com/secretenergy-2019/wp-content/uploads/2018/11/secret-energy-banner-8.jpg"}}/>
-    <Text>Secret Energy</Text>
+ {this.moundBuilders()}
 
-    <Text>The Innerstanding movement in Costa Rica</Text>
-  <Thumbnail style={{borderRadius:15, width:200}}
-    source={{uri:"https://astralquest.com/"}}/>
-    </View>
-      </CardItem></Card>
-
-{this.showModal()}
         </Content>
       </Container>
     );
@@ -225,6 +199,11 @@ const styles = StyleSheet.create({
     height: 44,
   },
 });
+
+
+const mapStateToProps = state => ({digitalResources: state.resourcesData.digitalResources})
+
+export default connect(mapStateToProps, null)(Home)
 
 /*<Card>
 <CardItem>

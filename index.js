@@ -1,4 +1,3 @@
-
 /**
  *
  * @format
@@ -8,7 +7,7 @@
 
 import React, { Component } from "react";
 import { Root } from "native-base";
-
+import sideBarReducer from './redux/sideBarReducer.js';
 import {NativeEventEmitter, Platform, AppRegistry, NativeModules, AsyncStorage} from 'react-native';
 import {name as appName} from './app.json';
 
@@ -19,8 +18,8 @@ import {Provider} from 'react-redux';
 import { createAppContainer } from 'react-navigation';
 import { rootSaga, clean,saveAuthCode} from './redux/sagas/authSagas.js';
 import { createStore, applyMiddleware,combineReducers } from 'redux';
-import profilesCRUD from './components/Profile/Redux/Reducers/profileCRUD.js'
-import profilesReducer from './components/Profile/Redux/Reducers/profileReducer.js'
+import resourcesReducer from './redux/resourcesReducer.js';
+import profilesReducer from './components/Profile/Redux/Reducers/profileReducer.js';
 import authReducer from './components/Authentication/Redux/Reducers/authReducer.js';
 import eventsReducer from './components/Event/Redux/Reducers/eventReducer.js';
 import eventsCRUD from './components/Event/Redux/Reducers/eventsCRUD.js';
@@ -42,9 +41,7 @@ const AppContainer = createAppContainer(mainStack);
 
 //
 //combine reducers
-const rootReducer = combineReducers({
-  profiles: profilesReducer,profilesCRUD:profilesCRUD,eventsCRUD:eventsCRUD, events:eventsReducer, auth: authReducer/*profileCRUD:profilesCRUDReducer*/
-});
+const rootReducer = combineReducers({profiles: profilesReducer, events:eventsReducer, auth: authReducer, resourcesData:resourcesReducer, sideBar:sideBarReducer});
 const store = createStore(rootReducer, initialStoreState,  applyMiddleware(sagaMiddleware, logger) );
 //const eventEmitter = new NativeEventEmitter(RNGoogleSignin);
 

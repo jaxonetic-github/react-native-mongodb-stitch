@@ -1,4 +1,6 @@
 import React from "react";
+import PropTypes from 'prop-types';
+
 import { FlatList, Image, StatusBar,StyleSheet } from "react-native";
 import { Accordion, Text,View, Container, List, ListItem,  Header, Content, Card, CardItem, Icon,Left, Body, Right} from "native-base";
 //redux 
@@ -11,19 +13,13 @@ import Authentication from './Authentication/authenticationComponent.js';
 //constants
 import {COMMON_LISTVIEW_ITEM_SEPARATOR, NEED_AT_LEAST_ANONYMOUS_LOGIN, COMMON_DARK_BACKGROUND, ACTIVE_TINT_COLOR, INACTIVE_TINT_COLOR} from './../constants.js'
  
-const sideBarData = [{routeName:"Home", label:"Home", requiresVerification:false, icon:"home"}, {routeName:"ProfileView", label:"Profile", requiresVerification:true, icon:"person"}, 
-                      {routeName:"SearchLayout", label:"Events & Creators", requiresVerification:false, icon:"search"},{routeName:"VideoSearch", label:"Library", requiresVerification:false, icon:"business"},
-                      {routeName:"TimelineView", label:"Timeline", requiresVerification:false, icon:'hourglass'}
-                      ];
+
 
 /**
  * sideBar component manages the drawer sidebar
  */
 class SideBar extends React.Component {
-    constructor(props) {
-    super(props);
-    this.state = { dataArray : sideBarData};
-  }
+
 
 /** Only show the rows that the user is entitled  to see.  This will be  moved into Stitch User roles later
 */
@@ -57,8 +53,7 @@ renderHeader = () =>{return(
         let androidIcon = "md-"+data.item.icon;
                return (
                 <ListItem style={styles.listItemStyles}
-                  button
-                  onPress={() => this.props.navigation.navigate(data.item.routeName, {user:true, id:this.props.profileIndex})}>
+                  button onPress={() => this.props.navigation.navigate(data.item.routeName, {user:true, id:this.props.profileIndex})}>
 
                   <Left>
                <Icon ios={iosIcon} android={androidIcon} style={{fontSize: 20, color: '#000'}}/>
@@ -87,7 +82,7 @@ renderHeader = () =>{return(
 <CardItem>
  <FlatList
           ListHeaderComponent={this.renderHeader}
-          data={this._listDataFilter(this.state.dataArray)}
+          data={this._listDataFilter(this.props.sideBarData)}
           renderItem={this._renderRow}
           keyExtractor={this._keyExtractor}
            ItemSeparatorComponent = {COMMON_LISTVIEW_ITEM_SEPARATOR}
@@ -102,7 +97,6 @@ renderHeader = () =>{return(
     );
   }
 }
-
 
 const styles = StyleSheet.create({
   headerImageStyles:{
@@ -125,9 +119,16 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => (
     {isLoggedIn: (state.auth!=1) && (state.auth.auth.loggedInProviderName=="oauth2-google"),
     profileIndex: ((state.auth!= NEED_AT_LEAST_ANONYMOUS_LOGIN) &&  (state.auth.auth.loggedInProviderName=="oauth2-google") && state.auth.auth.userProfile.identities[0].id) ?state.auth.auth.userProfile.identities[0].id:null,
+    sideBarData: state.sideBar,
 })
 
-
+/**
+ * Potential properties to override state
+ */
+SideBar.propTypes = {
+  
+  sideBarData:PropTypes.array
+};
 export default connect(mapStateToProps, null)(SideBar)
 
 

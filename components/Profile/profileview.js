@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+
 import { StyleSheet,Image,   ImagePickerIOS} from 'react-native';
 import { Container,Button,Separator,Thumbnail, Header, Content, List, ListItem,Title,
                                        Text,Textarea, Icon, Left, Body, Right, Switch, Toast } from 'native-base';
@@ -18,12 +20,12 @@ import { UPDATE_PROFILE_NAME_BY_KEY, UPDATE_PROFILE_WEBSITE_BY_KEY, UPDATE_PROFI
 class ProfileView extends Component {
 
   constructor(props) {
-    super(props);
-    console.log(props);
+super(props);
+console.log("2:",props.navigation.state.params);
     //setting default state
-    if(this.props.navigation.state.params && this.props.navigation.state.params.id)
+    if(props.navigation.state.params && props.navigation.state.params.id)
     //setting default state
-    this.state = { dataIndex: this.props.navigation.state.params.id, text: ''};
+    this.state = { dataIndex: props.navigation.state.params.id, text: ''};
    
     else
       this.state = {}
@@ -32,11 +34,11 @@ class ProfileView extends Component {
            componentWillMount =()=>{console.log("ProfileView Component Will Mount")}
            componentDidMount =()=>{console.log("ProfileView Component Did Mount")}
 
-
+ /**
+ *   update  profile 
+ */
     updateProfile = () => {
-    // updater functions are preferred for transactional updates
-    console.log("Attempting to update personal profile");
-
+    
     //const tmp = this.props.addProfile(tmpProfile);
     const request = this.props.updateProfileRequest(this.props.profiles[this.state.dataIndex]);
 
@@ -46,15 +48,16 @@ class ProfileView extends Component {
             });
   };
 
-   arrowIcon = ()=>isGoogleUser ? <Icon style={COMMON_ICON_STYLE}  name="arrow-forward" /> : null;
+   arrowIcon = ()=>this.props.isGoogleUser ? <Icon style={COMMON_ICON_STYLE}  name="arrow-forward" /> : null;
 
-
+/**
+ *  When the User presses save/update button, this method fires the corresponding redux actions
+ */
     _onPress = () => {
-    // updater functions are preferred for transactional updates
+
     const tmpProfile = getDefaultProfile({ website:this.props.website, name:this.props.name, phone:this.props.phone, email:this.props.email,
                description:this.props.description, imageURI:(this.state.avatarSource||this.props.imageURI)});
 
-    //const tmp = this.props.addProfile(tmpProfile);
     const request = this.state.dataIndex?this.props.updateProfileRequest(this.props.profiles[this.state.dataIndex]) : this.props.addProfileRequest(tmpProfile);
 
   };
@@ -103,7 +106,7 @@ displayEmail = () => (this.state.dataIndex && this.props.profiles[this.state.dat
 displayPhone = () => (this.state.dataIndex && this.props.profiles[this.state.dataIndex] ? this.props.profiles[this.state.dataIndex].phone: '');
 displayWebsite = () => (this.state.dataIndex && this.props.profiles[this.state.dataIndex] ? this.props.profiles[this.state.dataIndex].website: '');
 displayDescription = () => (this.state.dataIndex  && this.props.profiles[this.state.dataIndex] ? this.props.profiles[this.state.dataIndex].description: '');
-displayImageURI = () => (this.state.dataIndex && this.props.profiles[this.state.dataIndex] ? this.props.profiles[this.state.dataIndex].imageURI: '');
+displayImageURI = () => (this.state.dataIndex && this.props.profiles[this.state.dataIndex] && (this.props.profiles[this.state.dataIndex].imageURI!=='' )? this.props.profiles[this.state.dataIndex].imageURI: NO_PHOTO_AVAILABLE_URI);
 //displayEmail = () => (this.state.dataIndex? this.props.profiles[this.state.dataIndex].email: '');
 
 /** helper function to get the name of the profile at a specific index, if ani index  was provided as a property.
@@ -129,7 +132,7 @@ displayImageURI = () => (this.state.dataIndex && this.props.profiles[this.state.
   render(){
     const isPersonalProfile = (typeof this.state.dataIndex !== 'undefined')&& (this.state.dataIndex == this.props.profileIndex);
     const headerTitle = isPersonalProfile ? "Personal Profile" : "New Divine Profile" ;
-    const imageURI = this.state.dataIndex && this.props.profiles[this.state.dataIndex]? this.props.profiles[this.state.dataIndex].imageURI: this.props.imageURI;
+    const imageURI = this.displayImageURI();
     return (
       <Container>
          <Header style={{backgroundColor: '#a9c3d2'}}>
@@ -153,7 +156,7 @@ displayImageURI = () => (this.state.dataIndex && this.props.profiles[this.state.
               <Switch value={false} />
             </Right>
           </ListItem>
-          <ListItem icon>
+          <ListItem>
             <Left>
               <Button transparent>
                <Icon ios='ios-person' android="md-person" style={COMMON_ICON_STYLE}/>
@@ -166,7 +169,7 @@ displayImageURI = () => (this.state.dataIndex && this.props.profiles[this.state.
             <Right>
             {!isPersonalProfile ?
             <Button transparent onPress={() => this.props.navigation.navigate('SimpleInput', { inputType:(this.state.dataIndex?UPDATE_PROFILE_NAME_BY_KEY: ADD_NAME), profileIndex: this.state.dataIndex, inputInitialValue:this.displayName()})} >
-             {this.arrowIcon}
+             {this.arrowIcon()}
             </Button>
             :null}
             </Right>
@@ -186,7 +189,7 @@ displayImageURI = () => (this.state.dataIndex && this.props.profiles[this.state.
             <Right>
              {!isPersonalProfile?
             <Button transparent onPress={() => this.props.navigation.navigate('SimpleInput', { inputType: (this.state.dataIndex?UPDATE_PROFILE_EMAIL_BY_KEY: ADD_EMAIL), profileIndex: this.state.dataIndex, inputInitialValue:this.displayEmail() })} >
-               {this.arrowIcon}
+               {this.arrowIcon()}
             </Button>
              :null}
             </Right>
@@ -204,7 +207,7 @@ displayImageURI = () => (this.state.dataIndex && this.props.profiles[this.state.
             </Body>
             <Right>
               <Button transparent onPress={() => this.props.navigation.navigate('SimpleInput', { inputType: (this.state.dataIndex?UPDATE_PROFILE_PHONE_BY_KEY: ADD_PHONE), profileIndex: this.state.dataIndex, inputInitialValue:this.displayPhone()  })} >
-              {this.arrowIcon}
+              {this.arrowIcon()}
               </Button>
             </Right>
           </ListItem>
@@ -221,7 +224,7 @@ displayImageURI = () => (this.state.dataIndex && this.props.profiles[this.state.
             </Body>
             <Right>
               <Button transparent onPress={() => this.props.navigation.navigate('SimpleInput',  { inputType: (this.state.dataIndex?UPDATE_PROFILE_WEBSITE_BY_KEY: ADD_WEBSITE), profileIndex: this.state.dataIndex, inputInitialValue:this.displayWebsite()  })} >
-                    {this.arrowIcon}
+                    {this.arrowIcon()}
              </Button>
 
             </Right>
@@ -240,7 +243,7 @@ displayImageURI = () => (this.state.dataIndex && this.props.profiles[this.state.
             <Right>
             <Button transparent onPress={() => this.props.navigation.navigate("EditDescription")}>   
                  
-                  {this.arrowIcon}
+                  {this.arrowIcon()}
           </Button>
             </Right>
           </ListItem>
@@ -253,12 +256,12 @@ displayImageURI = () => (this.state.dataIndex && this.props.profiles[this.state.
               <Text>Current Image</Text>
               </Left>
               <Body style={{backgroundColor:"pink"}} >
-                <Image style={{width:205, height:250}} source={{uri:( this.state.dataIndex && this.props.profiles[this.state.dataIndex]? this.props.profiles[this.state.dataIndex].imageURI:NO_PHOTO_AVAILABLE_URI)}} />              
+                <Image style={{width:205, height:250}} source={{uri:this.displayImageURI()}} />              
               </Body>
             <Right>
               <Button transparent disabled onPress={() => this.onPressImagePicker()}>
                  <Text>Edit</Text>
-                 {this.arrowIcon}
+                 {this.arrowIcon()}
               </Button>
             </Right>
             </ListItem>
@@ -275,22 +278,27 @@ const mapStateToProps = state => {
    const isConnected =  ((state.auth!= NEED_AT_LEAST_ANONYMOUS_LOGIN) && state.auth.auth &&  (state.auth.auth.loggedInProviderName=="oauth2-google"));
    const profileIndex =  isConnected? state.auth.auth.userProfile.identities[0].id :null;
    const profiles = state.profiles.profiles;
-   console.log(profileIndex, "----",profiles,"-------",profiles[profileIndex]);
+
   return {
     profileIndex: profileIndex,
     isConnected : isConnected,
     isGoogleUser: (isConnected && state.auth.auth.userProfile.identities[0].id),
     profiles: profiles,
-
     email: profileIndex && profiles[profileIndex] ? profiles[profileIndex].email : state.profiles.tmpProfile.email,
     name: profileIndex && profiles[profileIndex]  ? profiles[profileIndex].name : state.profiles.tmpProfile.name,
     phone: profileIndex && profiles[profileIndex] ? profiles[profileIndex].phone : state.profiles.tmpProfile.phone,
     website: profileIndex && profiles[profileIndex] ? profiles[profileIndex].website : state.profiles.tmpProfile.website,
     description: profileIndex && profiles[profileIndex] ? profiles[profileIndex].description : state.profiles.tmpProfile.description,
-    imageURI: profileIndex && profiles[profileIndex] ? profiles[profileIndex].imageURI : state.profiles.tmpProfile.imageURI
+    imageURI: profileIndex && profiles[profileIndex] && profiles[profileIndex].imageURI !='' ? profiles[profileIndex].imageURI : NO_PHOTO_AVAILABLE_URI
   }
 }
 
+/**
+ * Potential properties to override state
+ */
+ProfileView.propTypes = {
+  id: PropTypes.string
+};
 
 function matchDispatchToProps(dispatch){
   return bindActionCreators({updateProfileRequest:updateProfileRequest, addProfileRequest:addProfileRequest}, dispatch)

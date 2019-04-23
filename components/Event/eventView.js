@@ -38,7 +38,7 @@ displayLocation= () =>(this.state.dataIndex && this.props.events[this.state.data
 displayCalendar= () =>(this.state.dataIndex && this.props.events[this.state.dataIndex]?this.props.events[this.state.dataIndex].calendar:this.props.calendar)
 displayEmail = () =>(this.state.dataIndex && this.props.events[this.state.dataIndex]?this.props.events[this.state.dataIndex].email:this.props.email)
 displayDescription = () =>(this.state.dataIndex && this.props.events[this.state.dataIndex]?this.props.events[this.state.dataIndex].description:this.props.description)
-displayImageURI = () =>(this.state.dataIndex && this.props.events[this.state.dataIndex]?this.props.profiles[this.state.dataIndex].imageURI:this.props.imageURI)
+displayImageURI = () =>(this.state.dataIndex && this.props.events[this.state.dataIndex]?this.props.events[this.state.dataIndex].imageURI:this.props.imageURI)
 
   render() {
     return (
