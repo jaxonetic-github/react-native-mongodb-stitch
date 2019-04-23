@@ -1,15 +1,17 @@
 //This is an example code to Add Search Bar Filter on Listview// 
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 //import react in our code. 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { StyleSheet, View, ListView, TextInput, ActivityIndicator,FlatList, Alert} from 'react-native';
-import { SwipeRow,Container, Subtitle, Header, Content, List, ListItem,Title,Icon, Thumbnail, Text, Left, Body, Right, Button ,Accordion,Tab, Tabs} from 'native-base';
+import { SwipeRow,Container, Subtitle, Header, Content, List, ListItem,Title,Icon, Thumbnail, Text, Left, Body, Right, Button ,Accordion,Tab, Tabs,Card, CardItem} from 'native-base';
 import {resourceData,ALT_LISTVIEW_ITEM_SEPARATOR, COMMON_LISTVIEW_ITEM_SEPARATOR,
         COMMON_DARK_BACKGROUND,ACTIVE_TINT_COLOR, INACTIVE_TINT_COLOR,GOOGLE_PROVIDER_NAME,NEED_AT_LEAST_ANONYMOUS_LOGIN, NO_PHOTO_AVAILABLE_URI,
          ROUTE_EVENT_VIEW, ROUTE_SIMPLE_WEB_VIEW, ROUTE_YOUTUBELIST_VIEW,TEXT_VIEW,
         renderListView} from '../../constants.js'
 import WebResourcesList from '../WebResources/webResourcesList.js';
+
 /**
  * Represents a component that allows a user to search for events.
  */
@@ -17,16 +19,7 @@ import WebResourcesList from '../WebResources/webResourcesList.js';
 
   constructor(props) {
     super(props);
-    //setting default state
-          this.state={record:null}
     }
-
-  /** Loads events into the component */
-  async componentDidMount() {
-        
-    const videoData = resourceData.youTubeResources;
-   this.setState({record:videoData})   
-  }
 
 /**
  * Filter events based on what the user types in the search field
@@ -75,18 +68,6 @@ import WebResourcesList from '../WebResources/webResourcesList.js';
  /** Exract a key from an object for the List */
     _keyExtractor = (item, index) =>(item.title);
 
-/** Navigate to event-creation screen  */
-   _onPress = (itemId) => {
-   this.props.navigation.navigate(ROUTE_EVENT_VIEW,{id:itemId})
-  };
-  /* Navigate to artist-creation screen on [add] buttonpress  */
-  _onPressNew = () => (this.props.navigation.push(ROUTE_EVENT_VIEW, { } ))
-//onPress={() => this.props.navigation.push('EventView', { })} 
-/** Navigate to event-creation screen  */
-   _onPressDelete = (itemId) => {
-  this.props.deleteEventRequest({id:itemId})
-  };
-
 
 /** The Search field */
 renderSearchField = () =>(
@@ -98,16 +79,48 @@ renderSearchField = () =>(
           placeholder="Search Here"
         />)
 
+/**
+ * renderItem:Renders the listitem views for two lists in this VideoSearch view
+ * @param record: record.item.payload should contain a non empty array
+ */
+renderItem =(record)=>{
+ //doing a bit of filtering that should probably done earlier
+ if(!record.item.payload && record.item.payload===''){ return null;}
 
-/** React Render **/
+//attempting to combine the renderItems for 2 possible route options
+  const route = record.item.payload ? ROUTE_YOUTUBELIST_VIEW :ROUTE_SIMPLE_WEB_VIEW ;
+
+   return (<ListItem style={styles.flexStyle}>       
+   <Card style={styles.flexStyle}>
+     <CardItem style={styles.flexStyle}>
+      <View  style={styles.outerViewStyle}>
+       <Thumbnail  source={{uri:/*item.item.imageURI||*/NO_PHOTO_AVAILABLE_URI}}/>
+        <View><Title style={styles.title}>{record.item.title}</Title></View>
+        <View style={styles.buttonContainer}>
+            <Button transparent onPress={() => {this.props.navigation.push(route, {record:record.item, title:record.item.title, url:record.item.url})}}>
+             <Text>{TEXT_VIEW}</Text>
+            </Button>
+             </View>
+            </View>
+          </CardItem> 
+      <View style={styles.title}><Text>{record.item.generalCategory?record.item.generalCategory[0]:null}</Text></View>
+
+</Card>
+
+            </ListItem>);}
+
+
+/** React Render
+ * Render tabs
+ **/
   render() {
 
     return (
       <Container>
     <Tabs>
-    <Tab heading="Our Master Teachers">{renderListView(this._keyExtractor, this.state.record,this.props.navigation, COMMON_LISTVIEW_ITEM_SEPARATOR, styles.outerViewStyle, styles.title,ROUTE_YOUTUBELIST_VIEW, TEXT_VIEW,NO_PHOTO_AVAILABLE_URI  )}</Tab>
-    <Tab heading="Media Outlets">{renderListView( ((item, index) => item.title), resourceData.onlineMediaContent,this.props.navigation, COMMON_LISTVIEW_ITEM_SEPARATOR,styles.outerViewStyle, styles.title, ROUTE_SIMPLE_WEB_VIEW, TEXT_VIEW,NO_PHOTO_AVAILABLE_URI)}</Tab>
-    <Tab heading="Roads to the Community"><WebResourcesList navigation={this.props.navigation} resourceData={resourceData.webResources}/></Tab>
+    <Tab heading="Our Master Teachers">{renderListView(this._keyExtractor, null,this.renderItem, this.props.videoData, COMMON_LISTVIEW_ITEM_SEPARATOR, styles.outerViewStyle, styles.title,ROUTE_YOUTUBELIST_VIEW, TEXT_VIEW  )}</Tab>
+    <Tab heading="Media Outlets">{renderListView( ((item, index) => item.title),null, this.renderItem, this.props.onlineMediaContent,COMMON_LISTVIEW_ITEM_SEPARATOR,styles.outerViewStyle, styles.title, ROUTE_SIMPLE_WEB_VIEW, TEXT_VIEW)}</Tab>
+    <Tab heading="Roads to the Community"><WebResourcesList navigation={this.props.navigation}/></Tab>
   </Tabs>
 
       </Container>
@@ -115,28 +128,25 @@ renderSearchField = () =>(
   }
 }
 
-
+/**
+ * map redux state to component props
+ */
 const mapStateToProps = state => {
-   const eventKeys = Object.keys(state.events.events)
-
+  console.log("videosearch resourcesdata",state.resourcesData);
   return {
-        canAddEvent : (state.auth.auth!=NEED_AT_LEAST_ANONYMOUS_LOGIN) && (state.auth.auth.auth.loggedInProviderName==GOOGLE_PROVIDER_NAME),
-
-    eventCount: eventKeys.length, 
-    events: eventKeys.map(pkey => state.events.events[pkey])
+    videoData: state.resourcesData.youTubeResources, 
+    onlineMediaContent: state.resourcesData.onlineMediaContent,
+    webResources: state.resourcesData.webResources
   }
-
 }
 
-
-function matchDispatchToProps(dispatch){
-  return bindActionCreators({deleteEventRequest: deleteEventRequest}, dispatch)
-}
-
+/** component specific styles*/
 const styles = StyleSheet.create({
+  flexStyle:{flex:1},
+  buttonContainer:{ flex:1,flexDirection: 'row', alignSelf:"flex-end", justifyContent:"flex-end"},
   title:{flex:1, alignSelf:"center"},
   innerHeaderStyle:{backgroundColor: COMMON_DARK_BACKGROUND},
-  outerViewStyle:{ margin:0,padding:0, flexDirection: 'row',flex:1, justifyContent: 'center'},
+  outerViewStyle:{flexDirection: 'row',flex:1},
   textInputStyle: {
     textAlign: 'center',
     height: 40,
@@ -146,8 +156,15 @@ const styles = StyleSheet.create({
   },
 });
 
-
-export default connect(null,null )(VideoSearch)
+/**
+ * Potential properties to override state
+ */
+VideoSearch.propTypes = {
+  videoData: PropTypes.array,
+  onlineMediaContent: PropTypes.array,
+  webResources:PropTypes.array
+};
+export default connect(mapStateToProps,null )(VideoSearch)
 
 
 
