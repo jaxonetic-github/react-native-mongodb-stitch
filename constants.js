@@ -45,6 +45,7 @@ export const ROUTE_SIMPLE_INPUT_VIEW = 'SimpleEventInput';
 export const ROUTE_SIMPLE_WEB_VIEW = 'SimpleWebView';
 export const ROUTE_PROFILE_VIEW = 'ProfileView';
 export const ROUTE_EVENT_VIEW = 'EventView';
+export const ROUTE_SIMPLE_PROFILE_INPUT = 'SimpleInput';
 
 export const ROUTE_YOUTUBELIST_VIEW = 'YouTubeList';
 
@@ -85,9 +86,9 @@ export const TEXT_NEW_EVENT = 'New Event';
 export const TEXT_DELETE = 'Delete';
 export const TEXT_VIEW = 'View';
 export const TEXT_EDIT = 'Edit';
-
 export const TEXT_SAVE = 'Save';
 export const TEXT_UPDATE = 'Update';
+
 export const WEBVIEW_CONNECTION_ERROR = "Unable to display WebView, please check your internet connection";
 
 export const TEXT_EVERYWHERE = 'Everywhere';
@@ -98,7 +99,7 @@ export const EVENTS = 'Events';
 
 export const TEXT_WHATS_GOING_ON = "What's going on in ...?";
 export const TEXT_CHOOSE_VIBE = '"choose a vibe"';
-  
+export const TEXT_CURRENT_IMAGE ="Select an Image?"
 // CSS Constants
 export const COMMON_DARK_BACKGROUND = '#243244';
 export const INACTIVE_TINT_COLOR = '#9ab';

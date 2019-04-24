@@ -14,7 +14,7 @@ import { getDefaultProfile,COMMON_ICON_STYLE, NEED_AT_LEAST_ANONYMOUS_LOGIN, TEX
  TEXT_UPDATE, NO_PHOTO_AVAILABLE_URI,ICON_ALL_ARROWFORWARD,ICON_IOS_MAIL, ICON_ANDROID_MAIL,
 TEXT_WEBSITE, TEXT_MAIL,TEXT_PHONE,TEXT_DESCRIPTION, ICON_IOS_PORTRAIT,ICON_ANDROID_PORTRAIT,
 ICON_IOS_GLOBE, ICON_ANDROID_GLOBE, ICON_IOS_DESCRIPTION,ICON_ANDROID_DESCRIPTION,
-ICON_IOS_CIRCLE, ICON_ANDROID_CIRCLE,ICON_IOS_PERSON, ICON_ANDROID_PERSON, COMMON_DARK_BACKGROUND} from '../../constants.js';
+ICON_IOS_CIRCLE, ICON_ANDROID_CIRCLE,ICON_IOS_PERSON, ICON_ANDROID_PERSON, COMMON_DARK_BACKGROUND, TEXT_CURRENT_IMAGE} from '../../constants.js';
 
 import { UPDATE_PROFILE_NAME_BY_KEY, UPDATE_PROFILE_WEBSITE_BY_KEY, UPDATE_PROFILE_PHONE_BY_KEY,UPDATE_PROFILE_EMAIL_BY_KEY, UPDATE_PROFILE_IMAGE_BY_KEY,
  ADD_NAME, ADD_PROFILE, ADD_DESC, ADD_EMAIL, ADD_PHONE, ADD_WEBSITE, ADD_IMAGE} from '../../redux/types';
@@ -211,7 +211,6 @@ displayImageURI = () => (this.state.dataIndex && this.props.profiles[this.state.
                <Text>{TEXT_WEBSITE}</Text>
             </Left>
             <Body>
-             
               <Text>{this.displayWebsite()}</Text>
             </Body>
             <Right>
@@ -239,21 +238,19 @@ displayImageURI = () => (this.state.dataIndex && this.props.profiles[this.state.
           </Button>
             </Right>
           </ListItem>
-          <Separator style={{backgroundColor:"silver"}} bordered/>
+          <Separator style={styles.profileSeparatorStyle} bordered/>
       
-
           <ListItem >
               <Left >
-              <Text>Current Image</Text>
+            
               <Button transparent disabled onPress={() => this.onPressImagePicker()}>
-                 <Text>Edit</Text>
+                 <Text>{TEXT_CURRENT_IMAGE}</Text>
                  {this.arrowIcon()}
               </Button>
               </Left>
               <Body>
-                <Image style={{width:205, height:250}} source={{uri:this.displayImageURI()}} />              
-              </Body>
-           
+                <Image style={styles.profileImage} source={{uri:this.displayImageURI()}} />              
+              </Body>  
             </ListItem>
 
         </Content>
@@ -293,6 +290,12 @@ ProfileView.propTypes = {
 function matchDispatchToProps(dispatch){
   return bindActionCreators({updateProfileRequest:updateProfileRequest, addProfileRequest:addProfileRequest}, dispatch)
 }
+
+const styles = StyleSheet.create({
+   profileImage:{width:205, height:250},
+   profileSeparatorStyle:{backgroundColor:"silver"}
+});
+
 
 
 export default connect(mapStateToProps, matchDispatchToProps)(ProfileView)
