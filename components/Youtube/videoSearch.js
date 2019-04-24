@@ -117,10 +117,10 @@ renderItem =(record)=>{
 
     return (
       <Container>
-    <Tabs>
-    <Tab heading="Our Master Teachers">{renderListView(this._keyExtractor, null,this.renderItem, this.props.videoData, COMMON_LISTVIEW_ITEM_SEPARATOR, styles.outerViewStyle, styles.title,ROUTE_YOUTUBELIST_VIEW, TEXT_VIEW  )}</Tab>
-    <Tab heading="Media Outlets">{renderListView( ((item, index) => item.title),null, this.renderItem, this.props.onlineMediaContent,COMMON_LISTVIEW_ITEM_SEPARATOR,styles.outerViewStyle, styles.title, ROUTE_SIMPLE_WEB_VIEW, TEXT_VIEW)}</Tab>
-    <Tab heading="Roads to the Community"><WebResourcesList navigation={this.props.navigation}/></Tab>
+    <Tabs >
+    <Tab  style={{backgroundColor:COMMON_DARK_BACKGROUND}} heading="Our Master Teachers">{renderListView(this._keyExtractor, null,this.renderItem, this.props.videoData, COMMON_LISTVIEW_ITEM_SEPARATOR, styles.outerViewStyle, styles.title,ROUTE_YOUTUBELIST_VIEW, TEXT_VIEW  )}</Tab>
+    <Tab  style={{backgroundColor:COMMON_DARK_BACKGROUND}} heading="Media Outlets">{renderListView( ((item, index) => item.title),null, this.renderItem, this.props.onlineMediaContent,COMMON_LISTVIEW_ITEM_SEPARATOR,styles.outerViewStyle, styles.title, ROUTE_SIMPLE_WEB_VIEW, TEXT_VIEW)}</Tab>
+    <Tab style={{backgroundColor:COMMON_DARK_BACKGROUND}} heading="Roads to the Community"><WebResourcesList navigation={this.props.navigation}/></Tab>
   </Tabs>
 
       </Container>

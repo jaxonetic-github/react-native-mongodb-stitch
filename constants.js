@@ -1,6 +1,5 @@
-
-  import React from 'react'
-  import { View ,ActivityIndicator,FlatList, Text } from 'react-native';
+import React from 'react'
+import { View ,ActivityIndicator,FlatList, Text } from 'react-native';
 import {ListItem, Thumbnail, Title, Button} from 'native-base';
 
 
@@ -32,7 +31,8 @@ export const PROFILES_COLLECTION = 'Profiles';
 export const EVENT_COLLECTION = 'events';
 export const MAATUSER_COLLECTION = 'MaatUsers';
 
-
+export const COMMON_EMPTY = (unknownVariable)=>((unknownVariable == '')||(unknownVariable == []) || (unknownVariable == {}) || (unknownVariable == undefined) )
+export const EMPTY_STRING = '';
 
 // Importing redux state and corresponding redux constants
 export const STATE = require('./redux/state.js');
@@ -48,8 +48,44 @@ export const ROUTE_EVENT_VIEW = 'EventView';
 
 export const ROUTE_YOUTUBELIST_VIEW = 'YouTubeList';
 
+//*********************  HTML  *********************/
+// Icons
+export const ICON_IOS_CIRCLE = "ios-add-circle";
+export const ICON_ANDROID_CIRCLE = "md-add-circle";
+
+export const ICON_IOS_PERSON = "ios-person";
+export const ICON_ANDROID_PERSON = "md-person";
+export const ICON_IOS_PORTRAIT = "ios-phone-portrait";
+export const ICON_ANDROID_PORTRAIT = "md-phone-portrait";
+export const ICON_IOS_GLOBE = "ios-globe";
+export const ICON_ANDROID_GLOBE = "md-globe";
+export const ICON_IOS_MAIL = "ios-mail";
+export const ICON_ANDROID_MAIL = "md-mail";
+export const ICON_IOS_DESCRIPTION = "ios-list-box";
+export const ICON_ANDROID_DESCRIPTION = "md-list-box";
+export const ICON_IOS_LOCATION = "ios-list-box";
+export const ICON_ANDROID_LOCATION = "md-list-box";
+export const ICON_IOS_CALENDAR = "ios-list-box";
+export const ICON_ANDROID_CALENDAR = "md-list-box";
+export const ICON_ALL_TRASH = 'trash';
+export const ICON_ALL_ARROWFORWARD = 'arrow-forward';
+
+
 // Label Text
+export const PLACEHOLDER_SEARCH_TEXT = "Search Here";
+export const TEXT_WEBSITE = "Website";
+export const TEXT_MAIL = "Email";
+export const TEXT_PHONE = "Phone";
+export const TEXT_DESCRIPTION = "Description";
+export const TEXT_EVENT_CALENDAR = "Event Calendar";
+
+
+export const TEXT_ADD_ARTIST = "Add Divine";
+export const TEXT_NEW_EVENT = 'New Event';
+export const TEXT_DELETE = 'Delete';
 export const TEXT_VIEW = 'View';
+export const TEXT_EDIT = 'Edit';
+
 export const TEXT_SAVE = 'Save';
 export const TEXT_UPDATE = 'Update';
 export const WEBVIEW_CONNECTION_ERROR = "Unable to display WebView, please check your internet connection";
@@ -58,16 +94,16 @@ export const TEXT_EVERYWHERE = 'Everywhere';
 export const TEXT_ALL = 'All';
 export const PROFILE = 'profile';
 export const EVENT = 'event';
+export const EVENTS = 'Events';
 
 export const TEXT_WHATS_GOING_ON = "What's going on in ...?";
-
 export const TEXT_CHOOSE_VIBE = '"choose a vibe"';
   
-
 // CSS Constants
 export const COMMON_DARK_BACKGROUND = '#243244';
 export const INACTIVE_TINT_COLOR = '#9ab';
 export const ACTIVE_TINT_COLOR = '#b8bb49';
+export const TRANSPARENT_COLOR = 'transparent';
 
 //************ Common Components
 const listItemSeparatorStyle = { height: 2, backgroundColor:COMMON_DARK_BACKGROUND  };
@@ -105,6 +141,8 @@ export const renderListView = (keyExtractor,headerComponent,renderItemComponent,
  */
 export const NEED_AT_LEAST_ANONYMOUS_LOGIN = '1';
 
+export const LIST_SWIPELEFT_OPENVALUE = 100;
+export const LIST_SWIPERIGHT_OPENVALUE=-75;
 
 //**********************  Test ***************************/
 export const TIME_OUT = 122999;

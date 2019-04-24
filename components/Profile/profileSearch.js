@@ -10,7 +10,8 @@ import { NavigationEvents } from 'react-navigation';
  import {deleteProfileRequest,fetchProfileRequest} from './Redux/Actions/profile.js'
 import {COMMON_ICON_STYLE, COMMON_DARK_BACKGROUND,COMMON_ACTIVITY_INDICATOR, ACTIVE_TINT_COLOR, INACTIVE_TINT_COLOR, ROUTE_PROFILE_VIEW,
         COMMON_LISTVIEW_ITEM_SEPARATOR, GOOGLE_PROVIDER_NAME, ROUTE_YOUTUBELIST_VIEW, TEXT_VIEW,NO_PHOTO_AVAILABLE_URI,
-      renderListView} from '../../constants.js'
+        TEXT_ADD_ARTIST,ICON_IOS_CIRCLE,ICON_ANDROID_CIRCLE,ICON_ALL_TRASH,EMPTY_STRING,TRANSPARENT_COLOR, PLACEHOLDER_SEARCH_TEXT,
+        TEXT_DELETE, renderListView} from '../../constants.js'
 
 /**
  * A List component with search abilities
@@ -19,7 +20,7 @@ import {COMMON_ICON_STYLE, COMMON_DARK_BACKGROUND,COMMON_ACTIVITY_INDICATOR, ACT
   constructor(props) {
     super(props);
     //setting default state
-    this.state = { isLoading: true, text: '',   refreshing: false};
+    this.state = { isLoading: true, text: EMPTY_STRING,   refreshing: false};
      }
 
  _onRefresh = () => {
@@ -29,7 +30,7 @@ import {COMMON_ICON_STYLE, COMMON_DARK_BACKGROUND,COMMON_ACTIVITY_INDICATOR, ACT
 
   /** Loads profiles into the component */
   componentDidMount() {
-          this.setState({ isLoading: false,  text: ''})
+          this.setState({ isLoading: false,  text: EMPTY_STRING})
   }
 
 /**
@@ -59,11 +60,11 @@ import {COMMON_ICON_STYLE, COMMON_DARK_BACKGROUND,COMMON_ACTIVITY_INDICATOR, ACT
         return false;
       }
       //applying filter for the inserted text in search bar
-      const name = item.name ? item.name.toUpperCase() : ''.toUpperCase();
-      const description = item.description ? item.description.toUpperCase() : ''.toUpperCase();
-      const phone = item.phone ? item.phone.toUpperCase() : ''.toUpperCase();
-      const website = item.website ? item.website.toUpperCase() : ''.toUpperCase();
-      const email = item.email ? item.email.toUpperCase() : ''.toUpperCase();
+      const name = item.name ? item.name.toUpperCase() : EMPTY_STRING.toUpperCase();
+      const description = item.description ? item.description.toUpperCase() : EMPTY_STRING.toUpperCase();
+      const phone = item.phone ? item.phone.toUpperCase() : EMPTY_STRING.toUpperCase();
+      const website = item.website ? item.website.toUpperCase() : EMPTY_STRING.toUpperCase();
+      const email = item.email ? item.email.toUpperCase() : EMPTY_STRING.toUpperCase();
 
       const textData = text.toUpperCase();
 
@@ -98,8 +99,8 @@ renderSearchField = () =>(
           style={styles.textInputStyle}
           onChangeText={text => this.SearchFilterAndUpdateStateFunction(text)}
           value={this.state.text}
-          underlineColorAndroid="transparent"
-          placeholder="Search Here"
+          underlineColorAndroid={TRANSPARENT_COLOR}
+          placeholder= {PLACEHOLDER_SEARCH_TEXT}
         />)
 
 
@@ -115,18 +116,18 @@ renderSearchField = () =>(
             rightOpenValue={0}
             left={
               <Button iconLeft danger transparent onPress={()=>this._onPressDelete(profile.item.id)}>
-                 <Icon name='trash' />
-                  <Text>Delete</Text>
+                 <Icon name={ICON_ALL_TRASH} />
+                  <Text>{TEXT_DELETE}</Text>
                 </Button>
             }
             body={
                             
-              <View  style={{ margin:0,padding:0, flexDirection: 'row',flex:1, justifyContent: 'center'}}>
+              <View  style={styles.outerViewStyle}>
               <Thumbnail source={{uri:profile.item.imageURI||NO_PHOTO_AVAILABLE_URI}}/>
               <Text style={{flex:1, alignSelf:"center"}}>{profile.item.name}</Text>
               <View style={{flex:1}}>
               <Button transparent  onPress={() => this._onPress(profile.item.id)} style={{flex:1,alignSelf:"flex-end"}}>
-                  <Text>View</Text>
+                  <Text>{TEXT_VIEW}</Text>
                 </Button>
                 </View >
                 </View>
@@ -135,20 +136,7 @@ renderSearchField = () =>(
 
           />
   );
-
-/*
-              <View style={{margin:0,padding:0, flexDirection: 'row',flex:1, justifyContent: 'center'}}>
-              <Thumbnail source={{uri:profile.item.imageURI||NO_PHOTO_AVAILABLE_URI}}/>
-    
-    <View style={{flex:1,alignSelf:"flex-start"}}>
-     <View style={{flex:1,alignSelf:"flex-end"}}>    
-                  <Button transparent onPress={() => this._onPress(profile.item.id)}>
-                  <Text>View</Text>
-                </Button></View>
-                <Text style={{flex:1,alignSelf:"center"}}>{profile.item.name}</Text>
-                <Text note numberOfLines={2}>{profile.item.description}</Text>
-              </View>
-    */         
+      
 
 /*
 * duplicate code also found in eventsearch
@@ -156,8 +144,8 @@ renderSearchField = () =>(
   addButton = ()=>{
     const _addButton = this.props.canAddProfile 
       ?  (<Button transparent  onPress={()=>this._onPressNew()} >
-             <Icon ios='ios-add-circle' android="md-add-circle" style={COMMON_ICON_STYLE}/>
-               <Text style={styles.textStyle}>Add Artist</Text>
+             <Icon ios={ICON_IOS_CIRCLE} android={ICON_ANDROID_CIRCLE} style={COMMON_ICON_STYLE}/>
+               <Text style={styles.textStyle}>{TEXT_ADD_ARTIST}</Text>
             </Button>)
       : null;
       return _addButton; }

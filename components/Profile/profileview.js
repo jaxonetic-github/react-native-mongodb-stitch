@@ -10,9 +10,14 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import { updateProfileRequest, addProfileRequest } from './Redux/Actions/profile.js';
-import { getDefaultProfile,COMMON_ICON_STYLE, NEED_AT_LEAST_ANONYMOUS_LOGIN, TEXT_SAVE, TEXT_UPDATE, NO_PHOTO_AVAILABLE_URI} from '../../constants.js';
+import { getDefaultProfile,COMMON_ICON_STYLE, NEED_AT_LEAST_ANONYMOUS_LOGIN, TEXT_SAVE,
+ TEXT_UPDATE, NO_PHOTO_AVAILABLE_URI,ICON_ALL_ARROWFORWARD,ICON_IOS_MAIL, ICON_ANDROID_MAIL,
+TEXT_WEBSITE, TEXT_MAIL,TEXT_PHONE,TEXT_DESCRIPTION, ICON_IOS_PORTRAIT,ICON_ANDROID_PORTRAIT,
+ICON_IOS_GLOBE, ICON_ANDROID_GLOBE, ICON_IOS_DESCRIPTION,ICON_ANDROID_DESCRIPTION,
+ICON_IOS_CIRCLE, ICON_ANDROID_CIRCLE,ICON_IOS_PERSON, ICON_ANDROID_PERSON, COMMON_DARK_BACKGROUND} from '../../constants.js';
 
-import { UPDATE_PROFILE_NAME_BY_KEY, UPDATE_PROFILE_WEBSITE_BY_KEY, UPDATE_PROFILE_PHONE_BY_KEY,UPDATE_PROFILE_EMAIL_BY_KEY, UPDATE_PROFILE_IMAGE_BY_KEY, ADD_NAME, ADD_PROFILE, ADD_DESC, ADD_EMAIL, ADD_PHONE, ADD_WEBSITE, ADD_IMAGE} from '../../redux/types';
+import { UPDATE_PROFILE_NAME_BY_KEY, UPDATE_PROFILE_WEBSITE_BY_KEY, UPDATE_PROFILE_PHONE_BY_KEY,UPDATE_PROFILE_EMAIL_BY_KEY, UPDATE_PROFILE_IMAGE_BY_KEY,
+ ADD_NAME, ADD_PROFILE, ADD_DESC, ADD_EMAIL, ADD_PHONE, ADD_WEBSITE, ADD_IMAGE} from '../../redux/types';
 
 /**
 *   ProfileView - The Screen to view and potentially edit a profile.
@@ -28,10 +33,7 @@ super(props);
    
     else
       this.state = {}
-           }
-
-           componentWillMount =()=>{console.log("ProfileView Component Will Mount")}
-           componentDidMount =()=>{console.log("ProfileView Component Did Mount")}
+  }
 
  /**
  *   update  profile 
@@ -47,7 +49,7 @@ super(props);
             });
   };
 
-   arrowIcon = ()=>this.props.isGoogleUser ? <Icon style={COMMON_ICON_STYLE}  name="arrow-forward" /> : null;
+   arrowIcon = ()=>this.props.isGoogleUser ? <Icon style={COMMON_ICON_STYLE}  name={ICON_ALL_ARROWFORWARD} /> : null;
 
 /**
  *  When the User presses save/update button, this method fires the corresponding redux actions
@@ -120,7 +122,7 @@ displayImageURI = () => (this.state.dataIndex && this.props.profiles[this.state.
    //determine whether to show "Save" or "Update" depending on ownership
    const buttonText    = isPersonalProfile ?   TEXT_UPDATE :TEXT_SAVE;
     const _saveButton = isPersonalProfile || isNewProfile ? ( <Button transparent  onPress={onPressAction } >
-             <Icon ios='ios-add-circle' android="md-add-circle" style={COMMON_ICON_STYLE}/>
+             <Icon ios={ICON_IOS_CIRCLE} android={ICON_ANDROID_CIRCLE} style={COMMON_ICON_STYLE}/>
                <Text>{buttonText}</Text>
             </Button>):null;
 
@@ -134,11 +136,11 @@ displayImageURI = () => (this.state.dataIndex && this.props.profiles[this.state.
     const imageURI = this.displayImageURI();
     return (
       <Container>
-         <Header style={{backgroundColor: '#a9c3d2'}}>
-            <Body>
-              <Title>{headerTitle}</Title>
-            </Body>
+         <Header style={{backgroundColor: "silver", height:80}}>
 
+            <Body>
+              <Title><Icon ios={ICON_IOS_PERSON} android={ICON_ANDROID_PERSON} style={COMMON_ICON_STYLE}/>{headerTitle}</Title>
+            </Body>
             <Right>       
            
 {this.addButton(isPersonalProfile)}
@@ -147,18 +149,9 @@ displayImageURI = () => (this.state.dataIndex && this.props.profiles[this.state.
         </Header>
         <Content>
           <ListItem icon>
-            
-            <Body>
-              <Text>Visible</Text>
-            </Body>
-            <Right>
-              <Switch value={false} />
-            </Right>
-          </ListItem>
-          <ListItem>
             <Left>
               <Button transparent>
-               <Icon ios='ios-person' android="md-person" style={COMMON_ICON_STYLE}/>
+               <Icon ios={ICON_IOS_PERSON} android={ICON_ANDROID_PERSON} style={COMMON_ICON_STYLE}/>
               </Button>
               <Text>Name :</Text>
             </Left>
@@ -167,7 +160,7 @@ displayImageURI = () => (this.state.dataIndex && this.props.profiles[this.state.
             </Body>
             <Right>
             {!isPersonalProfile ?
-            <Button transparent onPress={() => this.props.navigation.navigate('SimpleInput', { inputType:(this.state.dataIndex?UPDATE_PROFILE_NAME_BY_KEY: ADD_NAME), profileIndex: this.state.dataIndex, inputInitialValue:this.displayName()})} >
+            <Button transparent onPress={() => this.props.navigation.navigate(ROUTE_SIMPLE_PROFILE_INPUT, { inputType:(this.state.dataIndex?UPDATE_PROFILE_NAME_BY_KEY: ADD_NAME), profileIndex: this.state.dataIndex, inputInitialValue:this.displayName()})} >
              {this.arrowIcon()}
             </Button>
             :null}
@@ -177,9 +170,9 @@ displayImageURI = () => (this.state.dataIndex && this.props.profiles[this.state.
           <ListItem icon>
             <Left>
               <Button transparent>
-               <Icon ios='ios-mail' android="md-mail" style={COMMON_ICON_STYLE}/>
+               <Icon ios={ICON_IOS_MAIL} android={ICON_ANDROID_MAIL} style={COMMON_ICON_STYLE}/>
               </Button>
-              <Text>Email</Text>
+              <Text>{TEXT_MAIL}</Text>
             </Left>
             <Body>
               <Text>{this.displayEmail()}</Text>
@@ -187,7 +180,7 @@ displayImageURI = () => (this.state.dataIndex && this.props.profiles[this.state.
              
             <Right>
              {!isPersonalProfile?
-            <Button transparent onPress={() => this.props.navigation.navigate('SimpleInput', { inputType: (this.state.dataIndex?UPDATE_PROFILE_EMAIL_BY_KEY: ADD_EMAIL), profileIndex: this.state.dataIndex, inputInitialValue:this.displayEmail() })} >
+            <Button transparent onPress={() => this.props.navigation.navigate(ROUTE_SIMPLE_PROFILE_INPUT, { inputType: (this.state.dataIndex?UPDATE_PROFILE_EMAIL_BY_KEY: ADD_EMAIL), profileIndex: this.state.dataIndex, inputInitialValue:this.displayEmail() })} >
                {this.arrowIcon()}
             </Button>
              :null}
@@ -197,15 +190,15 @@ displayImageURI = () => (this.state.dataIndex && this.props.profiles[this.state.
           <ListItem icon>
             <Left>
               <Button transparent>
-               <Icon ios='ios-phone-portrait' android="md-phone-portrait" style={COMMON_ICON_STYLE}/>
+               <Icon ios={ICON_IOS_PORTRAIT} android={ICON_ANDROID_PORTRAIT} style={COMMON_ICON_STYLE}/>
               </Button>
-              <Text>Phone</Text>
+              <Text>{TEXT_PHONE}</Text>
             </Left>
             <Body>
               <Text>{this.displayPhone()}</Text>
             </Body>
             <Right>
-              <Button transparent onPress={() => this.props.navigation.navigate('SimpleInput', { inputType: (this.state.dataIndex?UPDATE_PROFILE_PHONE_BY_KEY: ADD_PHONE), profileIndex: this.state.dataIndex, inputInitialValue:this.displayPhone()  })} >
+              <Button transparent onPress={() => this.props.navigation.navigate(ROUTE_SIMPLE_PROFILE_INPUT, { inputType: (this.state.dataIndex?UPDATE_PROFILE_PHONE_BY_KEY: ADD_PHONE), profileIndex: this.state.dataIndex, inputInitialValue:this.displayPhone()  })} >
               {this.arrowIcon()}
               </Button>
             </Right>
@@ -213,16 +206,16 @@ displayImageURI = () => (this.state.dataIndex && this.props.profiles[this.state.
           <ListItem icon>
             <Left>
               <Button transparent>
-             <Icon ios='ios-globe' android="md-phone-portrait" style={COMMON_ICON_STYLE}/>
+             <Icon ios={ICON_IOS_GLOBE} android={ICON_ANDROID_PORTRAIT} style={COMMON_ICON_STYLE}/>
               </Button>
-               <Text>Website</Text>
+               <Text>{TEXT_WEBSITE}</Text>
             </Left>
             <Body>
              
               <Text>{this.displayWebsite()}</Text>
             </Body>
             <Right>
-              <Button transparent onPress={() => this.props.navigation.navigate('SimpleInput',  { inputType: (this.state.dataIndex?UPDATE_PROFILE_WEBSITE_BY_KEY: ADD_WEBSITE), profileIndex: this.state.dataIndex, inputInitialValue:this.displayWebsite()  })} >
+              <Button transparent onPress={() => this.props.navigation.navigate(ROUTE_SIMPLE_PROFILE_INPUT,  { inputType: (this.state.dataIndex?UPDATE_PROFILE_WEBSITE_BY_KEY: ADD_WEBSITE), profileIndex: this.state.dataIndex, inputInitialValue:this.displayWebsite()  })} >
                     {this.arrowIcon()}
              </Button>
 
@@ -232,9 +225,9 @@ displayImageURI = () => (this.state.dataIndex && this.props.profiles[this.state.
           <ListItem icon>
             <Left>
               <Button transparent>
-                <Icon ios='ios-list-box' android="md-list-box" style={COMMON_ICON_STYLE}/>
+                <Icon ios={ICON_IOS_DESCRIPTION} android={ICON_ANDROID_DESCRIPTION} style={COMMON_ICON_STYLE}/>
               </Button>
-              <Text>Description</Text>
+              <Text>{TEXT_DESCRIPTION}</Text>
             </Left>
             <Body>
               <Text>{this.displayDescription()}</Text>
@@ -246,23 +239,21 @@ displayImageURI = () => (this.state.dataIndex && this.props.profiles[this.state.
           </Button>
             </Right>
           </ListItem>
-          <Separator bordered>
-            <Text></Text>
-          </Separator>
+          <Separator style={{backgroundColor:"silver"}} bordered/>
+      
 
           <ListItem >
-              <Left>
+              <Left >
               <Text>Current Image</Text>
-              </Left>
-              <Body style={{backgroundColor:"pink"}} >
-                <Image style={{width:205, height:250}} source={{uri:this.displayImageURI()}} />              
-              </Body>
-            <Right>
               <Button transparent disabled onPress={() => this.onPressImagePicker()}>
                  <Text>Edit</Text>
                  {this.arrowIcon()}
               </Button>
-            </Right>
+              </Left>
+              <Body>
+                <Image style={{width:205, height:250}} source={{uri:this.displayImageURI()}} />              
+              </Body>
+           
             </ListItem>
 
         </Content>

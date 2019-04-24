@@ -7,7 +7,8 @@ import {  addEventRequest, updateEventRequest } from './Redux/Actions/eventActio
 import { bindActionCreators } from 'redux';
 import {UPDATE_EVENT_NAME_BY_KEY, UPDATE_EVENT_EMAIL_BY_KEY,UPDATE_EVENT_PHONE_BY_KEY, UPDATE_EVENT_WEBSITE_BY_KEY,UPDATE_EVENT_IMAGE_BY_KEY,
        ADD_EVENT, ADD_EVENT_NAME, ADD_EVENT_DESC, ADD_EVENT_EMAIL, ADD_EVENT_PHONE, ADD_EVENT_WEBSITE, ADD_EVENT_IMAGE} from '../../redux/types';
-import {getDefaultEvent, COMMON_ICON_STYLE,ROUTE_SIMPLE_INPUT_VIEW,ROUTE_EVENT_CALENDAR,ROUTE_MAPVIEW} from '../../constants.js';
+import {getDefaultEvent, COMMON_ICON_STYLE,ROUTE_SIMPLE_INPUT_VIEW,ROUTE_EVENT_CALENDAR,ROUTE_MAPVIEW,
+        TEXT_WEBSITE} from '../../constants.js';
 /**
 *   ProfileView - The Screen to view and potentially edit a event. 
 *    
@@ -51,35 +52,26 @@ displayImageURI = () =>(this.state.dataIndex && this.props.events[this.state.dat
             <Right>             
             <Button transparent  onPress={() => this._saveEvent()} >
  
-             <Icon ios='ios-add-circle' android="md-add-circle" style={COMMON_ICON_STYLE}/>
+             <Icon ios={ICON_IOS_CIRCLE} android={ICON_ANDROID_CIRCLE} style={COMMON_ICON_STYLE}/>
 
-               <Text>Save</Text>
+               <Text>{TEXT_SAVE}</Text>
             </Button>
 
             </Right>
         </Header>
         <Content>
           <ListItem icon>
-            
-            <Body>
-              <Text>Visible</Text>
-            </Body>
-            <Right>
-              <Switch value={false} />
-            </Right>
-          </ListItem>
-          <ListItem icon>
             <Left>
               <Button transparent>
-               <Icon ios='ios-person' android="md-person" style={COMMON_ICON_STYLE}/>
+               <Icon ios={ICON_IOS_PERSON} android={ICON_ANDROID_PERSON} style={COMMON_ICON_STYLE}/>
               </Button>
               <Text>Name : {this.displayName()}</Text>
             </Left>
             <Body>
              </Body>
             <Right>
-            <Button transparent onPress={() => this.props.navigation.navigate('SimpleEventInput', { inputType:(this.state.dataIndex?UPDATE_EVENT_NAME_BY_KEY: ADD_EVENT_NAME), eventIndex: this.state.dataIndex, inputInitialValue:this.displayName()})} >
-              <Icon  style={COMMON_ICON_STYLE} name="arrow-forward" />
+            <Button transparent onPress={() => this.props.navigation.navigate(ROUTE_SIMPLE_INPUT_VIEW, { inputType:(this.state.dataIndex?UPDATE_EVENT_NAME_BY_KEY: ADD_EVENT_NAME), eventIndex: this.state.dataIndex, inputInitialValue:this.displayName()})} >
+              <Icon  style={COMMON_ICON_STYLE} name={ICON_ALL_ARROWFORWARD} />
             </Button>
             </Right>
           </ListItem>
@@ -87,17 +79,17 @@ displayImageURI = () =>(this.state.dataIndex && this.props.events[this.state.dat
           <ListItem icon>
             <Left>
               <Button transparent>
-               <Icon ios='ios-mail' android="md-mail" style={COMMON_ICON_STYLE}/>
+               <Icon ios={ICON_IOS_MAIL} android={ICON_ANDROID_MAIL} style={COMMON_ICON_STYLE}/>
               </Button>
-              <Text>Email</Text>
+              <Text>{TEXT_MAIL}</Text>
             </Left>
             <Body>
               <Text>{this.displayEmail()}</Text>
             </Body>
              
             <Right>
-            <Button transparent onPress={() => this.props.navigation.navigate('SimpleEventInput', { inputType: (this.state.dataIndex?UPDATE_EVENT_EMAIL_BY_KEY: ADD_EVENT_EMAIL), eventIndex: this.state.dataIndex, inputInitialValue:this.displayEmail() })} >
-              <Icon style={COMMON_ICON_STYLE} name="arrow-forward" />
+            <Button transparent onPress={() => this.props.navigation.navigate(ROUTE_SIMPLE_INPUT_VIEW, { inputType: (this.state.dataIndex?UPDATE_EVENT_EMAIL_BY_KEY: ADD_EVENT_EMAIL), eventIndex: this.state.dataIndex, inputInitialValue:this.displayEmail() })} >
+              <Icon style={COMMON_ICON_STYLE} name={ICON_ALL_ARROWFORWARD} />
             </Button>
             </Right>
              
@@ -105,25 +97,25 @@ displayImageURI = () =>(this.state.dataIndex && this.props.events[this.state.dat
           <ListItem icon>
             <Left>
               <Button transparent >
-               <Icon ios='ios-phone-portrait' android="md-phone-portrait" style={COMMON_ICON_STYLE}/>
+               <Icon ios={ICON_IOS_PORTRAIT} android={ICON_ANDROID_PORTRAIT} style={COMMON_ICON_STYLE}/>
               </Button>
-              <Text>Phone</Text>
+              <Text>{TEXT_PHONE}</Text>
             </Left>
             <Body>
               <Text>{this.displayPhone()}</Text>
             </Body>
             <Right>
-              <Button transparent onPress={() => this.props.navigation.navigate('SimpleEventInput', { inputType: (this.state.dataIndex?UPDATE_EVENT_PHONE_BY_KEY: ADD_EVENT_PHONE), eventIndex: this.state.dataIndex, inputInitialValue:this.displayPhone()  })} >
-              <Icon style={COMMON_ICON_STYLE}  name="arrow-forward"  />
+              <Button transparent onPress={() => this.props.navigation.navigate(ROUTE_SIMPLE_INPUT_VIEW, { inputType: (this.state.dataIndex?UPDATE_EVENT_PHONE_BY_KEY: ADD_EVENT_PHONE), eventIndex: this.state.dataIndex, inputInitialValue:this.displayPhone()  })} >
+              <Icon style={COMMON_ICON_STYLE}  name={ICON_ALL_ARROWFORWARD}  />
               </Button>
             </Right>
           </ListItem>
           <ListItem icon>
             <Left>
-              <Button transparent style={{ backgroundColor: "transparent" }}>
-             <Icon ios='ios-globe' android="md-phone-portrait" style={COMMON_ICON_STYLE}/>
+              <Button transparent style={{ backgroundColor:{TRANSPARENT_COLOR}  }}>
+             <Icon ios={ICON_IOS_GLOBE} android={ICON_ANDROID_GLOBE} style={COMMON_ICON_STYLE}/>
               </Button>
-               <Text>Website</Text>
+               <Text>{TEXT_WEBSITE}</Text>
             </Left>
             <Body>
              
@@ -132,7 +124,7 @@ displayImageURI = () =>(this.state.dataIndex && this.props.events[this.state.dat
             <Right>
               <Button transparent onPress={() => this.props.navigation.navigate('SimpleEventInput', { inputType:  (this.state.dataIndex?UPDATE_EVENT_WEBSITE_BY_KEY: ADD_EVENT_WEBSITE), eventIndex: this.state.dataIndex, inputInitialValue:this.displayWebsite() })} >
 
-              <Icon style={COMMON_ICON_STYLE} name="arrow-forward" />
+              <Icon style={COMMON_ICON_STYLE} name={ICON_ALL_ARROWFORWARD} />
              </Button>
 
             </Right>
@@ -141,16 +133,16 @@ displayImageURI = () =>(this.state.dataIndex && this.props.events[this.state.dat
           <ListItem icon>
             <Left>
               <Button transparent>
-                <Icon ios='ios-list-box' android="md-list-box" style={COMMON_ICON_STYLE}/>
+                <Icon ios={ICON_IOS_DESCRIPTION} android={ICON_ANDROID_DESCRIPTION} style={COMMON_ICON_STYLE}/>
               </Button>
-              <Text>Description</Text>
+              <Text>{TEXT_DESCRIPTION}</Text>
             </Left>
             <Body>
               <Text>{this.displayDescription()}</Text>
             </Body>
             <Right>   
                  <Icon onPress={() => this.props.navigation.navigate("EditDescription")}
-                  name="arrow-forward" />
+                  name={ICON_ALL_ARROWFORWARD} />
           
             </Right>
           </ListItem>
@@ -159,7 +151,7 @@ displayImageURI = () =>(this.state.dataIndex && this.props.events[this.state.dat
           </Separator>
   <ListItem icon>
             <Left>
-                <Icon ios='ios-list-box' android="md-list-box" style={COMMON_ICON_STYLE}/>
+                <Icon ios={ICON_IOS_LOCATION} android={ICON_ANDROID_LOCATION} style={COMMON_ICON_STYLE}/>
               <Text>Location</Text>
             </Left>
             <Body>
@@ -174,7 +166,7 @@ displayImageURI = () =>(this.state.dataIndex && this.props.events[this.state.dat
           </ListItem>
   <ListItem icon>
             <Left>
-                <Icon ios='ios-list-box' android="md-list-box" style={COMMON_ICON_STYLE}/>
+                <Icon ios={ICON_IOS_CALENDAR} android={ICON_ANDROID_CALENDAR} style={COMMON_ICON_STYLE}/>
               <Text>Calendar</Text>
             </Left>
             <Body>
