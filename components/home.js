@@ -6,7 +6,8 @@ import axios from "axios";
 import SimpleWebView from './WebResources/simpleWebView.js';
 //import { WebGLView } from "react-native-webgl";
 import { ROUTE_SIMPLE_WEB_VIEW, COMMON_DARK_BACKGROUND,TEXT_EVERYWHERE,TEXT_All, LOCATION_LIST,CATEGORY_LIST,
-      TEXT_CHOOSE_VIBE, TEXT_WHATS_GOING_ON,COMMON_ICON_STYLE, COMMON_LISTVIEW_ITEM_SEPARATOR } from '../constants.js';
+      TEXT_CHOOSE_VIBE, TEXT_WHATS_GOING_ON,COMMON_ICON_STYLE,COMMON_ICON_STYLE_MAROON,COMMON_ICON_STYLE_GOLD, COMMON_LISTVIEW_ITEM_SEPARATOR ,
+       ICON_IOS_INFORMATION, ICON_ANDROID_INFORMATION } from '../constants.js';
 import WebResourcesList from './WebResources/webResourcesList.js';
 //import FitImage from 'react-native-fit-image';
 import { Container, Header, Content, Card, CardItem,ListItem, Thumbnail,Button, Text, Icon,Right,Subtitle, Title, Left, Body,Form, Picker as AltPicker } from 'native-base';
@@ -17,28 +18,12 @@ import { Container, Header, Content, Card, CardItem,ListItem, Thumbnail,Button, 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import MapView from 'react-native-maps';
-import MapScreen from './mapview.js';
-
+/**
+ * This is the home screen of the app. 
+ * The content will be changing 
+ */
 class Home extends React.Component {
-static navigationOptions = {
-    headerTitle: <Button  onPress={()=>{console.log("buttonnnnnninnnnnn!", this); DrawerActions.toggleDrawer();}}><Icon ios='ios-menu' android="md-menu" style={{fontSize: 25, margin:10, color: 'white'}}/></Button>,
-    headerRight: (
-      <Button 
-        onPress={() => alert('This is a button!')}
-        title="Info"
-        color="#666"
-      />
-    ),
-  };
-/*
-  onContextCreate = (gl: WebGLRenderingContext) => {
-    const rngl = gl.getExtension("RN");
-    gl.clearColor(1, 0, 0, 1);
-    gl.clear(gl.COLOR_BUFFER_BIT);
-    rngl.endFrame();
-  };
-*/
+
   constructor(props) {
     super(props);
     this.state = {
@@ -47,11 +32,6 @@ static navigationOptions = {
       selectedState: undefined,
       modalVisible: false,
     };
-    console.log("-----------------------------------",this.props.navigation);
-    //this.props.navigation.navigationOptions();
-  }
-  async componentDidMount(){
-    console.log("-----------------------------------",this.props.navigation);
   }
 
     async componentWillMount() {
@@ -62,9 +42,10 @@ static navigationOptions = {
          this.setState({ lastPosition });
       });
     }
+
 moundBuilders=()=>(<View><Card><CardItem>
     <TouchableOpacity style={{position:"absolute", top:5, right:0}}>
- <Icon ios='ios-information-circle' android="md-information-circle" style={COMMON_ICON_STYLE}/>
+ <Icon ios={ICON_IOS_INFORMATION} android={ICON_ANDROID_INFORMATION} style={COMMON_ICON_STYLE}/>
    </TouchableOpacity>
     <View style={{alignItems:"center", margin:5}}>
     <Image style={{width:280 ,height:250}} source={{uri:"https://dasg7xwmldix6.cloudfront.net/episodes/521925_fDB81ij7.jpg"}} />
@@ -78,7 +59,7 @@ moundBuilders=()=>(<View><Card><CardItem>
         <Card>
            <CardItem>
                <TouchableOpacity  style={{position:"absolute", top:5, right:0}}>
- <Icon ios='ios-information-circle' android="md-information-circle" style={COMMON_ICON_STYLE}/>
+ <Icon ios={ICON_IOS_INFORMATION} android={ICON_ANDROID_INFORMATION} style={COMMON_ICON_STYLE}/>
    </TouchableOpacity>
     <View style={{alignItems:"center", margin:5}}>
     <Thumbnail style={{borderRadius:15, width:200}}
@@ -91,21 +72,13 @@ moundBuilders=()=>(<View><Card><CardItem>
     </View>
       </CardItem></Card></View>)
 
-  render() {
-
-    return (<Container style={{backgroundColor:COMMON_DARK_BACKGROUND}}>
-    
-        <Content padder>
-  <Text>               
-       <Icon name="arrow-forward" style={COMMON_ICON_STYLE}/>
-       <Icon name="arrow-forward" style={COMMON_ICON_STYLE}/>
-   </Text>       
-    <Card><CardItem>
-<Text>“When I read history, I cannot read it as the conquerer, I must read it as the conquered; therefore, I have to read history as it affects me.  I have to put myself as the centroid figure, and how does that history affect me.Therefore the solution must come up in my perspective not in the conquerers perspective.” </Text>
-          </CardItem>
-          <CardItem>
-<TouchableOpacity style={{position:"absolute", top:5, right:0}}>
- <Icon ios='ios-information-circle' android="md-information-circle" style={COMMON_ICON_STYLE}/>
+quoteCard = ()=>(<Card>
+<CardItem>
+  <Text>“When I read history, I cannot read it as the conquerer, I must read it as the conquered; therefore, I have to read history as it affects me.  I have to put myself as the centroid figure, and how does that history affect me.Therefore the solution must come up in my perspective not in the conquerers perspective.” </Text>
+</CardItem>
+<CardItem>
+  <TouchableOpacity style={{ top:5, right:0}}>
+  <Icon ios={ICON_IOS_INFORMATION} android={ICON_ANDROID_INFORMATION} style={COMMON_ICON_STYLE}/>
    </TouchableOpacity>
 <TouchableOpacity  style={styles.touchable} onPress= { ()=>{this.props.navigation.push(ROUTE_SIMPLE_WEB_VIEW, {url:"https://youtu.be/K_nOQ9y4eT8?t=4710" , title:"Dr Ben"})}} >
 <Thumbnail style={{width:220 , height:220, borderRadius:15}} 
@@ -113,62 +86,70 @@ source={{uri:'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Dr_Ben.j
 <Title>Dr Ben</Title>
               </TouchableOpacity>
           </CardItem>
-    </Card>
+    </Card>)
 
-        <Card><CardItem>
 
-<Text>Our Story... Truth</Text>
-<Subtitle>These videos are priceless.  Buy them, watch them, gift them, watch them again!!!</Subtitle>
-          </CardItem>
-          <CardItem>
-          <View style={{flex:1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around'}}>
-          <FlatList horizontal data={this.props.digitalResources}
-          renderItem={(item)=>{
-            return(<ListItem style={{flex:1, borderRadius:15, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around' }}>
-            <View style={{flex:1,padding:5, backgroundColor:COMMON_DARK_BACKGROUND, borderRadius:5}}><TouchableOpacity style={{ borderWidth:1, borderRadius:10, backgroundColor:"maroon"}} >
-            <Text style={{color:"gold", paddingLeft:10, paddingRight:10, paddingTop:5, paddingBottom:5}}>{item.item.title}</Text>
-            </TouchableOpacity></View></ListItem>)
+/**
+ * Component to show list of videos users can buy
+ * @param promotion:  
+ */
+videoReferences = (promotions)=>{
+  const innerViews = promotions.map((promotion,i)=>(
+          <View  key={i} style={styles.videoRefsInnerView}>
+            <Title>{promotion.title}</Title>
+            <TouchableOpacity>
+              <Thumbnail style={styles.videoRefsThumbnail} source={{uri:promotion.imageURI}}/>
+           </TouchableOpacity><Text>{promotion.subTitle}</Text></View>));
+
+          return (<Card><CardItem><View style={styles.videoRefsOuterStyle} >{innerViews}</View></CardItem></Card>)
+    }
+
+pastPresentFutureComponent = ()=>(<Card>
+  <CardItem>
+  <Text>Our Story... Truth</Text>
+  <Subtitle>These videos are priceless.  Buy them, watch them, gift them, watch them again!!!</Subtitle>
+  </CardItem>
+  <CardItem>
+   <View style={{flex:1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around'}}>
+   <FlatList horizontal data={this.props.digitalResources} 
+            renderItem={(item)=>{
+              return(<ListItem style={{flex:1, borderRadius:15, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around' }}>
+                     <View style={{flex:1,padding:5, backgroundColor:COMMON_DARK_BACKGROUND, borderRadius:5}}>
+                     <TouchableOpacity style={{ borderWidth:1, borderRadius:10, backgroundColor:"maroon"}} >
+                       <Text style={{color:"gold", paddingLeft:10, paddingRight:10, paddingTop:5, paddingBottom:5}}>{item.item.title}</Text>
+                     </TouchableOpacity></View></ListItem>)
           }}
            ItemSeparatorComponent = {COMMON_LISTVIEW_ITEM_SEPARATOR}
         />
-</View>
-          </CardItem>
-    </Card>
-        <Card><CardItem>
-        <View style={{flex:1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around'}} >
-<View style={{alignItems:"center", margin:5}}>
-<Title>Unity</Title>
-<TouchableOpacity>
-<Thumbnail style={{borderRadius:15}} 
-source={{uri:'https://s3.amazonaws.com/classconnection/480/flashcards/2867480/png/screen_shot_2015-10-25_at_82913_pm-150A232408E23829107-thumb400.png'}}/>
-</TouchableOpacity><Title>Pschent</Title></View>
-
-<View style={{alignItems:"center", margin:5}}>
-<Title>The Civilizers</Title>
-<TouchableOpacity>
-    <Thumbnail style={{borderRadius:15}}
-    source={{uri:"http://msta1913.org/images/050168.png"}}/>
-</TouchableOpacity>
-    <Text>Moors</Text></View>
-<View style={{alignItems:"center", margin:5}}>
-<Title>The Cosmos</Title>
-    <TouchableOpacity><Thumbnail style={{borderRadius:15}}
-    source={{uri:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSbc9-O2_z-FLq7d81nDgX2ajeo5EN294EsaVBe0cW7wleDbgsRbg"}}/>
-    </TouchableOpacity>
-  <Text>Aquarius</Text></View>
   </View>
- </CardItem>
-    </Card>
+  </CardItem>
+</Card>)
 
- {this.moundBuilders()}
+  render() {
+    return(
+    <Container style={{backgroundColor:COMMON_DARK_BACKGROUND}}>
+    <Content padder>
+    <Text>               
+       <Icon name="arrow-forward" style={COMMON_ICON_STYLE}/>
+       <Icon name="arrow-forward" style={COMMON_ICON_STYLE_GOLD}/>
+       <Icon name="arrow-forward" style={COMMON_ICON_STYLE_MAROON}/>
+      </Text> 
+
+    {this.quoteCard()}
+    {this.pastPresentFutureComponent()}
+    {this.videoReferences(this.props.videoReferencePromotions)}
+    {this.moundBuilders()}
 
         </Content>
-      </Container>
-    );
-  }
+      </Container>)};
+
+  
 }
 
 const styles = StyleSheet.create({
+  videoRefsOuterStyle:{flex:1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around'},
+  videoRefsInnerView:{alignItems:"center", margin:5},
+  videoRefsThumbnail:{borderRadius:15},
   container: {
     flex: 1,
     backgroundColor: '#fff',
@@ -185,31 +166,12 @@ const styles = StyleSheet.create({
     position: 'absolute',
     backgroundColor: 'transparent'
   },
-    headerImageStyles:{
-              height: 120,
-              width: 100,
-              position: "relative",
-              alignSelf: "stretch",
-              top: 10
-            },
-   cardItem:{backgroundColor:"silver"},
-   item: {
-    padding: 10,
-    fontSize: 18,
-    height: 44,
-  },
+   
+   item: { padding: 10, fontSize: 18, height: 44},
 });
 
 
-const mapStateToProps = state => ({digitalResources: state.resourcesData.digitalResources})
+const mapStateToProps = state => ({digitalResources: state.resourcesData.digitalResources,
+                                  videoReferencePromotions: state.videoMediaPromotions})
 
 export default connect(mapStateToProps, null)(Home)
-
-/*<Card>
-<CardItem>
-<Content>
-<Text>{this.state.century}</Text>
- 
-</Content>
-</CardItem>
-</Card>*/

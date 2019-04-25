@@ -14,7 +14,8 @@ import { getDefaultProfile,COMMON_ICON_STYLE, NEED_AT_LEAST_ANONYMOUS_LOGIN, TEX
  TEXT_UPDATE, NO_PHOTO_AVAILABLE_URI,ICON_ALL_ARROWFORWARD,ICON_IOS_MAIL, ICON_ANDROID_MAIL,
 TEXT_WEBSITE, TEXT_MAIL,TEXT_PHONE,TEXT_DESCRIPTION, ICON_IOS_PORTRAIT,ICON_ANDROID_PORTRAIT,
 ICON_IOS_GLOBE, ICON_ANDROID_GLOBE, ICON_IOS_DESCRIPTION,ICON_ANDROID_DESCRIPTION,
-ICON_IOS_CIRCLE, ICON_ANDROID_CIRCLE,ICON_IOS_PERSON, ICON_ANDROID_PERSON, COMMON_DARK_BACKGROUND, TEXT_CURRENT_IMAGE} from '../../constants.js';
+ICON_IOS_CIRCLE, ICON_ANDROID_CIRCLE,ICON_IOS_PERSON, ICON_ANDROID_PERSON, COMMON_DARK_BACKGROUND,
+ TEXT_CURRENT_IMAGE,ROUTE_SIMPLE_PROFILE_INPUT} from '../../constants.js';
 
 import { UPDATE_PROFILE_NAME_BY_KEY, UPDATE_PROFILE_WEBSITE_BY_KEY, UPDATE_PROFILE_PHONE_BY_KEY,UPDATE_PROFILE_EMAIL_BY_KEY, UPDATE_PROFILE_IMAGE_BY_KEY,
  ADD_NAME, ADD_PROFILE, ADD_DESC, ADD_EMAIL, ADD_PHONE, ADD_WEBSITE, ADD_IMAGE} from '../../redux/types';
@@ -38,15 +39,8 @@ super(props);
  /**
  *   update  profile 
  */
-    updateProfile = () => {
-    
-    //const tmp = this.props.addProfile(tmpProfile);
+  updateProfile = () => {
     const request = this.props.updateProfileRequest(this.props.profiles[this.state.dataIndex]);
-
-    Toast.show({
-              text: 'Attempting to update personal profile',
-              buttonText: 'ok'
-            });
   };
 
    arrowIcon = ()=>this.props.isGoogleUser ? <Icon style={COMMON_ICON_STYLE}  name={ICON_ALL_ARROWFORWARD} /> : null;
@@ -108,25 +102,22 @@ displayPhone = () => (this.state.dataIndex && this.props.profiles[this.state.dat
 displayWebsite = () => (this.state.dataIndex && this.props.profiles[this.state.dataIndex] ? this.props.profiles[this.state.dataIndex].website: '');
 displayDescription = () => (this.state.dataIndex  && this.props.profiles[this.state.dataIndex] ? this.props.profiles[this.state.dataIndex].description: '');
 displayImageURI = () => (this.state.dataIndex && this.props.profiles[this.state.dataIndex] && (this.props.profiles[this.state.dataIndex].imageURI!=='' )? this.props.profiles[this.state.dataIndex].imageURI: NO_PHOTO_AVAILABLE_URI);
-//displayEmail = () => (this.state.dataIndex? this.props.profiles[this.state.dataIndex].email: '');
 
-/** helper function to get the name of the profile at a specific index, if ani index  was provided as a property.
-*.  If there is no data index then it checks if this has a parameter indicating a user profile, and returns the logged in user info
-*/
-
-
+/*
+ * 
+ */
   addButton = (isPersonalProfile)=>{
    const isNewProfile = !this.state.dataIndex;
    //determine whether to add or update when user clicks button
    const onPressAction =()=>( isPersonalProfile ? this.updateProfile() :this._onPress()) ;
    //determine whether to show "Save" or "Update" depending on ownership
    const buttonText    = isPersonalProfile ?   TEXT_UPDATE :TEXT_SAVE;
-    const _saveButton = isPersonalProfile || isNewProfile ? ( <Button transparent  onPress={onPressAction } >
+   const _saveButton = isPersonalProfile || isNewProfile ? ( <Button transparent  onPress={onPressAction } >
              <Icon ios={ICON_IOS_CIRCLE} android={ICON_ANDROID_CIRCLE} style={COMMON_ICON_STYLE}/>
                <Text>{buttonText}</Text>
             </Button>):null;
 
-      return _saveButton; };
+    return _saveButton; };
 
 
 

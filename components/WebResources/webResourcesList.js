@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { StyleSheet, View, ListView, TextInput, ActivityIndicator,FlatList,Image, Alert,TouchableOpacity, ImageBackground} from 'react-native';
-import { Container, Subtitle, Header, Content, List, ListItem,Title,Icon, Thumbnail, Text, Left, Body, Right, Button } from 'native-base';
+import { Container, Subtitle, Header, Content, List, ListItem,Title,Icon, Thumbnail, Text, Left, Body, Right,Card, CardItem, Button } from 'native-base';
 import {resourceData,COMMON_ICON_STYLE, COMMON_DARK_BACKGROUND, NO_PHOTO_AVAILABLE_URI, COMMON_LISTVIEW_ITEM_SEPARATOR,
         ROUTE_SIMPLE_WEB_VIEW, ROUTE_EVENT_VIEW} from '../../constants.js'
 
@@ -68,15 +68,19 @@ import {resourceData,COMMON_ICON_STYLE, COMMON_DARK_BACKGROUND, NO_PHOTO_AVAILAB
   */
 _renderItem = (item) => 
  {
- return (
-            <ListItem style={{backgroundColor:"transparent",  justifyContent:"center", flex:1}}>  
-            <Thumbnail  large source={{uri:(item.item.imageURI||NO_PHOTO_AVAILABLE_URI)}} style={{padding:30, width:190}}/>
-    <View style={{flex:1, alignSelf:"flex-end"}}>
-      <TouchableOpacity  onPress={() => this.props.navigation.push(ROUTE_SIMPLE_WEB_VIEW, {url:item.item.url , title:item.item.title})} >
-      <Text>{item.item.title}</Text>   
-      </TouchableOpacity>
-    </View>
-            </ListItem>
+ return (<ListItem style={{ flex:1 }}>
+          <Card style={{ flex:1 }}>
+           <CardItem style={{ flex:1}}> 
+            <TouchableOpacity  style={styles.outerOpacity}
+                        onPress={() => this.props.navigation.push(ROUTE_SIMPLE_WEB_VIEW, {url:item.item.url , title:item.item.title})} > 
+              <Thumbnail square large source={{uri:(item.item.imageURI||NO_PHOTO_AVAILABLE_URI)}} style={styles.thumbnail}/>
+              <View  style={styles.customOuterStyle}  >
+               <View style={styles.buttonOuterShell}>
+                <View style={styles.buttonTextShell} >
+                 <Text style={styles.buttonText}>{item.item.title}</Text>
+                </View></View></View>
+            </TouchableOpacity></CardItem></Card>
+        </ListItem>
     );
 }
 
@@ -85,28 +89,14 @@ _renderItem = (item) =>
     return (
       //ListView to show with textinput used as search bar 
       <Container style={styles.viewStyle}>
-        <Header >
-        <Body>
-           <Text>Keeping it in the Community</Text> 
-        </Body>
-            <Right>             
-            <Button transparent disabled onPress={() => this.props.navigation.push('EventView', { })} >
-             <Icon ios='ios-information-circle' android="md-information-circle" style={COMMON_ICON_STYLE}/>
-            </Button>
-            </Right>
-
-        </Header>
-<Content>
-
-        <FlatList style={{backgroundColor:"transparent", margin:0, padding:0}}
-          data={this.props.webResources}
-          renderItem={this._renderItem}
-          keyExtractor={this._keyExtractor}
-
-           ItemSeparatorComponent = {COMMON_LISTVIEW_ITEM_SEPARATOR}
+      <Content>
+        <FlatList style={{backgroundColor:COMMON_DARK_BACKGROUND, margin:0, padding:0}}
+                data={this.props.webResources}
+                renderItem={this._renderItem}
+                keyExtractor={this._keyExtractor}
+                ItemSeparatorComponent = {COMMON_LISTVIEW_ITEM_SEPARATOR}
         />
-              </Content>
-
+      </Content>
       </Container>
     );
   }
@@ -114,13 +104,12 @@ _renderItem = (item) =>
 
 
 const styles = StyleSheet.create({
-  view: {
-    justifyContent: 'center',
-    flex: 1,
-    padding: 10,
-  },
-imageStyle:{padding:0,width: 250, height: 110}
-
+  outerOpacity:{flex:1, borderRadius:15,  justifyContent:"flex-start", height:120, width:350,backgroundColor:COMMON_DARK_BACKGROUND},
+  thumbnail:{height:90, width:"100%"},
+  customOuterStyle:{position:"absolute", bottom:0, right:-5},
+  buttonText:{color:"gold", paddingLeft:10, paddingRight:10, paddingTop:5, paddingBottom:5},
+  buttonOuterShell:{flex:1, borderWidth:2, borderRadius:15, backgroundColor:COMMON_DARK_BACKGROUND},
+  buttonTextShell:{ borderWidth:1, borderRadius:10, backgroundColor:"maroon"}
 });
 
 const mapStateToProps = state => ({webResources: state.resourcesData.webResources})

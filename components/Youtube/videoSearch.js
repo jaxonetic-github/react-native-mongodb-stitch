@@ -87,14 +87,17 @@ renderItem =(record)=>{
  //doing a bit of filtering that should probably done earlier
  if(!record.item.payload && record.item.payload===''){ return null;}
 
+  let imgURI = record.item.imageURI;
+if(!imgURI)
+ imgURI =  record.item.images? record.item.images[0] : NO_PHOTO_AVAILABLE_URI;
 //attempting to combine the renderItems for 2 possible route options
   const route = record.item.payload ? ROUTE_YOUTUBELIST_VIEW :ROUTE_SIMPLE_WEB_VIEW ;
-
+console.log(imgURI,"renderitem:",record);
    return (<ListItem style={styles.flexStyle}>       
    <Card style={styles.flexStyle}>
      <CardItem style={styles.flexStyle}>
       <View  style={styles.outerViewStyle}>
-       <Thumbnail  source={{uri:/*item.item.imageURI||*/NO_PHOTO_AVAILABLE_URI}}/>
+       <Thumbnail  source={{uri:imgURI}}/>
         <View><Title style={styles.title}>{record.item.title}</Title></View>
         <View style={styles.buttonContainer}>
             <Button transparent onPress={() => {this.props.navigation.push(route, {record:record.item, title:record.item.title, url:record.item.url})}}>
@@ -146,7 +149,7 @@ const styles = StyleSheet.create({
   buttonContainer:{ flex:1,flexDirection: 'row', alignSelf:"flex-end", justifyContent:"flex-end"},
   title:{flex:1, alignSelf:"center"},
   innerHeaderStyle:{backgroundColor: COMMON_DARK_BACKGROUND},
-  outerViewStyle:{flexDirection: 'row',flex:1},
+  outerViewStyle:{flexDirection: 'row',flex:1, backgroundColor:"silver", borderRadius:15},
   textInputStyle: {
     textAlign: 'center',
     height: 40,

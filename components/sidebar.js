@@ -59,9 +59,7 @@ renderHeader = () =>{return(
                <Icon ios={iosIcon} android={androidIcon} style={{fontSize: 20, color: '#000'}}/>
                <Text>{data.item.label}</Text>
               </Left>            
-
-                </ListItem>)
-            
+            </ListItem>)
              }
 
 
