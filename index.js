@@ -19,6 +19,7 @@ import { createAppContainer } from 'react-navigation';
 import { rootSaga, clean,saveAuthCode} from './redux/sagas/authSagas.js';
 import { createStore, applyMiddleware,combineReducers } from 'redux';
 import resourcesReducer from './redux/resourcesReducer.js';
+import videoRefsReducer from './redux/videoRefsReducer.js';
 import profilesReducer from './components/Profile/Redux/Reducers/profileReducer.js';
 import authReducer from './components/Authentication/Redux/Reducers/authReducer.js';
 import eventsReducer from './components/Event/Redux/Reducers/eventReducer.js';
@@ -40,7 +41,7 @@ const AppContainer = createAppContainer(mainStack);
 
 //
 //combine reducers
-const rootReducer = combineReducers({profiles: profilesReducer, events:eventsReducer, auth: authReducer, resourcesData:resourcesReducer, sideBar:sideBarReducer});
+const rootReducer = combineReducers({profiles: profilesReducer, events:eventsReducer, auth: authReducer, resourcesData:resourcesReducer, sideBar:sideBarReducer,videoMediaPromotions:videoRefsReducer});
 const store = createStore(rootReducer, initialStoreState,  applyMiddleware(sagaMiddleware, logger) );
 //const eventEmitter = new NativeEventEmitter(RNGoogleSignin);
 

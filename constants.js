@@ -70,7 +70,8 @@ export const ICON_IOS_CALENDAR = "ios-list-box";
 export const ICON_ANDROID_CALENDAR = "md-list-box";
 export const ICON_ALL_TRASH = 'trash';
 export const ICON_ALL_ARROWFORWARD = 'arrow-forward';
-
+export const ICON_IOS_INFORMATION = 'ios-information-circle';
+export const ICON_ANDROID_INFORMATION = 'md-information-circle';
 
 // Label Text
 export const PLACEHOLDER_SEARCH_TEXT = "Search Here";
@@ -112,7 +113,8 @@ export const COMMON_ACTIVITY_INDICATOR = <View style={{ flex: 1, paddingTop: 20 
 export const COMMON_LISTVIEW_ITEM_SEPARATOR = ()=> <View style={listItemSeparatorStyle} />;
 export const ALT_LISTVIEW_ITEM_SEPARATOR = ()=> <View style={{flex:1,paddingTop:10, height: 20, backgroundColor:COMMON_DARK_BACKGROUND  }} />;
 export const COMMON_ICON_STYLE = {fontSize: 20, color: 'black'};
-
+export const COMMON_ICON_STYLE_MAROON = {fontSize: 20, color: 'maroon'};
+export const COMMON_ICON_STYLE_GOLD = {fontSize: 20, color: 'gold'};
 /**
  * Displays a list, where each element of the list must have a title,url, and imageURI variable
  * @param keyExtractor: records of the form {title:, imageURI:...,}
@@ -174,7 +176,10 @@ export const CATEGORY_LIST = [{label:"Educational", value:"Educational"}, {label
 export const SUBCATEGORY_LIST = [{label:"Mental Slavery", value:"Mental Slavery", }, {label:"War", value:"War"}, {label:"Solutions", value:"Solutions"},
  {label:"Information", value:"Information"}];
    
- const books=[{author:"G M James",  title:"Stolen Legacy"},{author:"Carter G Woodson", title:"The MisEducation of the Negro"}];
+ const books=[{author:"Druscilla Houson",  title:"Wonderful Ethiopians of the Ancient Cushite Empire"},
+              {author:"G M James",  title:"Stolen Legacy"},
+              {author:"John G Jackson",  title:"Man, God, and Civilization"},
+              {author:"Carter G Woodson", title:"The MisEducation of the Negro"}];
 
  const DEFAULT_EVENT = STATE.initialStoreState.events.tmpEvent;
  const DEFAULT_PROFILE = STATE.initialStoreState.profiles.tmpProfile;
