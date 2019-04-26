@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import {Icon, Button } from 'native-base';
+import {Icon, Button, Text } from 'native-base';
 import {  createStackNavigator,createAppContainer, createSwitchNavigator,createBottomTabNavigator, createMaterialTopTabNavigator } from 'react-navigation';
 import { createDrawerNavigator,DrawerActions } from 'react-navigation-drawer';
 
@@ -37,24 +37,23 @@ function createDrawerExample(options = {}) {
   {
         initialRouteName: 'Home',
         drawerWidth: 280,
-    contentComponent: props => <SideBar {...props} />
+        contentComponent: props => <SideBar {...props} />
   }
   );
 
   return DrawerExample;
 }
 
-
 /*
  * Return a StackNavigator with overall routes
  */
 function createTopStack(options = {}) {
-
+  const drawerNavigation = createDrawerExample();
 
   const innerNav = createStackNavigator({
-  Home: HomeScreen,
-  Drawer: {screen:createDrawerExample(), navigationOptions : { title: 'Black Arts Renaissance'} },
-  VideoSearch:{screen:VideoSearch, navigationOptions: ({ navigation }) => ({title: `Debates Lectures Interviews`})  },
+
+  Drawer: {screen:drawerNavigation },
+  VideoSearch:{screen:VideoSearch, navigationOptions: ({ navigation }) => ({title: `Our Truebrary`})  },
   YouTubeList:{screen:YouTubeList, navigationOptions: ({ navigation }) => ({title: `${navigation.state.params.title}`})  },
   TimelineView:{screen:TimelineView, navigationOptions: ({ navigation }) => ({title: "Timeline"})  },
   SimpleWebView:{screen:SimpleWebView, navigationOptions: ({ navigation }) => ({title: `${navigation.state.params.title}`}) },
@@ -68,20 +67,17 @@ function createTopStack(options = {}) {
   EventCalendar: {screen: EventCalendar, navigationOptions :{ title: 'Events'}},
   MapView: {screen: MapView, navigationOptions :{ title: 'MapView'}},
 },
-  {initialRouteName: "Drawer",
-/*    defaultNavigationOptions: {
-      headerStyle: {
-        backgroundColor:COMMON_DARK_BACKGROUND ,
-      },
-      headerRight:<Button transparent onPress={()=>{console.log("button presssssssses!", this); DrawerActions.toggleDrawer();}}><Icon ios='ios-menu' android="md-menu" style={{fontSize: 25, margin:10, color: 'white'}}/></Button>,
+  {         initialRouteName: "Drawer",
+    defaultNavigationOptions : ({ navigation }) => (    {
+      headerStyle: {backgroundColor:COMMON_DARK_BACKGROUND },
+      headerRight:<Button transparent onPress={() => navigation.toggleDrawer()}><Icon ios='ios-menu' android="md-menu" style={{fontSize: 25, color: 'white'}}/></Button>,
       headerTintColor: '#fff',
-      headerTitleStyle: {
-        fontWeight: 'bold',
-      },
-    }*/})
+      headerTitleStyle: {fontWeight: 'bold'}
+    }) 
+
+
+  })
   return innerNav;
-
-
 }
 
 /******** TabNav Stack  **********/
@@ -101,11 +97,6 @@ export default mainStack = createSwitchNavigator({
    // SearchLayout:TabNavigator 
  },
   {
-    initialRouteName: 'Inner',
-    
-    headerStyle: {
-        backgroundColor: COMMON_DARK_BACKGROUND,
-      }
-  });
+    initialRouteName: 'Inner' });
 
 

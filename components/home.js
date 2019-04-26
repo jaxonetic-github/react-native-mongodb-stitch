@@ -10,27 +10,36 @@ import { ROUTE_SIMPLE_WEB_VIEW, COMMON_DARK_BACKGROUND,TEXT_EVERYWHERE,TEXT_All,
        ICON_IOS_INFORMATION, ICON_ANDROID_INFORMATION } from '../constants.js';
 import WebResourcesList from './WebResources/webResourcesList.js';
 //import FitImage from 'react-native-fit-image';
-import { Container, Header, Content, Card, CardItem,ListItem, Thumbnail,Button, Text, Icon,Right,Subtitle, Title, Left, Body,Form, Picker as AltPicker } from 'native-base';
-//import { Provider } from 'react-redux'
-//import rootReducer from './reducers'
-//import { createStore } from 'redux'
-//redux 
+import { Container, Header, Content, Card, CardItem,ListItem, Thumbnail,Button, Text, Icon,Right,Subtitle, Title, Toast,Left, Body,Form, Picker as AltPicker } from 'native-base';
+
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 /**
  * This is the home screen of the app. 
  * The content will be changing 
+ //navigation.getParam('title', 'A Nested Details Screen')||"BAR",
  */
 class Home extends React.Component {
+static navigationOptions = ({ navigation, navigationOptions }) => {
+  console.log(navigation,"_-----------------------------------------*********************");
+    return {
+      headerRight:<Button  onPress={() => navigation.toggleDrawer()}><Icon ios='ios-menu' android="md-menu" style={{fontSize: 25, color: 'white'}}/></Button>,
+      title: "jkhk",
+            headerStyle: {backgroundColor:COMMON_DARK_BACKGROUND },
+      headerTintColor: 'gold',
+      headerTitleStyle: {fontWeight: 'bold'} 
 
+    };
+  };
   constructor(props) {
     super(props);
+
     this.state = {
       locations : LOCATION_LIST,categories:CATEGORY_LIST,
       selectedCategory:undefined,
       selectedState: undefined,
-      modalVisible: false,
+      menuVisible: false,
     };
   }
 
@@ -107,17 +116,18 @@ videoReferences = (promotions)=>{
 pastPresentFutureComponent = ()=>(<Card>
   <CardItem>
   <Text>Our Story... Truth</Text>
-  <Subtitle>These videos are priceless.  Buy them, watch them, gift them, watch them again!!!</Subtitle>
+  <Subtitle>These videos are priceless. </Subtitle><Subtitle> Buy them, watch them, gift them, watch them again!!!</Subtitle>
   </CardItem>
   <CardItem>
-   <View style={{flex:1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around'}}>
+   <View style={styles.pastPresFutureStyle}>
+
    <FlatList horizontal data={this.props.digitalResources} 
             renderItem={(item)=>{
               return(<ListItem style={{flex:1, borderRadius:15, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around' }}>
-                     <View style={{flex:1,padding:5, backgroundColor:COMMON_DARK_BACKGROUND, borderRadius:5}}>
-                     <TouchableOpacity style={{ borderWidth:1, borderRadius:10, backgroundColor:"maroon"}} >
-                       <Text style={{color:"gold", paddingLeft:10, paddingRight:10, paddingTop:5, paddingBottom:5}}>{item.item.title}</Text>
-                     </TouchableOpacity></View></ListItem>)
+                 <View style={{flex:1,padding:5, backgroundColor:COMMON_DARK_BACKGROUND, borderRadius:5}}>
+                <TouchableOpacity style={{ borderWidth:1, borderRadius:10, backgroundColor:"maroon"}} >
+               <Text style={{color:"gold", paddingLeft:10, paddingRight:10, paddingTop:5, paddingBottom:5}}>{item.item.title}</Text>
+              </TouchableOpacity></View></ListItem>)
           }}
            ItemSeparatorComponent = {COMMON_LISTVIEW_ITEM_SEPARATOR}
         />
@@ -126,22 +136,16 @@ pastPresentFutureComponent = ()=>(<Card>
 </Card>)
 
   render() {
+   
     return(
     <Container style={{backgroundColor:COMMON_DARK_BACKGROUND}}>
-    <Content padder>
-    <Text>               
-       <Icon name="arrow-forward" style={COMMON_ICON_STYLE}/>
-       <Icon name="arrow-forward" style={COMMON_ICON_STYLE_GOLD}/>
-       <Icon name="arrow-forward" style={COMMON_ICON_STYLE_MAROON}/>
-      </Text> 
-
-    {this.quoteCard()}
-    {this.pastPresentFutureComponent()}
-    {this.videoReferences(this.props.videoReferencePromotions)}
-    {this.moundBuilders()}
-
-        </Content>
-      </Container>)};
+      <Content padder>
+        {this.quoteCard()}
+        {this.pastPresentFutureComponent()}
+        {this.videoReferences(this.props.videoReferencePromotions)}
+        {this.moundBuilders()}
+      </Content>
+     </Container>)};
 
   
 }
@@ -157,16 +161,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingTop: 22
   },
+  slideMenuStyle:{marginTop:4},
+  pastPresFutureStyle:{flex:1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around'},
   touchable: {
-     
     alignItems: 'center',
-   // justifyContent: 'center'
   },
    view: {
     position: 'absolute',
     backgroundColor: 'transparent'
   },
-   
    item: { padding: 10, fontSize: 18, height: 44},
 });
 
