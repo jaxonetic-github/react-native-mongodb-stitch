@@ -135,6 +135,10 @@ pastPresentFutureComponent = ()=>(<Card>
   </CardItem>
 </Card>)
 
+
+/**
+ * Render the home view 
+ */
   render() {
    
     return(
