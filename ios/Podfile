@@ -16,6 +16,7 @@ target 'Tamari' do
   
 
 #pod 'react-native-geocoder', :path => '../node_modules/react-native-geocoder'
+
     pod 'React', :path => '../node_modules/react-native', :subspecs => [
     'Core',
     'CxxBridge',
@@ -31,13 +32,16 @@ target 'Tamari' do
     # Remove any subspecs you don't want to use in your project
   ]
 pod 'yoga', :path => '../node_modules/react-native/ReactCommon/yoga'
+
     pod 'react-native-webview', :path => '../node_modules/react-native-webview'
     pod 'react-native-maps', :path => '../node_modules/react-native-maps'
     #pod 'react-native-google-maps', path: rn_maps_path  # Remove this line if you don't want to support GoogleMaps on iOS
 #pod 'GoogleMaps'  # Remove this line if you don't want to support GoogleMaps on iOS
 #pod 'Google-Maps-iOS-Utils' # Remove this line if you don't want to support GoogleMaps on iOS
 
+   
+  
+
     pod 'react-native-netinfo', :path => '../node_modules/@react-native-community/netinfo'
 
-  
   end
