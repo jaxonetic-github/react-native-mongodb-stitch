@@ -5,18 +5,15 @@ Mongo Stitch Cloud for the backend.
 React Native for the front end 
    --redux saga, Native Module, Google Signin, Apple Maps, MongdDB Stitch integration
 
-### Component Screenshot
-```
-react-native run-ios   Or   react-native run-android
-
-
 
 ### Project Structure
-Using the Vue Webpack scaffold and jsDocs, you get a structure below. 
+
+<img src="https://github.com/jaxonetic-github/react-native-mongodb-stitch/blob/master/images/profileDemoUpdate.gif" align="left" height="300" width="170" > 
 * `services/dbServices.js` - essentially a dbo for the MongoStitchbackend
 * `redux` - Redux specific files for state, and sagas
 * `redux/saga` - Redux Sagas
-<img src="https://github.com/jaxonetic-github/react-native-mongodb-stitch/blob/master/images/profileDemoUpdate.gif" align="left" height="300" width="170" >* `android` - Android specific modifications
+* `ios` - IOS specific modifications
+* `android` - Android specific modifications
 * `components` - The applications react components
 * `components/Authentication` - The applications react components and redux files that handle authentication and connectivity changes
 * `docs` - Documentation coming ...
@@ -27,9 +24,16 @@ Using the Vue Webpack scaffold and jsDocs, you get a structure below.
 * `index.html` - Need to add google api key.  I may not always provide it.  That is why I made the screenshot.
 
 
-
 ** This app uses KEYS and ID's from Google and StreetySmarts.  They are stored securely (I hope) as Secrets and accessed via Stitch Functions which are similar to AWS Lambdas.  @See services/dbService.
 
+## Screenshots
 
+```
+react-native run-ios   Or   react-native run-android
+```
+
+Produces
+
+<img src="https://github.com/jaxonetic-github/react-native-mongodb-stitch/blob/master/images/profileDemoUpdate.gif" align="left" height="300" width="170" >
 
 
