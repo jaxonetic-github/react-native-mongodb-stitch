@@ -1,27 +1,22 @@
 
 
-** Architecture
+### Architecture
 Mongo Stitch Cloud for the backend.
 React Native for the front end 
    --redux saga, Native Module, Google Signin, Apple Maps, MongdDB Stitch integration
 
 ### Component Screenshot
 ```
-react-native run-ios
-```
-Or
-```
-react-native run-android
-```
-<img src="https://github.com/jaxonetic-github/react-native-mongodb-stitch/blob/master/images/profileDemoUpdate.gif" align="left" height="300" width="170" >
+react-native run-ios   Or   react-native run-android
+
+
 
 ### Project Structure
 Using the Vue Webpack scaffold and jsDocs, you get a structure below. 
 * `services/dbServices.js` - essentially a dbo for the MongoStitchbackend
 * `redux` - Redux specific files for state, and sagas
 * `redux/saga` - Redux Sagas
-* `ios` - IOS specific modifications
-* `android` - Android specific modifications
+<img src="https://github.com/jaxonetic-github/react-native-mongodb-stitch/blob/master/images/profileDemoUpdate.gif" align="left" height="300" width="170" >* `android` - Android specific modifications
 * `components` - The applications react components
 * `components/Authentication` - The applications react components and redux files that handle authentication and connectivity changes
 * `docs` - Documentation coming ...
