@@ -7,25 +7,34 @@ React Native for the front end
 
 ### Component Screenshot
 ```
-npm run dev
+react-native run-ios
 ```
-produces:
-
+Or
+```
+react-native run-android
+```
 <img src="https://github.com/jaxonetic-github/react-native-mongodb-stitch/blob/master/images/profileDemoUpdate.gif" align="left" height="300" width="170" >
 
-** Test Cases
- Testcases can be found in __tests__. There are examples of unit tests, integration tests.  At the moment there are unit and e2e tests with Jest and Detox. [https://github.com/wix/Detox]
+### Project Structure
+Using the Vue Webpack scaffold and jsDocs, you get a structure below. 
+* `services/dbServices.js` - essentially a dbo for the MongoStitchbackend
+* `redux` - Redux specific files for state, and sagas
+* `redux/saga` - Redux Sagas
+* `ios` - IOS specific modifications
+* `android` - Android specific modifications
+* `components` - The applications react components
+* `components/Authentication` - The applications react components and redux files that handle authentication and connectivity changes
+* `docs` - Documentation coming ...
+* `__tests__/DBServicesSpec.js` - Unit Tests for the dbServices.js file
+* `__tests__/sagaSpec.js` - Integration Test for Redux Saga flows
+* `build/` - build scripts
+* `config/` - configurations
+* `index.html` - Need to add google api key.  I may not always provide it.  That is why I made the screenshot.
 
 
-** This app uses KEYS and ID's from Google and StreetySmarts.  They are stored securely (I hope) as Secrets and accessed via Stitch Functions which are similar to AWS Lambdas.
+
+** This app uses KEYS and ID's from Google and StreetySmarts.  They are stored securely (I hope) as Secrets and accessed via Stitch Functions which are similar to AWS Lambdas.  @See services/dbService.
 
 
 
-** Documentation
 
-
-** Resources
-EventEmitters -> https://blog.callstack.io/sending-events-to-javascript-from-your-native-module-in-react-native-29244f890e04
-
-
-**Direction

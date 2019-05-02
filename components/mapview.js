@@ -1,7 +1,6 @@
 import React from 'react'
 import { ActivityIndicator, StyleSheet, View, TouchableOpacity, Text, Alert} from 'react-native'
 import Input from './textinput'
-import InputForm from './inputform'
 import MapView from 'react-native-maps';
 import Geocoder from 'react-native-geocoding';
 import { Container, Header, Content, Item, Label, Textarea, Form } from "native-base";

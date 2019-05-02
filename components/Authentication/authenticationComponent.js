@@ -7,7 +7,6 @@ import {Container, Accordion ,Content, Icon, Text } from 'native-base';
 import { googleSignOut, loginUserRequest,updateInternetConnectivity } from './Redux/Actions/authActions.js';
 import SignUp from '../signUp';
 import {NEED_AT_LEAST_ANONYMOUS_LOGIN} from '../../constants.js'
-
 import {getLoggedUser} from '../../redux/authSelectors.js';
 
 //import { GoogleLogin } from 'react-google-login-component';
@@ -17,6 +16,10 @@ const dataArray = [
   { title: "Register", content: "Lorem ipsum dolor sit amet" },
 ];
 
+
+/**
+ *  A component to centralize the authentication and connectivity aspects of the application 
+ */
 class AuthenticationComponent extends React.Component{
 
 
@@ -42,7 +45,6 @@ NetInfo.isConnected.addEventListener('connectionChange', this.handleConnectivity
  }
 
   _renderContent = (item) =>{
-
     let contentView;
 if (this.props.isConnected) {
       contentView = 
@@ -82,9 +84,10 @@ if (this.props.isConnected) {
   }
 
 
-
+/**  
+ * Render Component
+ */
     render(){
-      console.log("Rendererer")
 return(
   <Accordion 
            
@@ -101,10 +104,8 @@ return(
 }
 
 function mapStateToProps(state){
-	console.log((state.auth!= NEED_AT_LEAST_ANONYMOUS_LOGIN) ,'mapStatetoprops auth::', state.auth);
-  console.log( (state.auth.loggedInProviderName=="oauth2-google") ,'mapStatetoprops auth::', state.auth.loggedInProviderName);
-console.log(((state.auth!= NEED_AT_LEAST_ANONYMOUS_LOGIN) && state.auth.auth &&  (state.auth.auth.loggedInProviderName=="oauth2-google")));
- const isConnected =  ((state.auth!= NEED_AT_LEAST_ANONYMOUS_LOGIN) && state.auth.auth &&  (state.auth.auth.loggedInProviderName=="oauth2-google"));
+
+const isConnected =  ((state.auth!= NEED_AT_LEAST_ANONYMOUS_LOGIN) && state.auth.auth &&  (state.auth.auth.loggedInProviderName=="oauth2-google"));
     return { 
       /** Check if there is at least an anonymous authorized connection */
     isConnected:isConnected,

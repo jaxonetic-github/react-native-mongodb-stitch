@@ -36,6 +36,7 @@ export  default class DBService {
 
 /**
  * Privately retrieve the google keys required for google sign in and Geocoding API
+ * Ths method may become deprecated in the future when I move the GoogleSign to a central server
  */
 async configureGoogleKeys(){
    const client =await DBService.getDBClient();
