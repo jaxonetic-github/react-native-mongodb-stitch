@@ -8,7 +8,6 @@ React Native for the front end
 
 ### Project Structure
 
-<img src="https://github.com/jaxonetic-github/react-native-mongodb-stitch/blob/master/images/profileDemoUpdate.gif" align="left" height="300" width="170" > 
 * `services/dbServices.js` - essentially a dbo for the MongoStitchbackend
 * `redux` - Redux specific files for state, and sagas
 * `redux/saga` - Redux Sagas
