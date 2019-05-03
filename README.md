@@ -18,15 +18,15 @@ React Native for the front end
 * `docs` - Documentation coming ...
 * `__tests__/DBServicesSpec.js` - Unit Tests for the dbServices.js file
 * `__tests__/sagaSpec.js` - Integration Test for Redux Saga flows
-* `build/` - build scripts
-* `config/` - configurations
-* `index.html` - Need to add google api key.  I may not always provide it.  That is why I made the screenshot.
+
+
+
 
 
 ** This app uses KEYS and ID's from Google and StreetySmarts.  They are stored securely (I hope) as Secrets and accessed via Stitch Functions which are similar to AWS Lambdas.  @See services/dbService.
 
 
-###Vagrant
+### Vagrant
 <div>
 Bootstrap.sh : a script to install the dependencies to the box and load the app from github
 <pre>
