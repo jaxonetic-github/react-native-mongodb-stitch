@@ -29,6 +29,7 @@ React Native for the front end
 ####Vagrant
 <div>
 Bootstrap.sh : a script to install the dependencies to the box and load the app from github
+<pre>
 <code>
 apt-get install -y git
 apt-get install -y nodejs
@@ -44,6 +45,7 @@ cd ios && pod install
 cd ..
 react-native run-ios
 </code>
+</pre>
 </div>
 
 
