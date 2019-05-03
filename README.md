@@ -20,10 +20,7 @@ React Native for the front end
 * `__tests__/sagaSpec.js` - Integration Test for Redux Saga flows
 
 
-
-
-
-** This app uses KEYS and ID's from Google and StreetySmarts.  They are stored securely (I hope) as Secrets and accessed via Stitch Functions which are similar to AWS Lambdas.  @See services/dbService.
+*** This app uses KEYS and ID's from Google and StreetySmarts.  They are stored securely (I hope) as Secrets and accessed via Stitch Functions which are similar to AWS Lambdas.  @See services/dbService.
 
 
 ### Vagrant
@@ -41,6 +38,7 @@ cd projectDir
 git clone "https://github.com/jaxonetic-github/react-native-mongodb-stitch.git" .
 ls
 sudo npm install
+react-native link
 cd ios && pod install
 cd ..
 react-native run-ios
