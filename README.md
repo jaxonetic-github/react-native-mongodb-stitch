@@ -27,10 +27,28 @@ React Native for the front end
 
 
 ####Vagrant
+<div>
+Bootstrap.sh : a script to install the dependencies to the box and load the app from github
+<code>
+apt-get install -y git
+apt-get install -y nodejs
+apt-get install -y build-essential
+apt-get install -y npm
+rm -rf projectDir
+mkdir  projectDir
+cd projectDir 
+git clone "https://github.com/jaxonetic-github/react-native-mongodb-stitch.git" .
+ls
+sudo npm install
+cd ios && pod install
+cd ..
+react-native run-ios
+</code>
+</div>
+
 
 <div>
-VagrantFile
-<pre>
+VagrantFile : FYI, It takes 6 hours for vagrant to download the OS X box.
 <code>
 Vagrant.configure("2") do |config|
   config.vm.box = "alopezh/osx-xcode-brew"
@@ -38,13 +56,13 @@ Vagrant.configure("2") do |config|
   config.vm.provision :shell, path:"bootstrap.sh"
 end
 </code>
-</pre></div>
+</div>
 
 
 <div><pre>
 <code>
-> vagrant init alopezh/osx-xcode-brew --box-version 1.0
-> vagrant up
+ vagrant init alopezh/osx-xcode-brew --box-version 1.0
+ vagrant up
 </code>
 </pre></div>
 
