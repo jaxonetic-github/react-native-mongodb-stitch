@@ -25,7 +25,7 @@ React Native for the front end
 
 ** This app uses KEYS and ID's from Google and StreetySmarts.  They are stored securely (I hope) as Secrets and accessed via Stitch Functions which are similar to AWS Lambdas.  @See services/dbService.
 
-## Screenshots
+### Screenshots
 
 ```
 react-native run-ios   Or   react-native run-android
@@ -36,3 +36,10 @@ Produces
 <img src="https://github.com/jaxonetic-github/react-native-mongodb-stitch/blob/master/images/profileDemoUpdate.gif" align="left" height="300" width="170" >
 
 
+### Devops
+<div><pre>
+<code>
+> vagrant init alopezh/osx-xcode-brew --box-version 1.0
+> vagrant up
+</code>
+</pre></div>
