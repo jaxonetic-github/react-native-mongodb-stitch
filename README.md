@@ -26,7 +26,7 @@ React Native for the front end
 ** This app uses KEYS and ID's from Google and StreetySmarts.  They are stored securely (I hope) as Secrets and accessed via Stitch Functions which are similar to AWS Lambdas.  @See services/dbService.
 
 
-####Vagrant
+###Vagrant
 <div>
 Bootstrap.sh : a script to install the dependencies to the box and load the app from github
 <pre>
@@ -51,6 +51,7 @@ react-native run-ios
 
 <div>
 VagrantFile : FYI, It takes 6 hours for vagrant to download the OS X box.
+<pre>
 <code>
 Vagrant.configure("2") do |config|
   config.vm.box = "alopezh/osx-xcode-brew"
@@ -58,6 +59,7 @@ Vagrant.configure("2") do |config|
   config.vm.provision :shell, path:"bootstrap.sh"
 end
 </code>
+</pre>
 </div>
 
 
