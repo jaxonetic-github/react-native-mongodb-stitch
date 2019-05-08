@@ -143,10 +143,10 @@ displayImageURI = () =>(this.state.dataIndex && this.props.events[this.state.dat
             <Body>
               <Text>{this.displayDescription()}</Text>
             </Body>
-            <Right>   
-                 <Icon onPress={() => this.props.navigation.navigate("EditDescription")}
-                  name={ICON_ALL_ARROWFORWARD} />
-          
+            <Right>  
+              <Button transparent onPress={() => this.props.navigation.navigate("EditDescription")} >
+                 <Icon style={COMMON_ICON_STYLE} name={ICON_ALL_ARROWFORWARD} />
+          </Button>
             </Right>
           </ListItem>
           <Separator bordered>
