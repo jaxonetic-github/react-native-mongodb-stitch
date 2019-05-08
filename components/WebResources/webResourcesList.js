@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { StyleSheet, View, ListView, TextInput, ActivityIndicator,FlatList,Image, Alert,TouchableOpacity, ImageBackground} from 'react-native';
 import { Container, Subtitle, Header, Content, List, ListItem,Title,Icon, Thumbnail, Text, Left, Body, Right,Card, CardItem, Button } from 'native-base';
-import {resourceData,COMMON_ICON_STYLE, COMMON_DARK_BACKGROUND, NO_PHOTO_AVAILABLE_URI, COMMON_LISTVIEW_ITEM_SEPARATOR,
+import {resourceData,commonViewButton,COMMON_ICON_STYLE, COMMON_DARK_BACKGROUND, NO_PHOTO_AVAILABLE_URI, COMMON_LISTVIEW_ITEM_SEPARATOR,
         ROUTE_SIMPLE_WEB_VIEW, ROUTE_EVENT_VIEW} from '../../constants.js'
 
 /**
@@ -68,21 +68,29 @@ import {resourceData,COMMON_ICON_STYLE, COMMON_DARK_BACKGROUND, NO_PHOTO_AVAILAB
   */
 _renderItem = (item) => 
  {
+  const buttonPressAction = () => this.props.navigation.push(ROUTE_SIMPLE_WEB_VIEW, {url:item.item.url , title:item.item.title});
  return (<ListItem style={{ flex:1 }}>
           <Card style={{ flex:1 }}>
            <CardItem style={{ flex:1}}> 
             <TouchableOpacity  style={styles.outerOpacity}
-                        onPress={() => this.props.navigation.push(ROUTE_SIMPLE_WEB_VIEW, {url:item.item.url , title:item.item.title})} > 
+                        onPress={buttonPressAction} > 
+              
               <Thumbnail square large source={{uri:(item.item.imageURI||NO_PHOTO_AVAILABLE_URI)}} style={styles.thumbnail}/>
+
+{commonViewButton(item.item.title, buttonPressAction)}
+
+            </TouchableOpacity></CardItem></Card>
+        </ListItem>
+    );
+}
+
+/*
               <View  style={styles.customOuterStyle}  >
                <View style={styles.buttonOuterShell}>
                 <View style={styles.buttonTextShell} >
                  <Text style={styles.buttonText}>{item.item.title}</Text>
                 </View></View></View>
-            </TouchableOpacity></CardItem></Card>
-        </ListItem>
-    );
-}
+*/
 
   render() {
 
@@ -106,6 +114,7 @@ _renderItem = (item) =>
 const styles = StyleSheet.create({
   outerOpacity:{flex:1, borderRadius:15,  justifyContent:"flex-start", height:120, width:350,backgroundColor:COMMON_DARK_BACKGROUND},
   thumbnail:{height:90, width:"100%"},
+
   customOuterStyle:{position:"absolute", bottom:0, right:-5},
   buttonText:{color:"gold", paddingLeft:10, paddingRight:10, paddingTop:5, paddingBottom:5},
   buttonOuterShell:{flex:1, borderWidth:2, borderRadius:15, backgroundColor:COMMON_DARK_BACKGROUND},

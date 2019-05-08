@@ -15,6 +15,8 @@ import { Container, Header, Content, Card, CardItem,ListItem, Thumbnail,Button, 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
+import {PermissionsAndroid} from 'react-native';
+
 /**
  * This is the home screen of the app. 
  * The content will be changing 
@@ -43,13 +45,34 @@ static navigationOptions = ({ navigation, navigationOptions }) => {
     };
   }
 
-    async componentWillMount() {
+    async componentDidMount() {
        
-      this.watchID = navigator.geolocation.watchPosition((position) => {
+
+
+
+const granted = await PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+      {
+        title: 'Cool Photo App Camera Permission',
+        message:
+          'Cool Photo App needs access to your camera ' +
+          'so you can take awesome pictures.',
+        buttonNeutral: 'Ask Me Later',
+        buttonNegative: 'Cancel',
+        buttonPositive: 'OK',
+      },
+    );
+ if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+      console.log('You can use the camera');
+        this.watchID = navigator.geolocation.watchPosition((position) => {
         console.log( position );
          const lastPosition = JSON.stringify(position);
          this.setState({ lastPosition });
       });
+      
+    } else {
+      console.log('Camera permission denied');
+    }
     }
 
 moundBuilders=()=>(<View><Card><CardItem>
