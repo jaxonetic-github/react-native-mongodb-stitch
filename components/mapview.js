@@ -67,30 +67,6 @@ console.log(tmp);
     const location = JSON.stringify(position.coords);
     this.setState({inputType:'Address', position:{longitude:location.longitude, latitude:location.latitude} });
   }
-/*
-  load = async () => {
-    try {
-      const name = await AsyncStorage.getItem(STORAGE_KEY)
-
-      if (name !== null) {
-        this.setState({name})
-      }
-    } catch (e) {
-      console.error('Failed to load name.')
-    }
-  }
-
-  save = async (name) => {
-    try {
-      await AsyncStorage.setItem(STORAGE_KEY, name)
-
-      this.setState({name})
-    } catch (e) {
-      console.error('Failed to save name.')
-    }
-  }
-*/
-
 
 
 onAddressChange = async (region) =>{
