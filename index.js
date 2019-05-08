@@ -6,7 +6,7 @@
 import React, { Component } from "react";
 import { Root } from "native-base";
 import sideBarReducer from './redux/sideBarReducer.js';
-import { NativeEventEmitter, Platform, AppRegistry, NativeModules, AsyncStorage} from 'react-native';
+import { YellowBox,NativeEventEmitter, Platform, AppRegistry, NativeModules, AsyncStorage} from 'react-native';
 import { name as appName } from './app.json';
 
 import mainStack from './routes.js';
@@ -32,6 +32,9 @@ const AppContainer = createAppContainer(mainStack);
 //combine reducers
 const rootReducer = combineReducers({profiles: profilesReducer, events:eventsReducer, auth: authReducer, resourcesData:resourcesReducer, sideBar:sideBarReducer,videoMediaPromotions:videoRefsReducer});
 const store = createStore(rootReducer, initialStoreState,  applyMiddleware(sagaMiddleware, logger) );
+
+//YellowBox.ignoreWarnings(['Warning: componentWillReceiveProps','Warning: componentWillUpdate', 'Warning: componentWillMount']);
+console.disableYellowBox = true;
 
 sagaMiddleware.run(rootSaga);
 
