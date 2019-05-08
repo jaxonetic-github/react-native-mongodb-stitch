@@ -9,7 +9,7 @@ import { SwipeRow,Container, Subtitle, Header, Content, List, ListItem,Title,Ico
 import {resourceData,ALT_LISTVIEW_ITEM_SEPARATOR, COMMON_LISTVIEW_ITEM_SEPARATOR,
         COMMON_DARK_BACKGROUND,ACTIVE_TINT_COLOR, INACTIVE_TINT_COLOR,GOOGLE_PROVIDER_NAME,NEED_AT_LEAST_ANONYMOUS_LOGIN, NO_PHOTO_AVAILABLE_URI,
          ROUTE_EVENT_VIEW, ROUTE_SIMPLE_WEB_VIEW, ROUTE_YOUTUBELIST_VIEW,TEXT_VIEW,
-        renderListView} from '../../constants.js'
+        renderListView, commonViewButton} from '../../constants.js'
 import WebResourcesList from '../WebResources/webResourcesList.js';
 
 /**
@@ -92,18 +92,13 @@ if(!imgURI)
  imgURI =  record.item.images? record.item.images[0] : NO_PHOTO_AVAILABLE_URI;
 //attempting to combine the renderItems for 2 possible route options
   const route = record.item.payload ? ROUTE_YOUTUBELIST_VIEW :ROUTE_SIMPLE_WEB_VIEW ;
-console.log(imgURI,"renderitem:",record);
    return (<ListItem style={styles.flexStyle}>       
    <Card style={styles.flexStyle}>
      <CardItem style={styles.flexStyle}>
       <View  style={styles.outerViewStyle}>
        <Thumbnail  source={{uri:imgURI}}/>
         <View><Title style={styles.title}>{record.item.title}</Title></View>
-        <View style={styles.buttonContainer}>
-            <Button transparent onPress={() => {this.props.navigation.push(route, {record:record.item, title:record.item.title, url:record.item.url})}}>
-             <Text>{TEXT_VIEW}</Text>
-            </Button>
-             </View>
+        {commonViewButton("View",(() => {this.props.navigation.push(route, {record:record.item, title:record.item.title, url:record.item.url})}) )}
             </View>
           </CardItem> 
       <View style={styles.title}><Text>{record.item.generalCategory?record.item.generalCategory[0]:null}</Text></View>
@@ -111,7 +106,12 @@ console.log(imgURI,"renderitem:",record);
 </Card>
 
             </ListItem>);}
-
+/* <View style={styles.buttonContainer}>
+            <Button transparent onPress=
+            {() => {this.props.navigation.push(route, {record:record.item, title:record.item.title, url:record.item.url})}}>
+             <Text>{TEXT_VIEW}</Text>
+            </Button>
+             </View>*/
 
 /** React Render
  * Render tabs
@@ -135,7 +135,6 @@ console.log(imgURI,"renderitem:",record);
  * map redux state to component props
  */
 const mapStateToProps = state => {
-  console.log("videosearch resourcesdata",state.resourcesData);
   return {
     videoData: state.resourcesData.youTubeResources, 
     onlineMediaContent: state.resourcesData.onlineMediaContent,
