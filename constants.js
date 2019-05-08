@@ -2,8 +2,6 @@ import React from 'react'
 import { View ,ActivityIndicator,FlatList, Text, TouchableOpacity } from 'react-native';
 import {ListItem, Thumbnail, Title, Button} from 'native-base';
 
-
-
 export const NO_PHOTO_AVAILABLE_URI =  "https://static.wixstatic.com/media/84428b_aec5877604ff494295b3af5af0b27a67~mv2.png";
 
 /*************  Stitch **************/
@@ -51,9 +49,12 @@ export const ROUTE_YOUTUBELIST_VIEW = 'YouTubeList';
 
 //*********************  HTML  *********************/
 // Icons
+export const ICON_ADD_CIRCLE = "add-circle";
+export const ICON_REMOVE_CIRCLE = "remove-circle";
 export const ICON_IOS_CIRCLE = "ios-add-circle";
 export const ICON_ANDROID_CIRCLE = "md-add-circle";
-
+export const ICON_IOS_LOGOUT = "ios-log-out";
+export const ICON_ANDROID_LOGOUT = "md-log-out";
 export const ICON_IOS_PERSON = "ios-person";
 export const ICON_ANDROID_PERSON = "md-person";
 export const ICON_IOS_PORTRAIT = "ios-phone-portrait";

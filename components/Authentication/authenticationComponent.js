@@ -6,7 +6,8 @@ import NetInfo from "@react-native-community/netinfo";
 import {Container, Accordion ,Content, Icon, Text } from 'native-base';
 import { googleSignOut, loginUserRequest,updateInternetConnectivity } from './Redux/Actions/authActions.js';
 import SignUp from '../signUp';
-import {NEED_AT_LEAST_ANONYMOUS_LOGIN} from '../../constants.js'
+import {NEED_AT_LEAST_ANONYMOUS_LOGIN, COMMON_ICON_STYLE, ICON_ANDROID_LOGOUT, ICON_IOS_LOGOUT,
+        ICON_REMOVE_CIRCLE, ICON_ADD_CIRCLE} from '../../constants.js'
 import {getLoggedUser} from '../../redux/authSelectors.js';
 
 //import { GoogleLogin } from 'react-google-login-component';
@@ -48,8 +49,8 @@ NetInfo.isConnected.addEventListener('connectionChange', this.handleConnectivity
     let contentView;
 if (this.props.isConnected) {
       contentView = 
-      <Button title="Logout" warning  onPress={() => this.props.googleSignOut()}  style={styles.buttonStyle} iconRight >
-               <Icon ios='ios-log-out' android="md-log-out" style={{fontSize: 20, color: 'blue'}}/>
+      <Button title="Logout" warning  onPress={() => this.props.googleSignOut()}  iconRight >
+               <Icon ios={ICON_IOS_LOGOUT} android={ICON_ANDROID_LOGOUT} style={COMMON_ICON_STYLE}/>
               </Button>
     } else {
       contentView = <SignUp/> ;
@@ -68,17 +69,11 @@ if (this.props.isConnected) {
 
      const title = this._titleIfConnected();
     return (
-      <View style={{
-        //flexDirection: "row",
-       // padding: 10,
-        //justifyContent: "space-between",
-        alignItems: "center"  }}>
-      <Text style={{ fontWeight: "600" }}>
-          {" "}{title} 
-        </Text>
+      <View style={styles.header}>
+      <Text >{title}</Text>
         {expanded
-          ? <Icon style={{ fontSize: 18 }} name="remove-circle" />
-          : <Icon style={{ fontSize: 18 }} name="add-circle" />}
+          ? <Icon style={COMMON_ICON_STYLE} name={ICON_REMOVE_CIRCLE} />
+          : <Icon style={COMMON_ICON_STYLE} name={ICON_ADD_CIRCLE} />}
       </View>
     );
   }
@@ -121,28 +116,15 @@ function matchDispatchToProps(dispatch){
 
 
 const styles = StyleSheet.create({
-  container: {
-    //justifyContent: 'center',
-    //display: 'flex',
-    margin: 0,
-    padding: 0,
-    backgroundColor:'black'
-  },
-  buttonStyle: { 
- 	 backgroundColor: "pink" , borderStyle:'solid', borderColor:"maroon", padding: 0, margin:0,
-  },
-  textStyle: { 
-  	 backgroundColor: "transparent" , borderStyle:'solid', borderColor:"maroon",
-    padding: 10
-  },
-
-  textInputStyle: {
-    textAlign: 'center',
-    height: 40,
-    borderWidth: 1,
-    borderColor: '#009688',
-    backgroundColor: '#FFFFFF',
-  },
+  header:{ alignItems: "center"  }
+        //flexDirection: "row",
+       // padding: 10,
+        //justifyContent: "space-between",
+       
+        //flexDirection: "row",
+       // padding: 10,
+        //justifyContent: "space-between",
+       // alignItems: "center"  
 });
 
 export default connect(mapStateToProps, matchDispatchToProps)(AuthenticationComponent);
