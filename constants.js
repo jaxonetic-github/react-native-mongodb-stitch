@@ -1,5 +1,5 @@
 import React from 'react'
-import { View ,ActivityIndicator,FlatList, Text } from 'react-native';
+import { View ,ActivityIndicator,FlatList, Text, TouchableOpacity } from 'react-native';
 import {ListItem, Thumbnail, Title, Button} from 'native-base';
 
 
@@ -64,10 +64,10 @@ export const ICON_IOS_MAIL = "ios-mail";
 export const ICON_ANDROID_MAIL = "md-mail";
 export const ICON_IOS_DESCRIPTION = "ios-list-box";
 export const ICON_ANDROID_DESCRIPTION = "md-list-box";
-export const ICON_IOS_LOCATION = "ios-list-box";
-export const ICON_ANDROID_LOCATION = "md-list-box";
-export const ICON_IOS_CALENDAR = "ios-list-box";
-export const ICON_ANDROID_CALENDAR = "md-list-box";
+export const ICON_IOS_LOCATION = "ios-pin";
+export const ICON_ANDROID_LOCATION = "md-pin";
+export const ICON_IOS_CALENDAR = "ios-calendar";
+export const ICON_ANDROID_CALENDAR = "md-calendar";
 export const ICON_ALL_TRASH = 'trash';
 export const ICON_ALL_ARROWFORWARD = 'arrow-forward';
 export const ICON_IOS_INFORMATION = 'ios-information-circle';
@@ -136,6 +136,22 @@ export const renderListView = (keyExtractor,headerComponent,renderItemComponent,
           ListHeaderComponent={headerComponent}
            ItemSeparatorComponent = {separator}
         />)
+
+ const COMMON_VIEWBUTTON_STYLES ={
+ customOuterStyle:{position:"absolute", bottom:0, right:-5},
+  buttonText:{color:"gold", paddingLeft:10, paddingRight:10, paddingTop:5, paddingBottom:5},
+  buttonOuterShell:{flex:1, borderWidth:2, borderRadius:15, backgroundColor:COMMON_DARK_BACKGROUND},
+  buttonTextShell:{ borderWidth:1, borderRadius:10, backgroundColor:"maroon"}
+}
+
+export const commonViewButton = (buttonText,buttonPressAction) =>(
+ <View  style={COMMON_VIEWBUTTON_STYLES.customOuterStyle}  >
+               <View style={COMMON_VIEWBUTTON_STYLES.buttonOuterShell}>
+                <TouchableOpacity onPress={buttonPressAction||null} style={COMMON_VIEWBUTTON_STYLES.buttonTextShell} >
+                 <Text style={COMMON_VIEWBUTTON_STYLES.buttonText}>{buttonText}</Text>
+                </TouchableOpacity></View></View>)
+
+
 
 
 /*

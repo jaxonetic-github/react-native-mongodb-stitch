@@ -15,9 +15,9 @@ import {loginFailed, loginSucceeded, logout,loginUserRequest,dbClientInitialized
 import { addEventSuccess,addEventFailure,removeLocalEvent,deleteEventSuccess,updateEventSuccess, addEventsToLocal, requestFetchEvent, fetchEventFailure, fetchEventSuccess,updateEventFailure,deleteEventFailure } from '../../components/Event/Redux/Actions/eventActions.js'
 import { updateProfileSuccess,updateProfileFailure,fetchProfileSuccess, removeLocalProfile, addProfile,fetchProfileFailure, addProfileSuccess,addProfileFailure,fetchProfileRequest } from '../../components/Profile/Redux/Actions/profile.js'
 
-import DBService from '../../services/dbService.js'
+import ServicesManager from '../../services/servicesManager.js'
 import {googleAuthenticationPress, _onPressLogout,googleSilentLogin} from './googleSaga.js'
-import {resourceData} from '../../constants.js'
+import {resourceData, REMOTE_RESOURCE_STRING} from '../../constants.js'
 
 
 /**
@@ -177,7 +177,8 @@ const results = yield call (service.deleteProfile, action.payload);
   export function* fetchEvents(service) {
 
 try{
-        let events = yield call(service.fetchEvents);
+  console.log(service.dbServices);
+        let events = yield call(service.stitchCrudServices.fetchEvents);
         if(events  && events.errorStack)
           {
             yield put(fetchEventFailure(events.errorStack+"\n"+events.error.message))
@@ -204,7 +205,7 @@ try{
 
 try{
     
-      const profiles = yield call(service.fetchProfiles);
+      const profiles = yield call(service.stitchCrudServices.fetchProfiles);
       if(!profiles.errorStack){
          yield put(fetchProfileSuccess(profiles));
        }else
@@ -227,7 +228,7 @@ return profiles;
  export function* authorizeUser(service) {
 
    try{
-      const user = yield call(service.authorize);
+      const user = yield call(service.authorizeAnonymously);
       yield put(loginSucceeded(user))
       return user;
     }catch(error){
@@ -290,32 +291,36 @@ export function *loadYoutubeLists() {
 /** only export the rootSaga
  *  single entry point to start all Sagas at once
  */
-export  function* rootSaga(serviceArg) {
+export  function* rootSaga() {
   let authUser;
-  const service = serviceArg || new DBService();
+  const service =  new ServicesManager(REMOTE_RESOURCE_STRING);
+  console.log("rootsaga",service);
+yield service.initialize()
+console.log("post rootsaga",service.dbServices);
 //  yield service.authListen();
 
 try{
     authUser = yield call(authorizeUser, service);
-}catch(error){
-console.log(error);
-}
 
-if(!authUser){
-  authUser = yield service.authorizeAnonymously();
+    if(!authUser){
+      authUser = yield service.dbServices.authorizeAnonymously();
+    }
 
-}
+    if(authUser.isLoggedIn){
 
-if(authUser.isLoggedIn){
+    //start listening  for actions
+    yield fork(actionWatcher, service);
 
-//start listening  for actions
-  yield fork(actionWatcher, service);
-
-//retrieve data from backend
-  yield call(  _onAuthSucess, service); 
+    //retrieve data from backend
+    yield call(  _onAuthSucess, service); 
 }
 else{
   console.error('StitchUser Unable to Login:=>', authUser);
+}
+
+}catch(error){
+console.log(authUser,"--------------",error);
+ yield fork(actionWatcher, service);
 }
 
 }
