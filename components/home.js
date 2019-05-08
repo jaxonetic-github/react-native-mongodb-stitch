@@ -180,22 +180,10 @@ pastPresentFutureComponent = ()=>(<Card>
 const styles = StyleSheet.create({
   videoRefsOuterStyle:{flex:1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around'},
   videoRefsInnerView:{alignItems:"center", margin:5},
-  videoRefsThumbnail:{borderRadius:15},
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingTop: 22
-  },
-  slideMenuStyle:{marginTop:4},
+  videoRefsThumbnail:{borderRadius:15}, 
   pastPresFutureStyle:{flex:1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around'},
   touchable: {
     alignItems: 'center',
-  },
-   view: {
-    position: 'absolute',
-    backgroundColor: 'transparent'
   },
    item: { padding: 10, fontSize: 18, height: 44},
 });
