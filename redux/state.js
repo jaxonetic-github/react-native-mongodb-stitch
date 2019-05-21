@@ -171,7 +171,7 @@ const resourcesData ={youTubeResources: youTubeResources, webResources:webResour
                              onlineMediaContent:onlineMediaContent, digitalResources:digitalResources};
 
 const sideBarData = [{routeName:"Home", label:"Home", requiresVerification:false, icon:"home"}, {routeName:"ProfileView", label:"Profile", requiresVerification:true, icon:"person"}, 
-                      {routeName:"SearchLayout", label:"Events & Creators", requiresVerification:false, icon:"search"},{routeName:"VideoSearch", label:"Library", requiresVerification:false, icon:"business",videoData:null,onlineMediaContent:null,webResources:null},
+                      {routeName:"Activities", label:"Events & Creators", requiresVerification:false, icon:"search"},{routeName:"Trubrary", label:"Library", requiresVerification:false, icon:"business",videoData:null,onlineMediaContent:null,webResources:null},
                       {routeName:"TimelineView", label:"Timeline", requiresVerification:false, icon:'hourglass'}
                       ];
 

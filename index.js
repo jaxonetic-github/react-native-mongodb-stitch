@@ -41,7 +41,7 @@ sagaMiddleware.run(rootSaga);
 /*
  * Redux-ed application entry point
  */
-export default class App extends React.Component {
+export default class Main extends React.Component {
 
  constructor() {
     super();
@@ -58,13 +58,12 @@ export default class App extends React.Component {
   render() {
     return(
       <Root>
-      <Provider store= {store}>
+      <Provider store={store}>
       <AppContainer />
-
       </Provider>
       </Root>
     );
   }
 }
 
-AppRegistry.registerComponent(appName, () => App);
+AppRegistry.registerComponent(appName, () => Main);

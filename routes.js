@@ -1,16 +1,23 @@
 import React, { Component } from "react";
 import {Icon, Button, Text } from 'native-base';
-import {  createStackNavigator,createAppContainer, createSwitchNavigator,createBottomTabNavigator, createMaterialTopTabNavigator } from 'react-navigation';
-import { createDrawerNavigator,DrawerActions } from 'react-navigation-drawer';
+import {  createStackNavigator } from 'react-navigation';
+import {createSwitchNavigator, createAppContainer}  from '@react-navigation/core';
+import { createDrawerNavigator, DrawerActions } from 'react-navigation-drawer';
 
+//import { createBrowserApp } from "@react-navigation/web";
+
+//const MyNavigator = createSwitchNavigator(routes);
+
+//const App = createBrowserApp(MyNavigator);
+import Activities from "./components/Activities.js";
 import TimelineView from "./components/timeline.js";
-import VideoSearch from './components/Youtube/videoSearch.js';
-import YouTubeList from './components/Youtube/youtubeList.js';
+import Trubrary from './components/Trubrary/trubrary.js';
+import YouTubeList from './components/Trubrary/youtubeList.js';
 import SimpleWebView from './components/WebResources/simpleWebView.js';
 import HomeScreen from "./components/home.js";
 import SideBar from "./components/sidebar.js";
 import EventSearch from './components/Event/eventSearch.js';
-import MapView from './components/mapview.js';
+import MapView from './components/mapview';
 import EventCalendar from './components/calendarView.js';
 import EventView from './components/Event/eventView.js';
 import ProfileSearch from './components/Profile/profileSearch.js';
@@ -30,16 +37,28 @@ ROUTE_MAPVIEW, ROUTE_EVENT_CALENDAR, ROUTE_SIMPLE_INPUT_VIEW} from './constants.
 function createDrawerExample(options = {}) {
   let DrawerExample = createDrawerNavigator( 
   {
-    Home: { screen: HomeScreen },
+    Home: { screen: HomeScreen,    defaultNavigationOptions : ({ navigation }) => (    {
+      headerStyle: {backgroundColor:COMMON_DARK_BACKGROUND },
+      headerRight:<Button transparent onPress={() => navigation.toggleDrawer()}><Icon ios='ios-menu' android="md-menu" style={{fontSize: 25, color: 'white'}}/></Button>,
+      headerTintColor: '#fff',
+      headerTitleStyle: {fontWeight: 'bold'}
+    })    },
+    Activities:{screen: Activities},
+    Trubrary:{screen: Trubrary },
     ProfileView: { screen: ProfileView },
-    SearchLayout: {screen: TabNavigator},
   },
   {
         initialRouteName: 'Home',
+        
+        defaultNavigationOptions : ({ navigation }) => (    {
+          headerStyle: {backgroundColor:COMMON_DARK_BACKGROUND },
+          headerRight:<Button transparent onPress={() => navigation.toggleDrawer()}><Icon ios='ios-menu' android="md-menu" style={{fontSize: 25, color: 'black'}}/>fgsfgd</Button>,
+          headerTintColor: '#fff',
+          headerTitleStyle: {fontWeight: 'bold'}
+        }),
         drawerWidth: 280,
         contentComponent: props => <SideBar {...props} />
-  }
-  );
+  });
 
   return DrawerExample;
 }
@@ -53,7 +72,8 @@ function createTopStack(options = {}) {
   const innerNav = createStackNavigator({
 
   Drawer: {screen:drawerNavigation },
-  VideoSearch:{screen:VideoSearch, navigationOptions: ({ navigation }) => ({title: `Our Truebrary`})  },
+  Activities:{screen:Activities},
+  Trubrary:{screen:Trubrary, navigationOptions: ({ navigation }) => ({title: `Our Truebrary`})  },
   YouTubeList:{screen:YouTubeList, navigationOptions: ({ navigation }) => ({title: `${navigation.state.params.title}`})  },
   TimelineView:{screen:TimelineView, navigationOptions: ({ navigation }) => ({title: "Timeline"})  },
   SimpleWebView:{screen:SimpleWebView, navigationOptions: ({ navigation }) => ({title: `${navigation.state.params.title}`}) },
@@ -80,21 +100,14 @@ function createTopStack(options = {}) {
   return innerNav;
 }
 
-/******** TabNav Stack  **********/
-const tabNavRoutes = {
-  Events: EventSearch,
-  ProfileSearch: ProfileSearch,
-}
-
-const TabNavigator = createMaterialTopTabNavigator(tabNavRoutes,{swipeEnabled:false,tabBarOptions:{inactiveTintColor:INACTIVE_TINT_COLOR ,activeTintColor:ACTIVE_TINT_COLOR,tabStyle:{backgroundColor:"#f8f8f8"}}});
-
 
 /******* Main Stack *********/
 
-export default mainStack = createSwitchNavigator({
+export default mainStack = createDrawerExample();
+
+const pld= createSwitchNavigator({
     Signup: SignUpScreen,
     Inner: createTopStack()
-   // SearchLayout:TabNavigator 
  },
   {
     initialRouteName: 'Inner' });

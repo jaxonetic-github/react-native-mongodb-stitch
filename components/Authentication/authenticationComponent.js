@@ -1,7 +1,7 @@
  import React from 'react'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { View, Button, StyleSheet} from 'react-native';
+import { View, Button, StyleSheet, PermissionsAndroid} from 'react-native';
 import NetInfo from "@react-native-community/netinfo";
 import {Container, Accordion ,Content, Icon, Text } from 'native-base';
 import { googleSignOut, loginUserRequest,updateInternetConnectivity } from './Redux/Actions/authActions.js';

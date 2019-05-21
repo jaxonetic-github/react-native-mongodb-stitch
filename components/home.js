@@ -2,12 +2,11 @@ import React, { Component } from "react";
 
 import { TouchableHighlight, StyleSheet,Error, View ,Image, TouchableOpacity,TouchableIcon, FlatList,
 Picker, Modal} from 'react-native';
-import axios from "axios";
 import SimpleWebView from './WebResources/simpleWebView.js';
 //import { WebGLView } from "react-native-webgl";
 import { ROUTE_SIMPLE_WEB_VIEW, COMMON_DARK_BACKGROUND,TEXT_EVERYWHERE,TEXT_All, LOCATION_LIST,CATEGORY_LIST,
       TEXT_CHOOSE_VIBE, TEXT_WHATS_GOING_ON,COMMON_ICON_STYLE,COMMON_ICON_STYLE_MAROON,COMMON_ICON_STYLE_GOLD, COMMON_LISTVIEW_ITEM_SEPARATOR ,
-       ICON_IOS_INFORMATION, ICON_ANDROID_INFORMATION } from '../constants.js';
+       ICON_IOS_INFORMATION, ICON_ANDROID_INFORMATION , header} from '../constants.js';
 import WebResourcesList from './WebResources/webResourcesList.js';
 //import FitImage from 'react-native-fit-image';
 import { Container, Header, Content, Card, CardItem,ListItem, Thumbnail,Button, Text, Icon,Right,Subtitle, Title, Toast,Left, Body,Form, Picker as AltPicker } from 'native-base';
@@ -23,8 +22,8 @@ import {PermissionsAndroid} from 'react-native';
  //navigation.getParam('title', 'A Nested Details Screen')||"BAR",
  */
 class Home extends React.Component {
-static navigationOptions = ({ navigation, navigationOptions }) => {
-  console.log(navigation,"_-----------------------------------------*********************");
+/*static navigationOptions = ({ navigation, navigationOptions }) => {
+  console.log(navigation,"_--------------HOME---------------------------*********************");
     return {
       headerRight:<Button  onPress={() => navigation.toggleDrawer()}><Icon ios='ios-menu' android="md-menu" style={{fontSize: 25, color: 'white'}}/></Button>,
       title: "jkhk",
@@ -33,10 +32,10 @@ static navigationOptions = ({ navigation, navigationOptions }) => {
       headerTitleStyle: {fontWeight: 'bold'} 
 
     };
-  };
+  };*/
   constructor(props) {
     super(props);
-
+    console.log(this.props.navigation);
     this.state = {
       locations : LOCATION_LIST,categories:CATEGORY_LIST,
       selectedCategory:undefined,
@@ -45,23 +44,18 @@ static navigationOptions = ({ navigation, navigationOptions }) => {
     };
   }
 
-    async componentDidMount() {
+/*    async componentDidMount() {
        
+const granted = await PermissionsAndroid.check( PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION );
+
+if (granted) {
+  console.log( "You can use the ACCESS_FINE_LOCATION" )
+} 
+else {
+  console.log( "ACCESS_FINE_LOCATION permission denied" )
+}
 
 
-
-const granted = await PermissionsAndroid.request(
-      PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-      {
-        title: 'Cool Photo App Camera Permission',
-        message:
-          'Cool Photo App needs access to your camera ' +
-          'so you can take awesome pictures.',
-        buttonNeutral: 'Ask Me Later',
-        buttonNegative: 'Cancel',
-        buttonPositive: 'OK',
-      },
-    );
  if (granted === PermissionsAndroid.RESULTS.GRANTED) {
       console.log('You can use the camera');
         this.watchID = navigator.geolocation.watchPosition((position) => {
@@ -71,9 +65,9 @@ const granted = await PermissionsAndroid.request(
       });
       
     } else {
-      console.log('Camera permission denied');
+      console.log('Location permission denied');
     }
-    }
+    }*/
 
 moundBuilders=()=>(<View><Card><CardItem>
     <TouchableOpacity style={{position:"absolute", top:5, right:0}}>
@@ -159,14 +153,17 @@ pastPresentFutureComponent = ()=>(<Card>
 </Card>)
 
 
+
+
 /**
  * Render the home view 
  */
   render() {
-   
     return(
     <Container style={{backgroundColor:COMMON_DARK_BACKGROUND}}>
+<Header></Header>
       <Content padder>
+
         {this.quoteCard()}
         {this.pastPresentFutureComponent()}
         {this.videoReferences(this.props.videoReferencePromotions)}

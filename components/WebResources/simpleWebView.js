@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import PropTypes from 'prop-types';
+//import PropTypes from 'prop-types';
 
 import {  StyleSheet,ActivityIndicator,View} from 'react-native';
 import { WebView } from 'react-native-webview';
@@ -51,12 +51,12 @@ export default class SimpleWebView extends React.Component {
 
 /**
  * Potential properties to override state
- */
+ 
 SimpleWebView.propTypes = { 
   url:PropTypes.string,
   title:PropTypes.string
 };
-
+*/
 const styles = StyleSheet.create({
   //500 height choice was arbitrary
    webview: { height:500, padding:2, borderRadius:2},

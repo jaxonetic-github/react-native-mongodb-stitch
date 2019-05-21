@@ -142,6 +142,7 @@ renderSearchField = () =>(
 * duplicate code also found in eventsearch
 */
   addButton = ()=>{
+    console.log(this.props);
     const _addButton = this.props.canAddProfile 
       ?  (<Button transparent  onPress={()=>this._onPressNew()} >
              <Icon ios={ICON_IOS_CIRCLE} android={ICON_ANDROID_CIRCLE} style={COMMON_ICON_STYLE}/>

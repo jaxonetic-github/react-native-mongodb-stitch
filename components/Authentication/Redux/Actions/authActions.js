@@ -27,9 +27,9 @@ export function loginSucceeded(user){
 export function loginFailed(err){
     return {type: LOGIN_FAILURE, payload:err }
 }
-export function googleSignInRequest()
+export function googleSignInRequest(googleInfo)
 {
-  return {type: GOOGLE_SIGNIN_REQUEST }
+  return {type: GOOGLE_SIGNIN_REQUEST, payload:googleInfo }
 }
 export function googleSignOut()
 {

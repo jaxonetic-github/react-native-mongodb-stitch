@@ -1,6 +1,7 @@
 import React from 'react'
-import { View ,ActivityIndicator,FlatList, Text, TouchableOpacity } from 'react-native';
-import {ListItem, Thumbnail, Title, Button} from 'native-base';
+import { View ,ActivityIndicator,FlatList, Text, TouchableOpacity,Tab,Tabs } from 'react-native';
+import {ListItem, Thumbnail, Title, Button, Header,Left,Icon,Body,Right} from 'native-base';
+import { FaHome,  FaSearchengin, FaUser,FaRegBuilding } from "react-icons/fa";
 
 export const NO_PHOTO_AVAILABLE_URI =  "https://static.wixstatic.com/media/84428b_aec5877604ff494295b3af5af0b27a67~mv2.png";
 
@@ -74,6 +75,18 @@ export const ICON_ALL_ARROWFORWARD = 'arrow-forward';
 export const ICON_IOS_INFORMATION = 'ios-information-circle';
 export const ICON_ANDROID_INFORMATION = 'md-information-circle';
 
+export const iconManager =(icon)=>{
+  switch(icon)
+  {
+    case "home": return <FaHome/>;
+    case "search": return <FaSearchengin/>;
+    case "business": return <FaHome/>;
+    case "business": return <FaHome/>;
+    default :
+    return <FaRegBuilding/>
+    break;
+  }
+}
 // Label Text
 export const PLACEHOLDER_SEARCH_TEXT = "Search Here";
 export const TEXT_WEBSITE = "Website";
@@ -110,6 +123,7 @@ export const TRANSPARENT_COLOR = 'transparent';
 
 //************ Common Components
 const listItemSeparatorStyle = { height: 2, backgroundColor:COMMON_DARK_BACKGROUND  };
+export const COMMON_TEXT_STYLE = {padding:15, color:"white"};
 export const COMMON_ACTIVITY_INDICATOR = <View style={{ flex: 1, paddingTop: 20 ,justifyContent: 'space-around'}}><ActivityIndicator /></View>;
 export const COMMON_LISTVIEW_ITEM_SEPARATOR = ()=> <View style={listItemSeparatorStyle} />;
 export const ALT_LISTVIEW_ITEM_SEPARATOR = ()=> <View style={{flex:1,paddingTop:10, height: 20, backgroundColor:COMMON_DARK_BACKGROUND  }} />;
@@ -135,7 +149,7 @@ export const renderListView = (keyExtractor,headerComponent,renderItemComponent,
           renderItem={renderItemComponent}
           keyExtractor={keyExtractor}
           ListHeaderComponent={headerComponent}
-           ItemSeparatorComponent = {separator}
+           ItemSeparatorComponent={separator}
         />)
 
  const COMMON_VIEWBUTTON_STYLES ={
@@ -151,7 +165,6 @@ export const commonViewButton = (buttonText,buttonPressAction) =>(
                 <TouchableOpacity onPress={buttonPressAction||null} style={COMMON_VIEWBUTTON_STYLES.buttonTextShell} >
                  <Text style={COMMON_VIEWBUTTON_STYLES.buttonText}>{buttonText}</Text>
                 </TouchableOpacity></View></View>)
-
 
 
 

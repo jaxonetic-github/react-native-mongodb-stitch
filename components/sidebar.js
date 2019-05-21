@@ -1,8 +1,9 @@
 import React from "react";
-import PropTypes from 'prop-types';
+//import PropTypes from 'prop-types';
 
-import { FlatList, Image, StatusBar,StyleSheet } from "react-native";
-import { Accordion, Text,View, Container, List, ListItem,  Header, Content, Card, CardItem, Icon,Left, Body, Right} from "native-base";
+import { FlatList , Image, StyleSheet } from "react-native";
+//import { Image, StyleSheet } from "react-primitives";
+import { Accordion, Text,View, Container,  ListItem,  Header, Content, Card, CardItem, Icon,Left, Body, Right} from "native-base";
 //redux 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -122,11 +123,11 @@ const mapStateToProps = state => (
 
 /**
  * Potential properties to override state
- */
+
 SideBar.propTypes = {
   
   sideBarData:PropTypes.array
-};
+}; */
 export default connect(mapStateToProps, null)(SideBar)
 
 
