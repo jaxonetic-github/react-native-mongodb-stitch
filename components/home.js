@@ -160,10 +160,8 @@ pastPresentFutureComponent = ()=>(<Card>
  */
   render() {
     return(
-    <Container style={{backgroundColor:COMMON_DARK_BACKGROUND}}>
-<Header></Header>
+    <Container style={{backgroundColor:COMMON_DARK_BACKGROUND, flex:1, height:"100%"}}>
       <Content padder>
-
         {this.quoteCard()}
         {this.pastPresentFutureComponent()}
         {this.videoReferences(this.props.videoReferencePromotions)}

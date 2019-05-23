@@ -27,12 +27,9 @@ class ProfileView extends Component {
 
   constructor(props) {
 super(props);
+console.log(this.props);
     //setting default state
-    if(props.navigation.state.params && props.navigation.state.params.id)
-    //setting default state
-    this.state = { dataIndex: props.navigation.state.params.id, text: ''};
    
-    else
       this.state = {}
   }
 

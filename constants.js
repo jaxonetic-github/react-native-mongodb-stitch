@@ -79,12 +79,10 @@ export const iconManager =(icon)=>{
   switch(icon)
   {
     case "home": return <FaHome/>;
-    case "search": return <FaSearchengin/>;
-    case "business": return <FaHome/>;
+    case "search": return <FaHome/>;
     case "business": return <FaHome/>;
     default :
     return <FaRegBuilding/>
-    break;
   }
 }
 // Label Text
