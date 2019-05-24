@@ -24,6 +24,8 @@ import eventsReducer from './components/Event/Redux/Reducers/eventReducer.js';
 import createSagaMiddleware from 'redux-saga'
 
 import FooterNav from './components/NavBars/footerNav.js';
+import SideBar from './components/NavBars/sidebar.js';
+
 import { Switch, Route, Redirect } from 'react-router'
 import { NativeRouter, Link } from 'react-router-native'
 
@@ -37,6 +39,7 @@ import { COMMON_DARK_BACKGROUND} from './constants.js'
 
 // Logger with default options
 import logger from 'redux-logger';
+import SideMenu from 'react-native-side-menu';
 
 const history = createMemoryHistory();
 const sagaMiddleware = createSagaMiddleware();
@@ -69,25 +72,27 @@ export default class Main extends React.Component {
     sagaMiddleware.run(clean/*subscription*/);
   }
   render() {
+    const menu = <SideBar/>;
     return(
       <Root>
       <Provider store={store} >
   
-             <Header style={{backgroundColor:COMMON_DARK_BACKGROUND,height:10}}></Header>
 
-      <NativeRouter history={history} ><Container>
+ <SideMenu menu={menu}>
+     <NativeRouter history={history} ><Container>
+      <Header style={{backgroundColor:COMMON_DARK_BACKGROUND,height:30}}></Header>
+
        <Switch>
       <Route exact path="/" component={Home} />
-             <Route path="/Home" component={Home} />
-
+        <Route path="/Home" component={Home} />
        <Route path="/ProfileView/:id" component={ProfileView} />
        <Route  path="/Trubrary" component={Trubrary} />
         <Route  path="/Activities" component={Activities} />
       </Switch>
-      
-<FooterNav />
-</Container>
-</NativeRouter>
+      </Container>
+      <App />
+    </NativeRouter>   
+      </SideMenu>
       </Provider>
       </Root>
     );
