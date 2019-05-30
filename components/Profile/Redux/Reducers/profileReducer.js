@@ -1,4 +1,4 @@
-import { FETCH_PROFILE_SUCCESS, UPDATE_PROFILE_NAME_BY_KEY, UPDATE_PROFILE_WEBSITE_BY_KEY, UPDATE_PROFILE_PHONE_BY_KEY, UPDATE_PROFILE_EMAIL_BY_KEY, UPDATE_PROFILE_IMAGE_BY_KEY, REMOVE_LOCAL_PROFILE, ADD_PROFILE_TO_USERPROFILES, ADD_NAME, ADD_DESC, ADD_EMAIL, ADD_PHONE, ADD_WEBSITE, ADD_IMAGE} from '../../../../redux/types';
+import { UPDATE_PROFILE_DESC_BY_KEY, FETCH_PROFILE_SUCCESS, UPDATE_PROFILE_NAME_BY_KEY, UPDATE_PROFILE_WEBSITE_BY_KEY, UPDATE_PROFILE_PHONE_BY_KEY, UPDATE_PROFILE_EMAIL_BY_KEY, UPDATE_PROFILE_IMAGE_BY_KEY, REMOVE_LOCAL_PROFILE, ADD_PROFILE_TO_USERPROFILES, ADD_NAME, ADD_DESC, ADD_EMAIL, ADD_PHONE, ADD_WEBSITE, ADD_IMAGE} from '../../../../redux/types';
 
 /**
  * 
@@ -103,6 +103,29 @@ const profileReducer = (state={}, action) => {
          error :"No key specified"
        }
       } 
+       case UPDATE_PROFILE_DESC_BY_KEY:
+       
+      if(action.key)
+      {
+        //get a copy of all of the profiles in state
+        let _tmpProfiles = {...state.profiles};
+        //update the name field of the event specified by key
+        _tmpProfiles[action.key].description = action.payload;
+        _tmpProfiles[action.key].hasBeenModifiedLocally = true;
+        
+        return {
+       tmpProfile:{...state.tmpProfile},
+         profiles:{..._tmpProfiles}
+      };
+      }else
+      {
+
+        return {
+         tmpProfile:{...state.tmpProfile, phone:action.payload },
+         profiles:{...state.profiles},
+         error :"No key specified"
+       }
+      }
       case UPDATE_PROFILE_EMAIL_BY_KEY:
       if(action.key)
       {

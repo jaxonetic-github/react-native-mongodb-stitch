@@ -1,5 +1,6 @@
 //This is an example code to Add Search Bar Filter on Listview// 
 import React, { Component } from 'react';
+import { withRouter } from "react-router";
 
 //import react in our code. 
 import { connect } from 'react-redux';
@@ -82,10 +83,14 @@ import {COMMON_ICON_STYLE, COMMON_DARK_BACKGROUND,COMMON_ACTIVITY_INDICATOR, ACT
 
 
 /** Navigate to artist-creation screen on [add] buttonpress  */
-  _onPress = (itemId) => (this.props.navigation.push(ROUTE_PROFILE_VIEW,{id:itemId}))
+  _onPress = (itemId) => {console.log("dafdjskalfjdkslafdksal;fjksa;f------",this.itemId);
+this.props.history.push("/Activities/ProfileView/"+itemId );
+//this.props.history.goForward();
+}
+
 
 /** Navigate to artist-creation screen on [add] buttonpress  */
-  _onPressNew = () => (this.props.navigation.push(ROUTE_PROFILE_VIEW ))
+  _onPressNew = () => (this.props.history.push("/Activities/ProfileView/-1" ))
 
 
 /** Navigate to event-creation screen  */
@@ -222,6 +227,6 @@ function matchDispatchToProps(dispatch){
   return bindActionCreators({fetchProfileRequest:fetchProfileRequest, deleteProfileRequest: deleteProfileRequest}, dispatch)
 }
 
-export default connect(mapStateToProps, matchDispatchToProps)(SearchAndResultsScreen)
+export default withRouter(connect(mapStateToProps, matchDispatchToProps)(SearchAndResultsScreen))
 
 

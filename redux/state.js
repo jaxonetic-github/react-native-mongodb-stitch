@@ -170,7 +170,7 @@ const webResources = [
 const resourcesData ={youTubeResources: youTubeResources, webResources:webResources,
                              onlineMediaContent:onlineMediaContent, digitalResources:digitalResources};
 
-const sideBarData = [{routeName:"Home", label:"Home",path:"/" ,requiresVerification:false, icon:"home"}, {routeName:"ProfileView", label:"Profile",path:"/ProfileView", requiresVerification:true, icon:"person"}, 
+const sideBarData = [{routeName:"Home", label:"Home",path:"/" ,requiresVerification:false, icon:"home"}, {routeName:"ProfileView", label:"Profile",path:"/Activities/ProfileView/", requiresVerification:true, icon:"person"}, 
                       {routeName:"Activities", label:"Events & Creators", path:"/Activities", requiresVerification:false, icon:"search"},{routeName:"Trubrary", label:"Library",path:"/Trubrary", requiresVerification:false, icon:"business",videoData:null,onlineMediaContent:null,webResources:null} ];
 
 export const initialStoreState = {

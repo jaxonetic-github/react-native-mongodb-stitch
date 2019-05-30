@@ -141,7 +141,10 @@ const update ={
 const options = { upsert: false };
 
    try {
-const results = await this.db.collection(PROFILES_COLLECTION).profilesCollection.updateOne(query, update, options);
+    const client = await this.client();
+
+    const results = await client.callFunction(FUNCTION_UPDATEPROFILE,[query,update,options]);  
+    return results;
 return results;
 
   }catch(error) {

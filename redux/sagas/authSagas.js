@@ -261,7 +261,7 @@ export function* actionWatcher(service) {
    yield takeEvery(ADD_PROFILE_REQUEST, insertProfile, service);
    yield takeEvery(ADD_EVENT_REQUEST, insertEvent, service);
    yield takeEvery(UPDATE_EVENT_REQUEST, updateEvent, service);
-   yield takeEvery(UPDATE_PROFILE_REQUEST, updateProfile, service);
+   yield takeEvery(UPDATE_PROFILE_REQUEST, updateProfile, service.stitchCrudServices);
    yield takeEvery(FETCH_PROFILE_REQUEST, fetchProfiles, service);
    yield takeEvery(FETCH_EVENT_REQUEST, fetchEvents, service);
    yield takeEvery(DELETE_EVENT_REQUEST, deleteEvent, service);
