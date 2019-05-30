@@ -1,24 +1,26 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { StyleSheet,Image,   ImagePickerIOS} from 'react-native';
-import { Container,Button,Separator,Thumbnail, Header, Content, List, ListItem,Title,
-                                       Text,Textarea, Icon, Left, Body, Right, Switch, Toast } from 'native-base';
+import { StyleSheet,Image,   ImagePickerIOS, View} from 'react-native';
+import { Container,Button,Separator,Thumbnail, Header, Content, List, ListItem,Title,Item,
+                                    Accordion,   Text,Textarea, Icon, Left, Body, Right, Switch, Toast } from 'native-base';
 import ImagePicker from 'react-native-image-picker';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import { updateProfileRequest, addProfileRequest } from './Redux/Actions/profile.js';
-import { getDefaultProfile,COMMON_ICON_STYLE, NEED_AT_LEAST_ANONYMOUS_LOGIN, TEXT_SAVE,
+import { getDefaultProfile,iconManager,ICON_REMOVE_CIRCLE,ICON_ADD_CIRCLE,COMMON_ICON_STYLE, NEED_AT_LEAST_ANONYMOUS_LOGIN, TEXT_SAVE,
  TEXT_UPDATE, NO_PHOTO_AVAILABLE_URI,ICON_ALL_ARROWFORWARD,ICON_IOS_MAIL, ICON_ANDROID_MAIL,
 TEXT_WEBSITE, TEXT_MAIL,TEXT_PHONE,TEXT_DESCRIPTION, ICON_IOS_PORTRAIT,ICON_ANDROID_PORTRAIT,
-ICON_IOS_GLOBE, ICON_ANDROID_GLOBE, ICON_IOS_DESCRIPTION,ICON_ANDROID_DESCRIPTION,
+ICON_IOS_GLOBE, ICON_ANDROID_GLOBE, ICON_IOS_DESCRIPTION,ICON_ANDROID_DESCRIPTION, TEXT_NAME,
 ICON_IOS_CIRCLE, ICON_ANDROID_CIRCLE,ICON_IOS_PERSON, ICON_ANDROID_PERSON, COMMON_DARK_BACKGROUND,
  TEXT_CURRENT_IMAGE,ROUTE_SIMPLE_PROFILE_INPUT, header} from '../../constants.js';
-
-import { UPDATE_PROFILE_NAME_BY_KEY, UPDATE_PROFILE_WEBSITE_BY_KEY, UPDATE_PROFILE_PHONE_BY_KEY,UPDATE_PROFILE_EMAIL_BY_KEY, UPDATE_PROFILE_IMAGE_BY_KEY,
+import SimpleInputEdit from "./simpleInput.js";
+import { UPDATE_PROFILE_DESC_BY_KEY, UPDATE_PROFILE_NAME_BY_KEY, UPDATE_PROFILE_WEBSITE_BY_KEY, UPDATE_PROFILE_PHONE_BY_KEY,UPDATE_PROFILE_EMAIL_BY_KEY, UPDATE_PROFILE_IMAGE_BY_KEY,
  ADD_NAME, ADD_PROFILE, ADD_DESC, ADD_EMAIL, ADD_PHONE, ADD_WEBSITE, ADD_IMAGE} from '../../redux/types';
+import Input from '../textinput.js';
+
 
 /**
 *   ProfileView - The Screen to view and potentially edit a profile.
@@ -26,11 +28,8 @@ import { UPDATE_PROFILE_NAME_BY_KEY, UPDATE_PROFILE_WEBSITE_BY_KEY, UPDATE_PROFI
 class ProfileView extends Component {
 
   constructor(props) {
-super(props);
-console.log(this.props);
-    //setting default state
-   
-      this.state = {}
+   super(props);
+   this.state = {dataIndex:this.props.match.params.id}
   }
 
  /**
@@ -106,131 +105,100 @@ displayImageURI = () => (this.state.dataIndex && this.props.profiles[this.state.
   addButton = (isPersonalProfile)=>{
    const isNewProfile = !this.state.dataIndex;
    //determine whether to add or update when user clicks button
-   const onPressAction =()=>( isPersonalProfile ? this.updateProfile() :this._onPress()) ;
+   const onPressAction = ()=>( isPersonalProfile ? this.updateProfile() :this._onPress()) ;
    //determine whether to show "Save" or "Update" depending on ownership
-   const buttonText    = isPersonalProfile ?   TEXT_UPDATE :TEXT_SAVE;
+   const buttonText = isPersonalProfile ?   TEXT_UPDATE :TEXT_SAVE;
    const _saveButton = isPersonalProfile || isNewProfile ? ( <Button transparent  onPress={onPressAction } >
              <Icon ios={ICON_IOS_CIRCLE} android={ICON_ANDROID_CIRCLE} style={COMMON_ICON_STYLE}/>
-               <Text>{buttonText}</Text>
+               <Text style={{color:"gold"}}>{buttonText}</Text>
             </Button>):null;
 
     return _saveButton; };
 
 
+/**
+ * A header view to display the profile data when not in "Edit" mode
+ */
+    _renderHeader=(expanded,icon_ios, icon_droid, iconsStyle,titleText,bodyText,rightComponent)=> 
+            (<View key={titleText}  style={{flex:1,backgroundColor:COMMON_DARK_BACKGROUND}}>
+              <Item>
+               <Icon ios={icon_ios} android={icon_droid} style={{fontSize: 20, color: 'silver'}}/>
+            <Text style={{color:"silver"}}>{titleText}</Text>
+            </Item>
+            <Text style={{flex:1,alignSelf:"center",justifyContent:"center",backgroundColor:"white"}}>{bodyText}</Text>
+            {expanded
+          ? <Icon style={{fontSize: 20, color: 'silver', flex:1, alignSelf:"flex-end"}} name={ICON_REMOVE_CIRCLE} />
+          : <Icon style={{fontSize: 20, color: 'silver', position:"absolute", right:5, top:25}} name="create"></Icon>}
+          </View>)
+           
+  
 
+  _renderContent = (item) =>
+    (<View style={{flex:1, alignItems:"center",backgroundColor:"silver", borderRadius:10}}>
+          <Text >{item.displayText}</Text>
+          <SimpleInputEdit inputType={ (this.state.dataIndex?item.updateAction: item.addAction)}
+                    profileIndex={ this.state.dataIndex} inputInitialValue={item.displayText }/>
+ </View>)
+
+/**
+*
+*/
   render(){
+
     const isPersonalProfile = (typeof this.state.dataIndex !== 'undefined')&& (this.state.dataIndex == this.props.profileIndex);
     const headerTitle = isPersonalProfile ? "Personal Profile" : "New Divine Profile" ;
-    const imageURI = this.displayImageURI();
+   
+
+  const profileData= [
+    {key:TEXT_NAME,titleText:TEXT_NAME, icon_ios:ICON_IOS_PERSON,icon_droid:ICON_ANDROID_PERSON,
+     updateAction:UPDATE_PROFILE_NAME_BY_KEY, addAction:ADD_NAME,
+      iconStyle:COMMON_DARK_BACKGROUND,displayText:this.displayName(), actionIcon:this.arrowIcon() },
+    {key:TEXT_MAIL,titleText:TEXT_MAIL, icon_ios:ICON_IOS_MAIL,icon_droid:ICON_ANDROID_MAIL,
+      updateAction:UPDATE_PROFILE_EMAIL_BY_KEY, addAction:ADD_EMAIL,
+      iconStyle:COMMON_DARK_BACKGROUND,displayText:this.displayEmail(), actionIcon:this.arrowIcon() },
+    {key:TEXT_PHONE,titleText:TEXT_PHONE, icon_ios:ICON_IOS_PORTRAIT,icon_droid:ICON_ANDROID_PORTRAIT,
+      updateAction:UPDATE_PROFILE_PHONE_BY_KEY, addAction:ADD_PHONE,
+      iconStyle:COMMON_DARK_BACKGROUND,displayText:this.displayPhone(), actionIcon:this.arrowIcon() },
+    {key:TEXT_WEBSITE,titleText:TEXT_WEBSITE, icon_ios:ICON_IOS_GLOBE,icon_droid:ICON_ANDROID_GLOBE,
+           updateAction:UPDATE_PROFILE_WEBSITE_BY_KEY, addAction:ADD_WEBSITE,
+      iconStyle:COMMON_DARK_BACKGROUND,displayText:this.displayWebsite(), actionIcon:this.arrowIcon() },
+    {key:TEXT_DESCRIPTION,titleText:TEXT_DESCRIPTION, icon_ios:ICON_IOS_DESCRIPTION,icon_droid:ICON_ANDROID_DESCRIPTION,
+      updateAction:UPDATE_PROFILE_DESC_BY_KEY, addAction:ADD_DESC,
+      iconStyle:COMMON_DARK_BACKGROUND,displayText:this.displayDescription(), actionIcon:this.arrowIcon() }
+      ];
+
+
+ const items = profileData.map((record, index)=>{
+return (<Accordion  
+style={{ paddingBottom:15,paddingTop:5}}
+        dataArray={[record]}
+        animation={true}
+         renderContent={this._renderContent}
+       renderHeader= {(item, expanded)=> {
+          const title = item;
+            return (    
+              this._renderHeader(expanded,item.icon_ios, item.icon_droid, COMMON_ICON_STYLE, item.titleText, item.displayText,
+                  item.displayText,(!isPersonalProfile ?
+                    <Button transparent onPress={() => this.props.navigation.navigate(ROUTE_SIMPLE_PROFILE_INPUT, { inputType:(this.state.dataIndex?UPDATE_PROFILE_EMAIL_BY_KEY: ADD_NAME), profileIndex: this.state.dataIndex, inputInitialValue:this.displayEmail()})} >
+                     {this.arrowIcon()}
+                    </Button>
+                    :null) )
+            );
+          }}/>);
+ });
     return (
-      <Container>
-         <Header style={{backgroundColor: "silver", height:80}}>
-
+      <Container  style={{backgroundColor: COMMON_DARK_BACKGROUND}}>
+         <Header style={{backgroundColor: COMMON_DARK_BACKGROUND, height:55, color:"white"}}>
             <Body>
-              <Title><Icon ios={ICON_IOS_PERSON} android={ICON_ANDROID_PERSON} style={COMMON_ICON_STYLE}/>{headerTitle}</Title>
+              <Title style={{color:"gold"}}><Icon ios={ICON_IOS_PERSON} android={ICON_ANDROID_PERSON} style={COMMON_ICON_STYLE}/>{headerTitle}</Title>
             </Body>
-            <Right>       
-           
-{this.addButton(isPersonalProfile)}
-
-            </Right>
+            <Right>{this.addButton(isPersonalProfile)}</Right>
         </Header>
-        <Content>
-          <ListItem icon>
-            <Left>
-              <Button transparent>
-               <Icon ios={ICON_IOS_PERSON} android={ICON_ANDROID_PERSON} style={COMMON_ICON_STYLE}/>
-              </Button>
-              <Text>Name :</Text>
-            </Left>
-            <Body>
-              <Text>{this.displayName()}</Text>
-            </Body>
-            <Right>
-            {!isPersonalProfile ?
-            <Button transparent onPress={() => this.props.navigation.navigate(ROUTE_SIMPLE_PROFILE_INPUT, { inputType:(this.state.dataIndex?UPDATE_PROFILE_NAME_BY_KEY: ADD_NAME), profileIndex: this.state.dataIndex, inputInitialValue:this.displayName()})} >
-             {this.arrowIcon()}
-            </Button>
-            :null}
-            </Right>
-          </ListItem>
-
-          <ListItem icon>
-            <Left>
-              <Button transparent>
-               <Icon ios={ICON_IOS_MAIL} android={ICON_ANDROID_MAIL} style={COMMON_ICON_STYLE}/>
-              </Button>
-              <Text>{TEXT_MAIL}</Text>
-            </Left>
-            <Body>
-              <Text>{this.displayEmail()}</Text>
-            </Body>
-             
-            <Right>
-             {!isPersonalProfile?
-            <Button transparent onPress={() => this.props.navigation.navigate(ROUTE_SIMPLE_PROFILE_INPUT, { inputType: (this.state.dataIndex?UPDATE_PROFILE_EMAIL_BY_KEY: ADD_EMAIL), profileIndex: this.state.dataIndex, inputInitialValue:this.displayEmail() })} >
-               {this.arrowIcon()}
-            </Button>
-             :null}
-            </Right>
-             
-          </ListItem>
-          <ListItem icon>
-            <Left>
-              <Button transparent>
-               <Icon ios={ICON_IOS_PORTRAIT} android={ICON_ANDROID_PORTRAIT} style={COMMON_ICON_STYLE}/>
-              </Button>
-              <Text>{TEXT_PHONE}</Text>
-            </Left>
-            <Body>
-              <Text>{this.displayPhone()}</Text>
-            </Body>
-            <Right>
-              <Button transparent onPress={() => this.props.navigation.navigate(ROUTE_SIMPLE_PROFILE_INPUT, { inputType: (this.state.dataIndex?UPDATE_PROFILE_PHONE_BY_KEY: ADD_PHONE), profileIndex: this.state.dataIndex, inputInitialValue:this.displayPhone()  })} >
-              {this.arrowIcon()}
-              </Button>
-            </Right>
-          </ListItem>
-          <ListItem icon>
-            <Left>
-              <Button transparent>
-             <Icon ios={ICON_IOS_GLOBE} android={ICON_ANDROID_PORTRAIT} style={COMMON_ICON_STYLE}/>
-              </Button>
-               <Text>{TEXT_WEBSITE}</Text>
-            </Left>
-            <Body>
-              <Text>{this.displayWebsite()}</Text>
-            </Body>
-            <Right>
-              <Button transparent onPress={() => this.props.navigation.navigate(ROUTE_SIMPLE_PROFILE_INPUT,  { inputType: (this.state.dataIndex?UPDATE_PROFILE_WEBSITE_BY_KEY: ADD_WEBSITE), profileIndex: this.state.dataIndex, inputInitialValue:this.displayWebsite()  })} >
-                    {this.arrowIcon()}
-             </Button>
-
-            </Right>
-          </ListItem>
-
-          <ListItem icon>
-            <Left>
-              <Button transparent>
-                <Icon ios={ICON_IOS_DESCRIPTION} android={ICON_ANDROID_DESCRIPTION} style={COMMON_ICON_STYLE}/>
-              </Button>
-              <Text>{TEXT_DESCRIPTION}</Text>
-            </Left>
-            <Body>
-              <Text>{this.displayDescription()}</Text>
-            </Body>
-            <Right>
-            <Button transparent onPress={() => this.props.navigation.navigate("EditDescription")}>   
-                 
-                  {this.arrowIcon()}
-          </Button>
-            </Right>
-          </ListItem>
-          <Separator style={styles.profileSeparatorStyle} bordered/>
-      
-          <ListItem >
-              <Left >
-            
+   <Content padder>
+           {items}
+            <Separator style={styles.profileSeparatorStyle} bordered/>
+          <Item >
+              <Left>
               <Button transparent disabled onPress={() => this.onPressImagePicker()}>
                  <Text>{TEXT_CURRENT_IMAGE}</Text>
                  {this.arrowIcon()}
@@ -239,15 +207,12 @@ displayImageURI = () => (this.state.dataIndex && this.props.profiles[this.state.
               <Body>
                 <Image style={styles.profileImage} source={{uri:this.displayImageURI()}} />              
               </Body>  
-            </ListItem>
-
-        </Content>
+            </Item>
+          </Content>
       </Container>
     );
   }
-}
-
-
+}   
 
 const mapStateToProps = state => {
    const isConnected =  ((state.auth!= NEED_AT_LEAST_ANONYMOUS_LOGIN) && state.auth.auth &&  (state.auth.auth.loggedInProviderName=="oauth2-google"));
@@ -280,7 +245,7 @@ function matchDispatchToProps(dispatch){
 }
 
 const styles = StyleSheet.create({
-   profileImage:{width:205, height:250},
+   profileImage:{width:195, height:240},
    profileSeparatorStyle:{backgroundColor:"silver"}
 });
 

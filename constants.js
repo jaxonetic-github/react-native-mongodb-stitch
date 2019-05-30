@@ -1,7 +1,7 @@
 import React from 'react'
 import { View ,ActivityIndicator,FlatList, Text, TouchableOpacity,Tab,Tabs } from 'react-native';
 import {ListItem, Thumbnail, Title, Button, Header,Left,Icon,Body,Right} from 'native-base';
-import { FaHome,  FaSearchengin, FaUser,FaRegBuilding } from "react-icons/fa";
+import { FaHome,  FaSearchengin, FaUser,FaRegBuilding,FaEdit } from "react-icons/fa";
 
 export const NO_PHOTO_AVAILABLE_URI =  "https://static.wixstatic.com/media/84428b_aec5877604ff494295b3af5af0b27a67~mv2.png";
 
@@ -11,7 +11,7 @@ export const FUNCTION_INSERTPROFILE = "insertProfile";
 export const FUNCTION_INSERTEVENT   = "insertEvent";
 export const FUNCTION_QUERYPROFILE = "queryProfiles";
 export const FUNCTION_QUERYEVENTS = "queryEvents";
-export const FUNCTION_UPDATEPROFILE = "updateProfile";
+export const FUNCTION_UPDATEPROFILE = "updateUser";
 export const FUNCTION_UPDATEEVENT = "updateEvent";
 export const FUNCTION_RETRIEVE_GOOGLE_WEBCLIENTID = "retrieveGoogleWebClientID";
 export const FUNCTION_RETRIEVE_GOOGLE_IOSCLIENTID = "retrieveGoogleIosClientID";
@@ -81,6 +81,7 @@ export const iconManager =(icon)=>{
     case "home": return <FaHome/>;
     case "search": return <FaHome/>;
     case "business": return <FaHome/>;
+    case "edit": return <FaEdit/>;
     default :
     return <FaRegBuilding/>
   }
@@ -88,6 +89,7 @@ export const iconManager =(icon)=>{
 // Label Text
 export const PLACEHOLDER_SEARCH_TEXT = "Search Here";
 export const TEXT_WEBSITE = "Website";
+export const TEXT_NAME = "Name";
 export const TEXT_MAIL = "Email";
 export const TEXT_PHONE = "Phone";
 export const TEXT_DESCRIPTION = "Description";
