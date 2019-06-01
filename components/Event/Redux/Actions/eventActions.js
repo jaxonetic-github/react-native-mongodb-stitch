@@ -2,7 +2,7 @@
 import {REMOVE_LOCAL_EVENT, FETCH_EVENT_FAILURE, FETCH_EVENT_SUCCESS, FETCH_EVENT_REQUEST, DELETE_EVENT_REQUEST,UPDATE_EVENT_FAILURE,
 ADD_EVENT_REQUEST, ADD_EVENT_SUCCESS, ADD_EVENT_FAILURE,DELETE_EVENT_SUCCESS,DELETE_EVENT_FAILURE, DELETE_PROFILE_REQUEST,
  ADD_EVENTS_TO_USEREVENTS, ADD_EVENT_NAME, ADD_EVENT_DESC, ADD_EVENT_EMAIL, ADD_EVENT_PHONE, ADD_EVENT_WEBSITE, ADD_EVENT_IMAGE,UPDATE_EVENT_REQUEST,
-UPDATE_EVENT_CALENDAR_BY_KEY, UPDATE_EVENT_LOCATION_BY_KEY, UPDATE_EVENT_NAME_BY_KEY, UPDATE_EVENT_WEBSITE_BY_KEY, UPDATE_EVENT_PHONE_BY_KEY, UPDATE_EVENT_EMAIL_BY_KEY, UPDATE_EVENT_IMAGE_BY_KEY,
+UPDATE_EVENT_DESC_BY_KEY, UPDATE_EVENT_CALENDAR_BY_KEY, UPDATE_EVENT_LOCATION_BY_KEY, UPDATE_EVENT_NAME_BY_KEY, UPDATE_EVENT_WEBSITE_BY_KEY, UPDATE_EVENT_PHONE_BY_KEY, UPDATE_EVENT_EMAIL_BY_KEY, UPDATE_EVENT_IMAGE_BY_KEY,
 FETCH_PROFILE_REQUEST, FETCH_PROFILE_SUCCESS, } from '../../../../redux/types';
 
 /*
@@ -27,6 +27,9 @@ export function updateEventEmailByKey(text, key) {
 }
 export function updateEventImageByKey(text, key) {
   return { type: UPDATE_EVENT_IMAGE_BY_KEY, payload:text, key:key}
+}
+export function updateEventDescByKey(text, key) {
+  return { type: UPDATE_EVENT_DESC_BY_KEY, payload:text, key:key}
 }
 export function updateEventCalendarByKey(text, key) {
   return { type: UPDATE_EVENT_CALENDAR_BY_KEY, payload:text, key:key}
@@ -61,8 +64,8 @@ export function addEventImage(text) {
 export function addEventLocation(text) {
   return { type: ADD_EVENT_LOCATION, payload:text }
 }
-export function addEventsToLocal(eventObj) {
-  return { type: ADD_EVENTS_TO_USEREVENTS, payload:eventObj }
+export function addEventsToLocal(eventObjArray) {
+  return { type: ADD_EVENTS_TO_USEREVENTS, payload:eventObjArray }
 }
 
 export function updateEventSuccess(results) {

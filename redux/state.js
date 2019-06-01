@@ -139,6 +139,14 @@ const youTubeResources = [{title:"Dr Ivan Sertima", url:"http://www.journalofafr
                          {title:"Dr Frances Wesling", url:"https://www.noi.org/dr-frances-cress-welsing/",generalCategory:["Psychiatry"], payload:DRCRESSWESLING_YOUTUBE_PAYLOAD_MOCK, images:["https://appealinc.wildapricot.org/resources/Pictures/welsing%20crop.jpg"]},
                          {title:"Dr El Malik El Shabaz", url:'',generalCategory:["Warrior"], payload:'', images:[""]}
                           ]
+const CATEGORY_HISTORY = "History";
+const CATEGORY_ECONOMICS = "Economics";
+const CATEGORY_PSYCHOLOGY = "Psychology";
+const CATEGORY_OCCULT    = "Occult";
+const CATEGORY_MOVER    = "Mover";
+
+export const categories=[{title:CATEGORY_HISTORY, description:""}, {title:CATEGORY_ECONOMICS, description:""}, {title:CATEGORY_PSYCHOLOGY, description:""},
+                  {title:CATEGORY_OCCULT, description:""}, {title:CATEGORY_MOVER, description:""}];
 
 const subjects=[{etymology:"", description:"language has been weaponized"}];
 
@@ -171,7 +179,7 @@ const resourcesData ={youTubeResources: youTubeResources, webResources:webResour
                              onlineMediaContent:onlineMediaContent, digitalResources:digitalResources};
 
 const sideBarData = [{routeName:"Home", label:"Home",path:"/" ,requiresVerification:false, icon:"home"}, {routeName:"ProfileView", label:"Profile",path:"/Activities/ProfileView/", requiresVerification:true, icon:"person"}, 
-                      {routeName:"Activities", label:"Events & Creators", path:"/Activities", requiresVerification:false, icon:"search"},{routeName:"Trubrary", label:"Library",path:"/Trubrary", requiresVerification:false, icon:"business",videoData:null,onlineMediaContent:null,webResources:null} ];
+                      {routeName:"Activities", label:"Activities", path:"/Activities", requiresVerification:false, icon:"search"},{routeName:"Trubrary", label:"Library",path:"/Trubrary", requiresVerification:false, icon:"business",videoData:null,onlineMediaContent:null,webResources:null} ];
 
 export const initialStoreState = {
   profiles: profileState,

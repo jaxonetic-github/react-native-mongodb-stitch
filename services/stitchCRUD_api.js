@@ -3,7 +3,7 @@ import {PROFILES_COLLECTION, EVENT_COLLECTION,
   FUNCTION_INSERTPROFILE,FUNCTION_INSERTEVENT, FUNCTION_QUERYPROFILE, 
   FUNCTION_QUERYEVENTS, FUNCTION_UPDATEPROFILE,FUNCTION_UPDATEEVENT,
   FUNCTION_RETRIEVE_GOOGLE_WEBCLIENTID, FUNCTION_RETRIEVE_GOOGLE_IOSCLIENTID,FUNCTION_RETRIEVE_GOOGLE_APIKEY,
-  } from  '../constants.js'
+  FUNCTION_DELETE_PROFILE} from  '../constants.js'
 
 /**
 *  This CrudService is for the MongoDB Stitch Backend.
@@ -75,11 +75,12 @@ export  default class CrudService {
  *   @returns {deletedCount:1} on success or {deletedCount:0} or the error stack on exceptions
  */
   deleteProfile = async (profileIdObject)=> {
-
+    console.log("deleting profile :=", profileIdObject);
    try {
-      const profilesCollection = await this.db.collection(PROFILES_COLLECTION).deleteOne(profileIdObject)
-    return results; 
-
+             const client = await this.client();
+      const results = await client.callFunction(FUNCTION_DELETE_PROFILE,[profileIdObject]);  
+      console.log("results",results);
+      return results;
   }
   catch(error) {
     return({errorStack:error, arg:profileIdObject});
@@ -108,11 +109,14 @@ const update ={
   }
 }
 
-const options = { upsert: false };
+const options = { upsert: true };
 
     try {
-      const presults = await this.db.collection(EVENT_COLLECTION).updateOne(query, update, options);
-      return presults;
+          const client = await this.client();
+
+      const results = await client.callFunction(FUNCTION_UPDATEEVENT,[query,update,options]);  
+      console.log("results",results);
+      return results;
   }catch(error) {
     return({errorStack:error, arg:eventAction});
   }

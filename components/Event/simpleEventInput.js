@@ -4,8 +4,8 @@ import { Container, Header, Content, Item, Label, Textarea, Form } from "native-
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { updateEventImageByKey, updateEventEmailByKey, updateEventPhoneByKey, updateEventWebsiteByKey, updateEventNameByKey,addEventName, addEventEmail, addEventPhone, addEventDescription, addEventWebsite, addEventImage } from './Redux/Actions/eventActions.js';
-import { UPDATE_EVENT_IMAGE_BY_KEY, UPDATE_EVENT_EMAIL_BY_KEY, UPDATE_EVENT_PHONE_BY_KEY, UPDATE_EVENT_WEBSITE_BY_KEY, UPDATE_EVENT_NAME_BY_KEY, ADD_EVENT, ADD_EVENT_NAME, ADD_EVENT_DESC, ADD_EVENT_EMAIL, ADD_EVENT_PHONE, ADD_EVENT_WEBSITE, ADD_EVENT_IMAGE} from '../../redux/types';
+import { updateEventDescByKey, updateEventImageByKey, updateEventEmailByKey, updateEventPhoneByKey, updateEventWebsiteByKey, updateEventNameByKey,addEventName, addEventEmail, addEventPhone, addEventDescription, addEventWebsite, addEventImage } from './Redux/Actions/eventActions.js';
+import { UPDATE_EVENT_DESC_BY_KEY,UPDATE_EVENT_IMAGE_BY_KEY, UPDATE_EVENT_EMAIL_BY_KEY, UPDATE_EVENT_PHONE_BY_KEY, UPDATE_EVENT_WEBSITE_BY_KEY, UPDATE_EVENT_NAME_BY_KEY, ADD_EVENT, ADD_EVENT_NAME, ADD_EVENT_DESC, ADD_EVENT_EMAIL, ADD_EVENT_PHONE, ADD_EVENT_WEBSITE, ADD_EVENT_IMAGE} from '../../redux/types';
 
 
 
@@ -30,36 +30,7 @@ class SimpleEventInputEdit extends Component {
   updateChange = (text) => {
         console.log('updateChange', text);
         switch(this.state.inputType){
-          case UPDATE_EVENT_NAME_BY_KEY:
-               this.props.updateEventNameByKey(text, this.state.key);
-               break;
-          case UPDATE_EVENT_EMAIL_BY_KEY:
-               this.props.updateEventEmailByKey(text, this.state.key);
-               break;
-          case UPDATE_EVENT_PHONE_BY_KEY:
-               this.props.updateEventPhoneByKey(text, this.state.key);
-               break;
-          case UPDATE_EVENT_WEBSITE_BY_KEY:
-               this.props.updateEventWebsiteByKey(text, this.state.key);
-               break;
-          case UPDATE_EVENT_IMAGE_BY_KEY:
-               this.props.updateEventImageByKey(text, this.state.key);
-               break;
-          case ADD_EVENT_NAME:
-               this.props.eventName(text)
-               break;
-          case ADD_EVENT_EMAIL:
-               this.props.eventEmail(text)
-               break;
-          case ADD_EVENT_WEBSITE:
-               this.props.eventWebsite(text)
-               break;       
-          case ADD_EVENT_PHONE:
-               this.props.eventPhone(text)
-               break;
-          case ADD_EVENT_DESC:
-               this.props.eventDescription(text)
-               break;
+            
         default:
           return state;
   }
@@ -94,7 +65,7 @@ const mapStateToProps = state => {
 
 
 function matchDispatchToProps(dispatch){
-  return bindActionCreators({updateEventImageByKey:updateEventImageByKey,updateEventEmailByKey:updateEventEmailByKey,updateEventPhoneByKey:updateEventPhoneByKey, updateEventWebsiteByKey:updateEventWebsiteByKey, updateEventNameByKey:updateEventNameByKey, eventName: addEventName, eventEmail: addEventEmail,  eventWebsite: addEventWebsite,
+  return bindActionCreators({updateEventDescByKey:updateEventDescByKey,updateEventImageByKey:updateEventImageByKey,updateEventEmailByKey:updateEventEmailByKey,updateEventPhoneByKey:updateEventPhoneByKey, updateEventWebsiteByKey:updateEventWebsiteByKey, updateEventNameByKey:updateEventNameByKey, eventName: addEventName, eventEmail: addEventEmail,  eventWebsite: addEventWebsite,
    eventPhone:addEventPhone, eventDescription:addEventPhone}, dispatch)
 }
 

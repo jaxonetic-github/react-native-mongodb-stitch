@@ -2,14 +2,15 @@
 import React, { Component } from 'react';
 //import react in our code. 
 import { connect } from 'react-redux';
+import { withRouter } from "react-router";
 import { bindActionCreators } from 'redux';
 import { StyleSheet, View, ListView, TextInput, ActivityIndicator,FlatList, Alert} from 'react-native';
 import { SwipeRow,Container, Subtitle, Header, Content, List, ListItem,Title,Icon, Thumbnail, Text, Left, Body, Right, Button } from 'native-base';
-import {deleteEventRequest} from './Redux/Actions/eventActions.js'
+import {deleteEventRequest, addEventsToLocal,addEventRequest} from './Redux/Actions/eventActions.js'
 import {COMMON_ACTIVITY_INDICATOR, NO_PHOTO_AVAILABLE_URI, COMMON_DARK_BACKGROUND,ACTIVE_TINT_COLOR, INACTIVE_TINT_COLOR,
 ROUTE_EVENT_VIEW, TEXT_DELETE,EMPTY_STRING, TRANSPARENT_COLOR,ICON_ALL_TRASH,
 GOOGLE_PROVIDER_NAME, LIST_SWIPELEFT_OPENVALUE, LIST_SWIPERIGHT_OPENVALUE, PLACEHOLDER_SEARCH_TEXT, TEXT_VIEW,
-COMMON_LISTVIEW_ITEM_SEPARATOR } from '../../constants.js'
+COMMON_LISTVIEW_ITEM_SEPARATOR,NEED_AT_LEAST_ANONYMOUS_LOGIN,ICON_IOS_CIRCLE,ICON_ANDROID_CIRCLE, getDefaultEvent } from '../../constants.js'
 
 /**
  * Represents a component that allows a user to search for events.
@@ -72,10 +73,18 @@ COMMON_LISTVIEW_ITEM_SEPARATOR } from '../../constants.js'
 
 /** Navigate to event-creation screen  */
    _onPress = (itemId) => {
-   this.props.navigation.navigate(ROUTE_EVENT_VIEW,{id:itemId})
+
+ this.props.history.push("/Activities/EventView/"+itemId );
   };
   /* Navigate to artist-creation screen on [add] buttonpress  */
-  _onPressNew = () => (this.props.navigation.push(ROUTE_EVENT_VIEW, { } ))
+  _onPressNew =async () => {
+        
+//add a new local event
+//const tst= await this.props.addEventRequest(tmpEvt);
+//go to the detail of that local event
+    this.props.history.push("/Activities/EventView/-1");
+  }
+
 //onPress={() => this.props.navigation.push('EventView', { })} 
 /** Navigate to event-creation screen  */
    _onPressDelete = (itemId) => {
@@ -119,7 +128,7 @@ _renderItem = (item) => {
 * 
 */
   addButton = ()=>{
-    const _addButton = this.props.canAddEvent 
+    const _addButton = this.props.isGoogleUser 
       ?  (<Button transparent  onPress={()=>this._onPressNew()} >
              <Icon ios={ICON_IOS_CIRCLE} android={ICON_ANDROID_CIRCLE} style={{fontSize: 20, color: INACTIVE_TINT_COLOR}}/>
                <Text style={styles.textStyle}></Text>
@@ -177,8 +186,15 @@ renderSearchField = () =>(
 
 
 const mapStateToProps = state => {
-   const eventKeys = Object.keys(state.events.events)
+   const eventKeys = Object.keys(state.events.events);
+  const isConnected =  ((state.auth!= NEED_AT_LEAST_ANONYMOUS_LOGIN) && state.auth.auth &&  (state.auth.auth.loggedInProviderName=="oauth2-google"));
+const isGoogleUser = (isConnected && state.auth.auth.userProfile.identities[0].id);
+  
+console.log(isGoogleUser, "--",isConnected, "--",state.auth.auth.userProfile);
   return {
+    isConnected : isConnected,
+    isGoogleUser: (isConnected && state.auth.auth.userProfile.identities[0].id),
+
         canAddEvent : (state.auth!=1) && (state.auth.auth.loggedInProviderName=={GOOGLE_PROVIDER_NAME}),
 
     eventCount: eventKeys.length, 
@@ -191,7 +207,7 @@ const mapStateToProps = state => {
 
 
 function matchDispatchToProps(dispatch){
-  return bindActionCreators({deleteEventRequest: deleteEventRequest}, dispatch)
+  return bindActionCreators({addEventRequest:addEventRequest,addEventsToLocal:addEventsToLocal, deleteEventRequest: deleteEventRequest}, dispatch)
 }
 
 const styles = StyleSheet.create({
@@ -215,7 +231,7 @@ bodyViewStyle:{flex:1},
 });
 
 
-export default connect(mapStateToProps,matchDispatchToProps )(EventSearchAndResultsScreen)
+export default withRouter(connect(mapStateToProps,matchDispatchToProps )(EventSearchAndResultsScreen))
 
 
 

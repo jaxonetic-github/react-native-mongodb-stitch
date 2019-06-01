@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { StyleSheet,Image,   ImagePickerIOS, View} from 'react-native';
 import { Container,Button,Separator,Thumbnail, Header, Content, List, ListItem,Title,Item,
-                                    Accordion,   Text,Textarea, Icon, Left, Body, Right, Switch, Toast } from 'native-base';
+                                    Accordion,   Text,Textarea, Icon, Left, Body, Right, Switch, Toast,H1 } from 'native-base';
 import ImagePicker from 'react-native-image-picker';
 
 import { connect } from 'react-redux';
@@ -15,11 +15,11 @@ import { getDefaultProfile,iconManager,ICON_REMOVE_CIRCLE,ICON_ADD_CIRCLE,COMMON
 TEXT_WEBSITE, TEXT_MAIL,TEXT_PHONE,TEXT_DESCRIPTION, ICON_IOS_PORTRAIT,ICON_ANDROID_PORTRAIT,
 ICON_IOS_GLOBE, ICON_ANDROID_GLOBE, ICON_IOS_DESCRIPTION,ICON_ANDROID_DESCRIPTION, TEXT_NAME,
 ICON_IOS_CIRCLE, ICON_ANDROID_CIRCLE,ICON_IOS_PERSON, ICON_ANDROID_PERSON, COMMON_DARK_BACKGROUND,
- TEXT_CURRENT_IMAGE,ROUTE_SIMPLE_PROFILE_INPUT, header} from '../../constants.js';
-import SimpleInputEdit from "./simpleInput.js";
+ TEXT_CURRENT_IMAGE,ROUTE_SIMPLE_PROFILE_INPUT,PROFILE, header} from '../../constants.js';
+import SimpleInputEdit from "../simpleInput.js";
 import { UPDATE_PROFILE_DESC_BY_KEY, UPDATE_PROFILE_NAME_BY_KEY, UPDATE_PROFILE_WEBSITE_BY_KEY, UPDATE_PROFILE_PHONE_BY_KEY,UPDATE_PROFILE_EMAIL_BY_KEY, UPDATE_PROFILE_IMAGE_BY_KEY,
- ADD_NAME, ADD_PROFILE, ADD_DESC, ADD_EMAIL, ADD_PHONE, ADD_WEBSITE, ADD_IMAGE} from '../../redux/types';
-import Input from '../textinput.js';
+        ADD_NAME, ADD_PROFILE, ADD_DESC,  ADD_EMAIL, ADD_PHONE, ADD_WEBSITE, ADD_IMAGE} from '../../redux/types';
+
 
 
 /**
@@ -29,8 +29,22 @@ class ProfileView extends Component {
 
   constructor(props) {
    super(props);
-   this.state = {dataIndex:this.props.match.params.id}
+    
+    const update = this.props.match.params.id ;
+    if(!update) 
+    {
+      const newProfile = getDefaultProfile();
+      this.props.addProfileRequest(newProfile);
+      this.state = {dataIndex:newProfile.id, isNewProfile:true}
+    }else{
+      this.state = {dataIndex:this.props.match.params.id, isNewProfile:false}
+    }
+   console.log("ProfileView",this.props);
   }
+
+componentDidMount=()=>{
+  console.log(this.state,"---ProfileView didmount----",this.props)
+}
 
  /**
  *   update  profile 
@@ -49,8 +63,7 @@ class ProfileView extends Component {
     const tmpProfile = getDefaultProfile({ website:this.props.website, name:this.props.name, phone:this.props.phone, email:this.props.email,
                description:this.props.description, imageURI:(this.state.avatarSource||this.props.imageURI)});
 
-    const request = this.state.dataIndex?this.props.updateProfileRequest(this.props.profiles[this.state.dataIndex]) : this.props.addProfileRequest(tmpProfile);
-
+    const request = this.state.isNewProfile ? this.props.addProfileRequest(tmpProfile) : this.props.updateProfileRequest(this.props.profiles[this.state.dataIndex]) ;
   };
 
 /**  User selects image */
@@ -103,12 +116,12 @@ displayImageURI = () => (this.state.dataIndex && this.props.profiles[this.state.
  * 
  */
   addButton = (isPersonalProfile)=>{
-   const isNewProfile = !this.state.dataIndex;
    //determine whether to add or update when user clicks button
    const onPressAction = ()=>( isPersonalProfile ? this.updateProfile() :this._onPress()) ;
    //determine whether to show "Save" or "Update" depending on ownership
    const buttonText = isPersonalProfile ?   TEXT_UPDATE :TEXT_SAVE;
-   const _saveButton = isPersonalProfile || isNewProfile ? ( <Button transparent  onPress={onPressAction } >
+   const _saveButton = isPersonalProfile || this.state.isNewProfile ? 
+   (<Button style={{backgroundColor:"maroon", padding:0, margin:0}} iconLeft small  onPress={onPressAction } >
              <Icon ios={ICON_IOS_CIRCLE} android={ICON_ANDROID_CIRCLE} style={COMMON_ICON_STYLE}/>
                <Text style={{color:"gold"}}>{buttonText}</Text>
             </Button>):null;
@@ -119,26 +132,32 @@ displayImageURI = () => (this.state.dataIndex && this.props.profiles[this.state.
 /**
  * A header view to display the profile data when not in "Edit" mode
  */
-    _renderHeader=(expanded,icon_ios, icon_droid, iconsStyle,titleText,bodyText,rightComponent)=> 
-            (<View key={titleText}  style={{flex:1,backgroundColor:COMMON_DARK_BACKGROUND}}>
+    _renderHeader=(expanded,icon_ios, icon_droid, iconsStyle,titleText,bodyText,rightComponent)=>{ 
+      const iconDisplay = expanded
+          ? <Icon style={{fontSize: 20, color: 'silver', flex:1, alignSelf:"flex-end"}} name={ICON_REMOVE_CIRCLE} />
+          : <Icon style={{fontSize: 20, color: 'silver', position:"absolute", right:5, top:20}} name="create"></Icon>
+
+      return (<View key={titleText}  style={{flex:1,backgroundColor:"white"}}>
               <Item>
                <Icon ios={icon_ios} android={icon_droid} style={{fontSize: 20, color: 'silver'}}/>
-            <Text style={{color:"silver"}}>{titleText}</Text>
-            </Item>
+               <Text style={{color:"silver"}}>{titleText}</Text>
+              </Item>
             <Text style={{flex:1,alignSelf:"center",justifyContent:"center",backgroundColor:"white"}}>{bodyText}</Text>
-            {expanded
-          ? <Icon style={{fontSize: 20, color: 'silver', flex:1, alignSelf:"flex-end"}} name={ICON_REMOVE_CIRCLE} />
-          : <Icon style={{fontSize: 20, color: 'silver', position:"absolute", right:5, top:25}} name="create"></Icon>}
-          </View>)
+            {this.state.dataIndex==this.props.profileIndex ? iconDisplay:null }
+          </View>);
+          }
            
   
 
   _renderContent = (item) =>
-    (<View style={{flex:1, alignItems:"center",backgroundColor:"silver", borderRadius:10}}>
-          <Text >{item.displayText}</Text>
-          <SimpleInputEdit inputType={ (this.state.dataIndex?item.updateAction: item.addAction)}
-                    profileIndex={ this.state.dataIndex} inputInitialValue={item.displayText }/>
- </View>)
+  {
+    const view = (<View style={{flex:1, alignItems:"center",backgroundColor:"silver", borderRadius:10}}>
+                      <SimpleInputEdit inputType={ (this.state.dataIndex?item.updateAction: item.addAction)}
+                        profileIndex={ this.state.dataIndex} inputInitialValue={item.displayText }/>
+              </View>);
+    return (this.state.dataIndex==this.props.profileIndex )? view : null;
+
+}
 
 /**
 *
@@ -146,7 +165,7 @@ displayImageURI = () => (this.state.dataIndex && this.props.profiles[this.state.
   render(){
 
     const isPersonalProfile = (typeof this.state.dataIndex !== 'undefined')&& (this.state.dataIndex == this.props.profileIndex);
-    const headerTitle = isPersonalProfile ? "Personal Profile" : "New Divine Profile" ;
+    const headerTitle =  PROFILE  ;
    
 
   const profileData= [
@@ -169,7 +188,7 @@ displayImageURI = () => (this.state.dataIndex && this.props.profiles[this.state.
 
 
  const items = profileData.map((record, index)=>{
-return (<Accordion  
+return (<Accordion  key={record.key}
 style={{ paddingBottom:15,paddingTop:5}}
         dataArray={[record]}
         animation={true}
@@ -178,11 +197,7 @@ style={{ paddingBottom:15,paddingTop:5}}
           const title = item;
             return (    
               this._renderHeader(expanded,item.icon_ios, item.icon_droid, COMMON_ICON_STYLE, item.titleText, item.displayText,
-                  item.displayText,(!isPersonalProfile ?
-                    <Button transparent onPress={() => this.props.navigation.navigate(ROUTE_SIMPLE_PROFILE_INPUT, { inputType:(this.state.dataIndex?UPDATE_PROFILE_EMAIL_BY_KEY: ADD_NAME), profileIndex: this.state.dataIndex, inputInitialValue:this.displayEmail()})} >
-                     {this.arrowIcon()}
-                    </Button>
-                    :null) )
+                  item.displayText,null )
             );
           }}/>);
  });
@@ -190,14 +205,13 @@ style={{ paddingBottom:15,paddingTop:5}}
       <Container  style={{backgroundColor: COMMON_DARK_BACKGROUND}}>
          <Header style={{backgroundColor: COMMON_DARK_BACKGROUND, height:55, color:"white"}}>
             <Body>
-              <Title style={{color:"gold"}}><Icon ios={ICON_IOS_PERSON} android={ICON_ANDROID_PERSON} style={COMMON_ICON_STYLE}/>{headerTitle}</Title>
+              <H1 style={{color:"silver", textTransform:"capitalize", fontSize:35}}>{headerTitle}</H1>
             </Body>
             <Right>{this.addButton(isPersonalProfile)}</Right>
         </Header>
    <Content padder>
            {items}
-            <Separator style={styles.profileSeparatorStyle} bordered/>
-          <Item >
+          <View style={{borderWidth:2, borderColor:"silver"}}>
               <Left>
               <Button transparent disabled onPress={() => this.onPressImagePicker()}>
                  <Text>{TEXT_CURRENT_IMAGE}</Text>
@@ -207,7 +221,7 @@ style={{ paddingBottom:15,paddingTop:5}}
               <Body>
                 <Image style={styles.profileImage} source={{uri:this.displayImageURI()}} />              
               </Body>  
-            </Item>
+            </View>
           </Content>
       </Container>
     );

@@ -30,11 +30,14 @@ import { Switch, Route, Redirect } from 'react-router'
 import { NativeRouter, Link } from 'react-router-native'
 
 import Trubrary from './components/Trubrary/trubrary.js';
+import YouTubeList from './components/Trubrary/youtubeList.js';
 import Activities from './components/Activities.js';
+import SimpleWebview from './components/WebResources/simpleWebView.js';
 import Home from './components/home';
 import ProfileView from './components/Profile/profileview.js';
+import EventView from './components/Event/eventView.js';
 
-import { createBrowserHistory,createMemoryHistory } from 'history';
+import { createBrowserHistory, createMemoryHistory } from 'history';
 import { COMMON_DARK_BACKGROUND} from './constants.js'
 
 // Logger with default options
@@ -42,6 +45,42 @@ import logger from 'redux-logger';
 import SideMenu from 'react-native-side-menu';
 
 const history = createMemoryHistory();
+////////////////////////////////////////////////////////////
+// then our route config
+const routes = [
+  {
+    path: "/",
+    component: Home
+  },
+  {
+    path: "/Home",
+    component: Home
+  },
+    {
+    path: "/Trubrary",
+    component: Trubrary
+  },
+  {
+    path: "/Activities",
+    component: Activities,
+    routes: [
+      {
+        path: "/Activities/ProfileView",
+        component: ProfileView
+      },
+      {
+        path: "/Activities/ProfileView/:id",
+        component: ProfileView
+      },
+      {
+        path: "/Activities/EventView/:id",
+        component: EventView
+      }
+    ]
+  }
+
+];
+
 const sagaMiddleware = createSagaMiddleware();
 
 //combine reducers
@@ -81,13 +120,16 @@ export default class Main extends React.Component {
  <SideMenu menu={menu}>
      <NativeRouter history={history} ><Container>
       <Header style={{backgroundColor:COMMON_DARK_BACKGROUND,height:30}}></Header>
-
-       <Switch>
-      <Route exact path="/" component={Home} />
-        <Route path="/Home" component={Home} />
-       <Route path="/ProfileView/:id" component={ProfileView} />
-       <Route  path="/Trubrary" component={Trubrary} />
-        <Route  path="/Activities" component={Activities} />
+       <Switch >
+        <Route exact path="/"  render={() => <Home />} />
+        <Route path="/Home" render={() => <Home />}/>
+        <Route  path="/Trubrary" render={(props) => <Trubrary {...props} />} />
+        <Route  path="/SimpleWebView" render={(props) => <SimpleWebview {...props} />} />
+        <Route  path="/YoutubeListView" render={(props) => <YouTubeList {...props} />} />
+        <Route exact path="/Activities" render={ (props)=> <Activities {...props} />} />
+        <Route exact path="/Activities/ProfileView/" render={(props) => <ProfileView {...props}  />} />
+        <Route path="/Activities/ProfileView/:id" render={(props) => <ProfileView {...props}  />} />
+        <Route path="/Activities/EventView/:id" render={(props) => <EventView {...props}  />}/>} />
       </Switch>
       </Container>
       <App />

@@ -1,38 +1,51 @@
 import React, { Component } from 'react';
-import { StyleSheet,Image} from 'react-native';
+import { StyleSheet,Image,View} from 'react-native';
 import ImagePicker from 'react-native-image-picker';
-import { Container, Button,Separator,Thumbnail, Header, Content, List, ListItem, Text,Textarea, Icon, Title, Left, Body, Right, Switch } from 'native-base';
+import { Container, Button,Separator,Thumbnail, Header, Content, List, ListItem,
+ Text,Textarea, Icon, Title, Left, Body, Right, Switch,Accordion,Item } from 'native-base';
 import { connect } from 'react-redux';
-import {  addEventRequest, updateEventRequest } from './Redux/Actions/eventActions.js';
+import {  addEventsToLocal,addEventRequest, updateEventRequest } from './Redux/Actions/eventActions.js';
 import { bindActionCreators } from 'redux';
-import {UPDATE_EVENT_NAME_BY_KEY, UPDATE_EVENT_EMAIL_BY_KEY,UPDATE_EVENT_PHONE_BY_KEY, UPDATE_EVENT_WEBSITE_BY_KEY,UPDATE_EVENT_IMAGE_BY_KEY,
+import {UPDATE_EVENT_NAME_BY_KEY,UPDATE_EVENT_DESC_BY_KEY, UPDATE_EVENT_EMAIL_BY_KEY,UPDATE_EVENT_PHONE_BY_KEY, UPDATE_EVENT_WEBSITE_BY_KEY,UPDATE_EVENT_IMAGE_BY_KEY,
        ADD_EVENT, ADD_EVENT_NAME, ADD_EVENT_DESC, ADD_EVENT_EMAIL, ADD_EVENT_PHONE, ADD_EVENT_WEBSITE, ADD_EVENT_IMAGE} from '../../redux/types';
 import {getDefaultEvent, COMMON_ICON_STYLE,ROUTE_SIMPLE_INPUT_VIEW,ROUTE_EVENT_CALENDAR,ROUTE_MAPVIEW,
         TEXT_WEBSITE,ICON_IOS_PERSON, ICON_ANDROID_PERSON,TEXT_SAVE,ICON_IOS_CIRCLE,ICON_ANDROID_CIRCLE,ICON_ALL_ARROWFORWARD,
         ICON_IOS_MAIL, ICON_ANDROID_MAIL,TEXT_MAIL,ICON_IOS_PORTRAIT,ICON_ANDROID_PORTRAIT,
         TEXT_PHONE,TRANSPARENT_COLOR, ICON_IOS_GLOBE, ICON_ANDROID_GLOBE,ICON_IOS_DESCRIPTION,ICON_ANDROID_DESCRIPTION, TEXT_DESCRIPTION,
-        ICON_IOS_LOCATION, ICON_ANDROID_LOCATION, ICON_IOS_CALENDAR,ICON_ANDROID_CALENDAR   } from '../../constants.js';
+        ICON_IOS_LOCATION, ICON_ANDROID_LOCATION, ICON_IOS_CALENDAR,ICON_ANDROID_CALENDAR,
+        TEXT_NAME,COMMON_DARK_BACKGROUND,ICON_REMOVE_CIRCLE   } from '../../constants.js';
+import { withRouter } from "react-router";
+
+import SimpleInputEdit from "../simpleInput.js";
+
 /**
 *   ProfileView - The Screen to view and potentially edit a event. 
 *    
 */
-export class EventView extends Component {
+ class EventView extends Component {
 
   constructor(props) {
     super(props);
-    if(this.props.navigation.state.params && this.props.navigation.state.params.id)
+    console.log(props)
+    const tmpEvt = getDefaultEvent();
+this.props.addEventRequest(tmpEvt);
+    const update = this.props.match.params.id && (this.props.match.params.id>0)
     //setting default state
-    this.state = { dataIndex: this.props.navigation.state.params.id, text: ''};
-    else
-      this.state = {newEntry:"PrepareToCreate"}
+          this.state = {dataIndex:(update?this.props.match.params.id:tmpEvt.id), text: ''};
      }
 
+componentDidMount(){
+  console.log("mounting",this.props)
+ // const tmpEvt = getDefaultEvent();
+ // this.props.addEventRequest(tmpEvt);
+//  this.setState({dataIndex:tmpEvt.id})
+}
 
   _saveEvent = () => {
     const tmpEvt = getDefaultEvent({ website:this.displayWebsite(), name:this.displayName(), phone:this.displayPhone(), email:this.displayEmail(),
                description:this.props.description, imageURI:this.displayImageURI(), calendar: this.props.calendar, location:this.props.location});
-    
-    const request = this.state.dataIndex?this.props.updateEventRequest(this.props.events[this.state.dataIndex]) : this.props.addEventRequest(tmpEvt);
+    console.log(tmpEvt);
+    const request = this.state.dataIndex>-1?this.props.updateEventRequest(this.props.events[this.state.dataIndex]) : this.props.addEventRequest(tmpEvt);
   };
 
 displayName = () =>(this.state.dataIndex && this.props.events[this.state.dataIndex]?this.props.events[this.state.dataIndex].name:this.props.name)
@@ -44,10 +57,70 @@ displayEmail = () =>(this.state.dataIndex && this.props.events[this.state.dataIn
 displayDescription = () =>(this.state.dataIndex && this.props.events[this.state.dataIndex]?this.props.events[this.state.dataIndex].description:this.props.description)
 displayImageURI = () =>(this.state.dataIndex && this.props.events[this.state.dataIndex]?this.props.events[this.state.dataIndex].imageURI:this.props.imageURI)
 
+arrowIcon = ()=>this.props.isGoogleUser ? <Icon style={COMMON_ICON_STYLE}  name={ICON_ALL_ARROWFORWARD} /> : null;
+  
+  /**
+  * The "Edit" view for a particular widget
+  */
+_renderContent = (item) =>
+    (<View style={{flex:1, alignItems:"center",backgroundColor:"silver", borderRadius:10}}>
+      <Text>{this.state.dataIndex}</Text>
+          <SimpleInputEdit inputType={ (this.state.dataIndex?item.updateAction: item.addAction)}
+                    profileIndex={ this.state.dataIndex} inputInitialValue={item.displayText }/>
+ </View>)
+
+/**
+ * A header view to display the profile data when not in "Edit" mode
+ */
+    _renderHeader=(expanded,icon_ios, icon_droid, iconsStyle,titleText,bodyText,rightComponent)=> 
+            (<View key={titleText}  style={{flex:1,backgroundColor:"white"}}>
+              <Item>
+               <Icon ios={icon_ios} android={icon_droid} style={{fontSize: 20, color: 'silver'}}/>
+            <Text style={{color:"silver"}}>{titleText}</Text>
+            </Item>
+            <Text style={{flex:1,alignSelf:"center",justifyContent:"center",backgroundColor:"white"}}>{bodyText}</Text>
+            {expanded
+          ? <Icon style={{fontSize: 20, color: 'silver', flex:1, alignSelf:"flex-end"}} name={ICON_REMOVE_CIRCLE} />
+          : <Icon style={{fontSize: 20, color: 'silver', position:"absolute", right:5, top:20}} name="create"></Icon>}
+          </View>)
+
   render() {
+  const profileData= [
+    {key:TEXT_NAME,titleText:TEXT_NAME, icon_ios:ICON_IOS_PERSON,icon_droid:ICON_ANDROID_PERSON,
+     updateAction:UPDATE_EVENT_NAME_BY_KEY, addAction:ADD_EVENT_NAME,
+      iconStyle:COMMON_DARK_BACKGROUND,displayText:this.displayName(), actionIcon:this.arrowIcon() },
+    {key:TEXT_MAIL,titleText:TEXT_MAIL, icon_ios:ICON_IOS_MAIL,icon_droid:ICON_ANDROID_MAIL,
+      updateAction:UPDATE_EVENT_EMAIL_BY_KEY, addAction:ADD_EVENT_EMAIL,
+      iconStyle:COMMON_DARK_BACKGROUND,displayText:this.displayEmail(), actionIcon:this.arrowIcon() },
+    {key:TEXT_PHONE,titleText:TEXT_PHONE, icon_ios:ICON_IOS_PORTRAIT,icon_droid:ICON_ANDROID_PORTRAIT,
+      updateAction:UPDATE_EVENT_PHONE_BY_KEY, addAction:ADD_EVENT_PHONE,
+      iconStyle:COMMON_DARK_BACKGROUND,displayText:this.displayPhone(), actionIcon:this.arrowIcon() },
+    {key:TEXT_WEBSITE,titleText:TEXT_WEBSITE, icon_ios:ICON_IOS_GLOBE,icon_droid:ICON_ANDROID_GLOBE,
+           updateAction:UPDATE_EVENT_WEBSITE_BY_KEY, addAction:ADD_EVENT_WEBSITE,
+      iconStyle:COMMON_DARK_BACKGROUND,displayText:this.displayWebsite(), actionIcon:this.arrowIcon() },
+    {key:TEXT_DESCRIPTION,titleText:TEXT_DESCRIPTION, icon_ios:ICON_IOS_DESCRIPTION,icon_droid:ICON_ANDROID_DESCRIPTION,
+      updateAction:UPDATE_EVENT_DESC_BY_KEY, addAction:ADD_EVENT_DESC,
+      iconStyle:COMMON_DARK_BACKGROUND,displayText:this.displayDescription(), actionIcon:this.arrowIcon() }
+      ];
+
+ const items = profileData.map((record, index)=>{
+return (<Accordion  
+style={{ paddingBottom:15,paddingTop:5}}
+        dataArray={[record]}
+        animation={true}
+         renderContent={this._renderContent}
+       renderHeader= {(item, expanded)=> {
+          const title = item;
+            return (    
+              this._renderHeader(expanded,item.icon_ios, item.icon_droid, COMMON_ICON_STYLE, item.titleText, item.displayText,
+                  item.displayText,null )
+            );
+          }}/>);
+ });
     return (
-      <Container>
-          <Header style={{backgroundColor: '#a9c3d2'}}>
+      <Container style={{backgroundColor: COMMON_DARK_BACKGROUND}}>
+              
+          <Header  style={{backgroundColor: COMMON_DARK_BACKGROUND, height:55, color:"white"}}>
             <Body>
               <Title>Event {this.state.dataIndex}</Title>
             </Body>
@@ -62,97 +135,12 @@ displayImageURI = () =>(this.state.dataIndex && this.props.events[this.state.dat
 
             </Right>
         </Header>
-        <Content>
-          <ListItem icon>
-            <Left>
-              <Button transparent>
-               <Icon ios={ICON_IOS_PERSON} android={ICON_ANDROID_PERSON} style={COMMON_ICON_STYLE}/>
-              </Button>
-              <Text>Name : {this.displayName()}</Text>
-            </Left>
-            <Body>
-             </Body>
-            <Right>
-            <Button transparent onPress={() => this.props.navigation.navigate(ROUTE_SIMPLE_INPUT_VIEW, { inputType:(this.state.dataIndex?UPDATE_EVENT_NAME_BY_KEY: ADD_EVENT_NAME), eventIndex: this.state.dataIndex, inputInitialValue:this.displayName()})} >
-              <Icon  style={COMMON_ICON_STYLE} name={ICON_ALL_ARROWFORWARD} />
-            </Button>
-            </Right>
-          </ListItem>
-
-          <ListItem icon>
-            <Left>
-              <Button transparent>
-               <Icon ios={ICON_IOS_MAIL} android={ICON_ANDROID_MAIL} style={COMMON_ICON_STYLE}/>
-              </Button>
-              <Text>{TEXT_MAIL}</Text>
-            </Left>
-            <Body>
-              <Text>{this.displayEmail()}</Text>
-            </Body>
-             
-            <Right>
-            <Button transparent onPress={() => this.props.navigation.navigate(ROUTE_SIMPLE_INPUT_VIEW, { inputType: (this.state.dataIndex?UPDATE_EVENT_EMAIL_BY_KEY: ADD_EVENT_EMAIL), eventIndex: this.state.dataIndex, inputInitialValue:this.displayEmail() })} >
-              <Icon style={COMMON_ICON_STYLE} name={ICON_ALL_ARROWFORWARD} />
-            </Button>
-            </Right>
-             
-          </ListItem>
-          <ListItem icon>
-            <Left>
-              <Button transparent >
-               <Icon ios={ICON_IOS_PORTRAIT} android={ICON_ANDROID_PORTRAIT} style={COMMON_ICON_STYLE}/>
-              </Button>
-              <Text>{TEXT_PHONE}</Text>
-            </Left>
-            <Body>
-              <Text>{this.displayPhone()}</Text>
-            </Body>
-            <Right>
-              <Button transparent onPress={() => this.props.navigation.navigate(ROUTE_SIMPLE_INPUT_VIEW, { inputType: (this.state.dataIndex?UPDATE_EVENT_PHONE_BY_KEY: ADD_EVENT_PHONE), eventIndex: this.state.dataIndex, inputInitialValue:this.displayPhone()  })} >
-              <Icon style={COMMON_ICON_STYLE}  name={ICON_ALL_ARROWFORWARD}  />
-              </Button>
-            </Right>
-          </ListItem>
-          <ListItem icon>
-            <Left>
-              <Button transparent style={{ backgroundColor:{TRANSPARENT_COLOR}  }}>
-             <Icon ios={ICON_IOS_GLOBE} android={ICON_ANDROID_GLOBE} style={COMMON_ICON_STYLE}/>
-              </Button>
-               <Text>{TEXT_WEBSITE}</Text>
-            </Left>
-            <Body>
-             
-              <Text>{this.displayWebsite()}</Text>
-            </Body>
-            <Right>
-              <Button transparent onPress={() => this.props.navigation.navigate('SimpleEventInput', { inputType:  (this.state.dataIndex?UPDATE_EVENT_WEBSITE_BY_KEY: ADD_EVENT_WEBSITE), eventIndex: this.state.dataIndex, inputInitialValue:this.displayWebsite() })} >
-
-              <Icon style={COMMON_ICON_STYLE} name={ICON_ALL_ARROWFORWARD} />
-             </Button>
-
-            </Right>
-          </ListItem>
-
-          <ListItem icon>
-            <Left>
-              <Button transparent>
-                <Icon ios={ICON_IOS_DESCRIPTION} android={ICON_ANDROID_DESCRIPTION} style={COMMON_ICON_STYLE}/>
-              </Button>
-              <Text>{TEXT_DESCRIPTION}</Text>
-            </Left>
-            <Body>
-              <Text>{this.displayDescription()}</Text>
-            </Body>
-            <Right>  
-              <Button transparent onPress={() => this.props.navigation.navigate("EditDescription")} >
-                 <Icon style={COMMON_ICON_STYLE} name={ICON_ALL_ARROWFORWARD} />
-          </Button>
-            </Right>
-          </ListItem>
+        <Content padder>
+          {items}
           <Separator bordered>
-            <Text>MIDFIELD</Text>
+            <Text style={{flex:1,alignSelf:"center"}}>Time & Place</Text>
           </Separator>
-  <ListItem icon>
+  <ListItem style={{backgroundColor: "silver"}}>
             <Left>
                 <Icon ios={ICON_IOS_LOCATION} android={ICON_ANDROID_LOCATION} style={COMMON_ICON_STYLE}/>
               <Text>Location</Text>
@@ -167,7 +155,7 @@ displayImageURI = () =>(this.state.dataIndex && this.props.events[this.state.dat
 </Button>
             </Right>
           </ListItem>
-  <ListItem icon>
+  <ListItem style={{backgroundColor: "white"}}>
             <Left>
                 <Icon ios={ICON_IOS_CALENDAR} android={ICON_ANDROID_CALENDAR} style={COMMON_ICON_STYLE}/>
               <Text>Calendar</Text>
@@ -182,7 +170,7 @@ displayImageURI = () =>(this.state.dataIndex && this.props.events[this.state.dat
 </Button>
             </Right>
           </ListItem>
-          <ListItem thumbnail>
+          <ListItem style={{backgroundColor: "silver"}}>
               <Left>
               <Text>Current Image</Text>
               </Left>
@@ -218,8 +206,8 @@ const mapStateToProps = state => {
 
 
 function matchDispatchToProps(dispatch){
-  return bindActionCreators({updateEventRequest:updateEventRequest, addEventRequest: addEventRequest }, dispatch)
+  return bindActionCreators({updateEventRequest:updateEventRequest,addEventsToLocal:addEventsToLocal, addEventRequest: addEventRequest }, dispatch)
 }
 
-export default connect(mapStateToProps, matchDispatchToProps)(EventView)
+export default withRouter(connect(mapStateToProps, matchDispatchToProps)(EventView))
 

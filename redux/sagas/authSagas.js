@@ -13,7 +13,7 @@ FETCH_EVENT_FAILURE,LOGIN_SUCCESS,LOGIN_FAILURE, LOGIN_USER_REQUEST, LOGOUT_USER
 import {loginFailed, loginSucceeded, logout,loginUserRequest,dbClientInitialized, dbClientAlreadyInitialized } from '../../components/Authentication/Redux/Actions/authActions.js';
  
 import { addEventSuccess,addEventFailure,removeLocalEvent,deleteEventSuccess,updateEventSuccess, addEventsToLocal, requestFetchEvent, fetchEventFailure, fetchEventSuccess,updateEventFailure,deleteEventFailure } from '../../components/Event/Redux/Actions/eventActions.js'
-import { updateProfileSuccess,updateProfileFailure,fetchProfileSuccess, removeLocalProfile, addProfile,fetchProfileFailure, addProfileSuccess,addProfileFailure,fetchProfileRequest } from '../../components/Profile/Redux/Actions/profile.js'
+import { updateProfileSuccess,updateProfileFailure,fetchProfileSuccess, removeLocalProfile, addProfile,fetchProfileFailure, addProfileSuccess,addProfileFailure,fetchProfileRequest,deleteProfileFailure } from '../../components/Profile/Redux/Actions/profile.js'
 
 import ServicesManager from '../../services/servicesManager.js'
 import {googleAuthenticationPress, _onPressLogout,googleSilentLogin} from './googleSaga.js'
@@ -177,8 +177,7 @@ const results = yield call (service.deleteProfile, action.payload);
   export function* fetchEvents(service) {
 
 try{
-  console.log(service.dbServices);
-        let events = yield call(service.stitchCrudServices.fetchEvents);
+        let events = yield call(service.fetchEvents);
         if(events  && events.errorStack)
           {
             yield put(fetchEventFailure(events.errorStack+"\n"+events.error.message))
@@ -205,7 +204,7 @@ try{
 
 try{
     
-      const profiles = yield call(service.stitchCrudServices.fetchProfiles);
+      const profiles = yield call(service.fetchProfiles);
       if(!profiles.errorStack){
          yield put(fetchProfileSuccess(profiles));
        }else
@@ -258,14 +257,14 @@ export function* actionWatcher(service) {
   yield takeEvery(GOOGLE_SIGNOUT, _onPressLogout,service);
   yield takeEvery(LOGIN_SUCCESS, _onAuthSucess, service);
   yield takeEvery (GOOGLE_SIGNIN_REQUEST, googleAuthenticationPress,service,false )
-   yield takeEvery(ADD_PROFILE_REQUEST, insertProfile, service);
-   yield takeEvery(ADD_EVENT_REQUEST, insertEvent, service);
-   yield takeEvery(UPDATE_EVENT_REQUEST, updateEvent, service);
+   yield takeEvery(ADD_PROFILE_REQUEST, insertProfile, service.stitchCrudServices);
+   yield takeEvery(ADD_EVENT_REQUEST, insertEvent, service.stitchCrudServices);
+   yield takeEvery(UPDATE_EVENT_REQUEST, updateEvent, service.stitchCrudServices);
    yield takeEvery(UPDATE_PROFILE_REQUEST, updateProfile, service.stitchCrudServices);
-   yield takeEvery(FETCH_PROFILE_REQUEST, fetchProfiles, service);
-   yield takeEvery(FETCH_EVENT_REQUEST, fetchEvents, service);
-   yield takeEvery(DELETE_EVENT_REQUEST, deleteEvent, service);
-   yield takeEvery(DELETE_PROFILE_REQUEST, deleteProfile, service);
+   yield takeEvery(FETCH_PROFILE_REQUEST, fetchProfiles, service.stitchCrudServices);
+   yield takeEvery(FETCH_EVENT_REQUEST, fetchEvents, service.stitchCrudServices);
+   yield takeEvery(DELETE_EVENT_REQUEST, deleteEvent, service.stitchCrudServices);
+   yield takeEvery(DELETE_PROFILE_REQUEST, deleteProfile, service.stitchCrudServices);
 }
 
 
