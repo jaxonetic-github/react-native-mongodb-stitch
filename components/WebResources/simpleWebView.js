@@ -17,13 +17,19 @@ export default class SimpleWebView extends React.Component {
 
   constructor(props) {
     super(props);
-    console.log(props);
+    console.log(this.props);
     this.state = {
-      url : this.props.url || props.navigation.state.params.url,
-      title:this.props.title || props.navigation.state.params.title,
+      url : this.props.location.state.record.url ,
+      title:this.props.location.state.record.title,
     };
+
+
+
   }
   
+  componentDidMount(){
+    console.log(this.state);
+  }
 
 /**
  * Renders the webview unless its content is still loading in 

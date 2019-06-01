@@ -106,7 +106,7 @@ quoteCard = ()=>(<Card>
   <TouchableOpacity style={{ top:5, right:0}}>
   <Icon ios={ICON_IOS_INFORMATION} android={ICON_ANDROID_INFORMATION} style={COMMON_ICON_STYLE}/>
    </TouchableOpacity>
-<TouchableOpacity  style={styles.touchable} onPress= { ()=>{this.props.navigation.push(ROUTE_SIMPLE_WEB_VIEW, {url:"https://youtu.be/K_nOQ9y4eT8?t=4710" , title:"Dr Ben"})}} >
+<TouchableOpacity  style={styles.touchable}  >
 <Thumbnail style={{width:220 , height:220, borderRadius:15}} 
 source={{uri:'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Dr_Ben.jpg/220px-Dr_Ben.jpg'}}/>
 <Title>Dr Ben</Title>

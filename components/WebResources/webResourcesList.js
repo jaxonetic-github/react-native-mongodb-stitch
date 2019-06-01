@@ -68,7 +68,7 @@ import {resourceData,commonViewButton,COMMON_ICON_STYLE, COMMON_DARK_BACKGROUND,
   */
 _renderItem = (item) => 
  {
-  const buttonPressAction = () => this.props.navigation.push(ROUTE_SIMPLE_WEB_VIEW, {url:item.item.url , title:item.item.title});
+  const buttonPressAction = () => this.props.history.push(ROUTE_SIMPLE_WEB_VIEW, {record:{url:item.item.url , title:item.item.title}});
  return (<ListItem style={{ flex:1 }}>
           <Card style={{ flex:1 }}>
            <CardItem style={{ flex:1}}> 
@@ -84,15 +84,10 @@ _renderItem = (item) =>
     );
 }
 
-/*
-              <View  style={styles.customOuterStyle}  >
-               <View style={styles.buttonOuterShell}>
-                <View style={styles.buttonTextShell} >
-                 <Text style={styles.buttonText}>{item.item.title}</Text>
-                </View></View></View>
-*/
+
 
   render() {
+console.log(this.state,":TRUBRARY:", this.props);
 
     return (
       //ListView to show with textinput used as search bar 

@@ -12,7 +12,7 @@ export const FUNCTION_INSERTEVENT   = "insertEvent";
 export const FUNCTION_QUERYPROFILE = "queryProfiles";
 export const FUNCTION_QUERYEVENTS = "queryEvents";
 export const FUNCTION_UPDATEPROFILE = "updateUser";
-export const FUNCTION_UPDATEEVENT = "updateEvent";
+export const FUNCTION_UPDATEEVENT = "updateEvents";
 export const FUNCTION_RETRIEVE_GOOGLE_WEBCLIENTID = "retrieveGoogleWebClientID";
 export const FUNCTION_RETRIEVE_GOOGLE_IOSCLIENTID = "retrieveGoogleIosClientID";
 export const FUNCTION_RETRIEVE_GOOGLE_APIKEY = "retrieveGoogleApiKey";
@@ -41,12 +41,12 @@ export const ROUTE_EVENTVIEW = '';
 export const ROUTE_MAPVIEW = 'MapView';
 export const ROUTE_EVENT_CALENDAR = 'EventCalendar';
 export const ROUTE_SIMPLE_INPUT_VIEW = 'SimpleEventInput';
-export const ROUTE_SIMPLE_WEB_VIEW = 'SimpleWebView';
+export const ROUTE_SIMPLE_WEB_VIEW = '/SimpleWebView';
 export const ROUTE_PROFILE_VIEW = 'ProfileView';
 export const ROUTE_EVENT_VIEW = 'EventView';
 export const ROUTE_SIMPLE_PROFILE_INPUT = 'SimpleInput';
 
-export const ROUTE_YOUTUBELIST_VIEW = 'YouTubeList';
+export const ROUTE_YOUTUBELIST_VIEW = '/YoutubeListView';
 
 //*********************  HTML  *********************/
 // Icons
