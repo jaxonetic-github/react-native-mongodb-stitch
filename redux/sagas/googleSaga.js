@@ -38,12 +38,15 @@ return googleUser;
 try{
  
   googleUser = yield GoogleSignin.signIn();
+  console.log(googleUser)
 if(!googleUser.serverAuthCode){
+  console.log("roveking and signing out")
   yield GoogleSignin.revokeAccess();
   yield GoogleSignin.signOut();
 }
+console.log(googleUser);
   googleUser = yield service.googleSignIn(googleUser.serverAuthCode);
-
+console.log("second",googleUser);
   if(googleUser && googleUser.isLoggedIn){
      yield put(googleSigninSuccess(googleUser));
   }
@@ -62,9 +65,10 @@ return googleUser;
    
 try{
 
-  yield GoogleSignin.revokeAccess();
-  yield GoogleSignin.signOut();
-  yield service.logout();
+//  const revoke = yield GoogleSignin.revokeAccess();
+//  const signout = yield GoogleSignin.signOut();
+  const logout= yield service.logout();
+  console.log(logout)
 }catch(error){
       yield put({ type: LOGOUT_USER_FAILURE, error })
 

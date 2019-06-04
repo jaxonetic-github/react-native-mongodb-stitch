@@ -34,6 +34,8 @@ import YouTubeList from './components/Trubrary/youtubeList.js';
 import Activities from './components/Activities.js';
 import SimpleWebview from './components/WebResources/simpleWebView.js';
 import Home from './components/home';
+import CalendarView from './components/calendarView.js';
+import MapView from './components/mapview';
 import ProfileView from './components/Profile/profileview.js';
 import EventView from './components/Event/eventView.js';
 
@@ -123,13 +125,16 @@ export default class Main extends React.Component {
        <Switch >
         <Route exact path="/"  render={() => <Home />} />
         <Route path="/Home" render={() => <Home />}/>
+        <Route path="/MapView" render={(props) => <MapView {...props}/>}/>
         <Route  path="/Trubrary" render={(props) => <Trubrary {...props} />} />
+        <Route  path="/EventCalendar" render={(props) => <CalendarView {...props} />} />
         <Route  path="/SimpleWebView" render={(props) => <SimpleWebview {...props} />} />
         <Route  path="/YoutubeListView" render={(props) => <YouTubeList {...props} />} />
         <Route exact path="/Activities" render={ (props)=> <Activities {...props} />} />
         <Route exact path="/Activities/ProfileView/" render={(props) => <ProfileView {...props}  />} />
         <Route path="/Activities/ProfileView/:id" render={(props) => <ProfileView {...props}  />} />
         <Route path="/Activities/EventView/:id" render={(props) => <EventView {...props}  />}/>} />
+        <Route path="/Activities/EventView" render={(props) => <EventView {...props}  />}/>} />
       </Switch>
       </Container>
       <App />

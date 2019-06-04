@@ -10,7 +10,7 @@ FETCH_EVENT_FAILURE,LOGIN_SUCCESS,LOGIN_FAILURE, LOGIN_USER_REQUEST, LOGOUT_USER
       ADD_PROFILE_TO_USERPROFILES, ADD_EVENTS_TO_USEREVENTS, ADD_EVENT_REQUEST, ADD_EVENT_SUCCESS, ADD_EVENT_FAILURE ,
     GOOGLE_SERVERAUTHCODE_RECEIVED} from '../types.js';
     
-import {loginFailed, loginSucceeded, logout,loginUserRequest,dbClientInitialized, dbClientAlreadyInitialized } from '../../components/Authentication/Redux/Actions/authActions.js';
+import {loginFailed, loginSucceeded,loginUserRequest,dbClientInitialized, dbClientAlreadyInitialized } from '../../components/Authentication/Redux/Actions/authActions.js';
  
 import { addEventSuccess,addEventFailure,removeLocalEvent,deleteEventSuccess,updateEventSuccess, addEventsToLocal, requestFetchEvent, fetchEventFailure, fetchEventSuccess,updateEventFailure,deleteEventFailure } from '../../components/Event/Redux/Actions/eventActions.js'
 import { updateProfileSuccess,updateProfileFailure,fetchProfileSuccess, removeLocalProfile, addProfile,fetchProfileFailure, addProfileSuccess,addProfileFailure,fetchProfileRequest,deleteProfileFailure } from '../../components/Profile/Redux/Actions/profile.js'
@@ -247,14 +247,23 @@ return profiles;
    yield call (service.configureGoogleKeys);
 
   }
+/**
+ *  fetch App info and start configuration of google services
+ *  @param service: a DAO object
+ */
+  export function* logout(service) {
+   
+   //set up google services
+   yield call (service.logout);
 
+  }
 /**
 * actionWatcher : Spawns the generator fuctions that listens for actions
 * @param service: a DAO object
 */
 export function* actionWatcher(service) {
      yield takeEvery(LOGIN_USER_REQUEST, authorizeUser,service);
-  yield takeEvery(GOOGLE_SIGNOUT, _onPressLogout,service);
+  yield takeEvery(GOOGLE_SIGNOUT, logout,service);
   yield takeEvery(LOGIN_SUCCESS, _onAuthSucess, service);
   yield takeEvery (GOOGLE_SIGNIN_REQUEST, googleAuthenticationPress,service,false )
    yield takeEvery(ADD_PROFILE_REQUEST, insertProfile, service.stitchCrudServices);

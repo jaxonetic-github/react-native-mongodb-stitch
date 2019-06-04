@@ -39,7 +39,7 @@ const authReducer = (state={}, action) => {
               }
    
        case GOOGLE_SIGNIN_SUCCESS:
-         console.log(state);
+         console.log(action);
       console.log(state.app);
      return {  
 

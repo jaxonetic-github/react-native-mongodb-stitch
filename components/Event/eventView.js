@@ -26,10 +26,15 @@ import SimpleInputEdit from "../simpleInput.js";
 
   constructor(props) {
     super(props);
-    console.log(props)
+    console.log("Eventview::",this.props)
     const tmpEvt = getDefaultEvent();
-this.props.addEventRequest(tmpEvt);
-    const update = this.props.match.params.id && (this.props.match.params.id>0)
+
+    const update = this.props.match.params.id;
+    if(!update)
+    {
+      this.props.addEventRequest(tmpEvt);
+
+    }
     //setting default state
           this.state = {dataIndex:(update?this.props.match.params.id:tmpEvt.id), text: ''};
      }
@@ -104,7 +109,7 @@ _renderContent = (item) =>
       ];
 
  const items = profileData.map((record, index)=>{
-return (<Accordion  
+return (<Accordion  key={record.key}
 style={{ paddingBottom:15,paddingTop:5}}
         dataArray={[record]}
         animation={true}
@@ -136,7 +141,9 @@ style={{ paddingBottom:15,paddingTop:5}}
             </Right>
         </Header>
         <Content padder>
+
           {items}
+
           <Separator bordered>
             <Text style={{flex:1,alignSelf:"center"}}>Time & Place</Text>
           </Separator>
@@ -149,10 +156,8 @@ style={{ paddingBottom:15,paddingTop:5}}
               <Text>{this.displayLocation()}</Text>
             </Body>
             <Right>   
-                 <Button transparent title="Event Calendar" onPress={() => this.props.navigation.push('MapView',{id:this.state.dataIndex})} >
-
-                 <Icon  style={COMMON_ICON_STYLE}       name="arrow-forward" />
-</Button>
+                 <Button transparent title="Event Location" onPress={() => this.props.history.push('/MapView',{key:this.state.dataIndex, initialLocation:this.displayLocation()})} >
+                 <Icon  style={COMMON_ICON_STYLE}  name="arrow-forward" /></Button>
             </Right>
           </ListItem>
   <ListItem style={{backgroundColor: "white"}}>
@@ -164,7 +169,7 @@ style={{ paddingBottom:15,paddingTop:5}}
               <Text>{this.displayCalendar()}</Text>
             </Body>
             <Right>   
-                 <Button transparent title="Event Calendar" onPress={() => this.props.navigation.push('EventCalendar',{id:this.state.dataIndex})} >
+                 <Button transparent title="Event Calendar" onPress={() => this.props.history.push('/EventCalendar',{key:this.state.dataIndex, initialDate:this.displayCalendar() })} >
 
                  <Icon  style={COMMON_ICON_STYLE}   name="arrow-forward" />
 </Button>

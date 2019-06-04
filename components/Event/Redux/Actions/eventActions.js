@@ -31,12 +31,12 @@ export function updateEventImageByKey(text, key) {
 export function updateEventDescByKey(text, key) {
   return { type: UPDATE_EVENT_DESC_BY_KEY, payload:text, key:key}
 }
-export function updateEventCalendarByKey(text, key) {
-  return { type: UPDATE_EVENT_CALENDAR_BY_KEY, payload:text, key:key}
+export function updateEventCalendarByKey(calendarObj) {
+  return { type: UPDATE_EVENT_CALENDAR_BY_KEY, payload:calendarObj.payload, key:calendarObj.key}
 }
 
-export function updateEventLocationByKey(text, key) {
-  return { type: UPDATE_EVENT_LOCATION_BY_KEY, payload:text, key:key}
+export function updateEventLocationByKey(locationObj) {
+  return { type: UPDATE_EVENT_LOCATION_BY_KEY, payload:locationObj.location, key:locationObj.key}
 }
 export function addEventName(text) {
   return { type: ADD_EVENT_NAME, payload:text}

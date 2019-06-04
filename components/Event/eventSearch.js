@@ -5,7 +5,8 @@ import { connect } from 'react-redux';
 import { withRouter } from "react-router";
 import { bindActionCreators } from 'redux';
 import { StyleSheet, View, ListView, TextInput, ActivityIndicator,FlatList, Alert} from 'react-native';
-import { SwipeRow,Container, Subtitle, Header, Content, List, ListItem,Title,Icon, Thumbnail, Text, Left, Body, Right, Button } from 'native-base';
+import { SwipeRow,Container, Subtitle, Header, Content, List, ListItem,Title,Icon,
+Picker, Thumbnail, Text, Left, Body, Right, Button } from 'native-base';
 import {deleteEventRequest, addEventsToLocal,addEventRequest} from './Redux/Actions/eventActions.js'
 import {COMMON_ACTIVITY_INDICATOR, NO_PHOTO_AVAILABLE_URI, COMMON_DARK_BACKGROUND,ACTIVE_TINT_COLOR, INACTIVE_TINT_COLOR,
 ROUTE_EVENT_VIEW, TEXT_DELETE,EMPTY_STRING, TRANSPARENT_COLOR,ICON_ALL_TRASH,
@@ -20,7 +21,7 @@ COMMON_LISTVIEW_ITEM_SEPARATOR,NEED_AT_LEAST_ANONYMOUS_LOGIN,ICON_IOS_CIRCLE,ICO
   constructor(props) {
     super(props);
     //setting default state
-    this.state = { isLoading: true, text: EMPTY_STRING};
+    this.state = { isLoading: true, text: EMPTY_STRING, location:"All"};
   }
 
   /** Loads events into the component */
@@ -57,11 +58,13 @@ COMMON_LISTVIEW_ITEM_SEPARATOR,NEED_AT_LEAST_ANONYMOUS_LOGIN,ICON_IOS_CIRCLE,ICO
       const description = item.description ? item.description.toUpperCase() : ''.toUpperCase();
       const phone = item.phone ? item.phone.toUpperCase() : ''.toUpperCase();
       const website = item.website ? item.website.toUpperCase() : ''.toUpperCase();
+      const location = item.location ? item.location.toUpperCase() : ''.toUpperCase();
+      const calendar = item.calendar ? item.calendar.toUpperCase() : ''.toUpperCase();
       const email = item.email ? item.email.toUpperCase() : ''.toUpperCase();
 
       const textData = text.toUpperCase();
 
-      return ((name.indexOf(textData) > -1)||(description.indexOf(textData) > -1) ||
+      return ((location.indexOf(textData) > -1)||(calendar.indexOf(textData) > -1)||(name.indexOf(textData) > -1)||(description.indexOf(textData) > -1) ||
         (phone.indexOf(textData) > -1)||(website.indexOf(textData) > -1)||(email.indexOf(textData) > -1));
     });
     return newData;
@@ -82,7 +85,7 @@ COMMON_LISTVIEW_ITEM_SEPARATOR,NEED_AT_LEAST_ANONYMOUS_LOGIN,ICON_IOS_CIRCLE,ICO
 //add a new local event
 //const tst= await this.props.addEventRequest(tmpEvt);
 //go to the detail of that local event
-    this.props.history.push("/Activities/EventView/-1");
+    this.props.history.push("/Activities/EventView");
   }
 
 //onPress={() => this.props.navigation.push('EventView', { })} 
@@ -137,6 +140,12 @@ _renderItem = (item) => {
       return _addButton; }
 
 
+  onLocationChange(value: string) {
+    this.setState({
+      location: value
+    });
+  }
+
 
 /** The Search field */
 renderSearchField = () =>(
@@ -154,6 +163,7 @@ renderSearchField = () =>(
       //Loading View while data is loading
       return (COMMON_ACTIVITY_INDICATOR );
     }
+  const locations = this.props.events.map((event)=>(<Picker.Item key={event.id} label={event.location} value={event.location} />));
 
     return (
       //ListView to show with textinput used as search bar 
@@ -167,6 +177,17 @@ renderSearchField = () =>(
             </Right>
         </Header>
        <Content>
+            <Picker
+              mode="dropdown"
+              iosHeader="Locations"
+              iosIcon={<Icon name="arrow-dropdown-circle" style={{ color: "#007aff", fontSize: 25 }} />}
+              style={{ width: undefined }}
+              selectedValue={this.state.location}
+              onValueChange={this.onLocationChange.bind(this)}
+            >
+            <Picker.Item key={"All"} label={"All Locations"} value={"All"} />
+             {locations}
+            </Picker>
         <FlatList
             leftOpenValue={LIST_SWIPELEFT_OPENVALUE}
             rightOpenValue={LIST_SWIPERIGHT_OPENVALUE}
