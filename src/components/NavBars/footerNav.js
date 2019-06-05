@@ -74,7 +74,7 @@ renderHeader = () =>{return(
   * Render
   */
   render() {
-  footerTabs =this._listDataFilter(this.props.sideBarData).map((data)=>this._renderRow(data));
+  const footerTabs =this._listDataFilter(this.props.sideBarData).map((data)=>this._renderRow(data));
     return (<Footer style={{backgroundColor:COMMON_DARK_BACKGROUND}} >{footerTabs}</Footer>);
   }
 }

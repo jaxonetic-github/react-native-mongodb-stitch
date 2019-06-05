@@ -5,42 +5,42 @@
 */
 import React, { Component } from "react";
 import { Root, Container,Header } from "native-base";
-import sideBarReducer from './redux/sideBarReducer.js';
+import sideBarReducer from './src/redux/sideBarReducer.js';
 import { View,Text,YellowBox,NativeEventEmitter, Platform, AppRegistry, NativeModules, AsyncStorage,StatusBar} from 'react-native';
 import { name as appName } from './app.json';
 
-import App from './App';
+import BottomNav from './src/components/BottomNav.js';
 
-import { initialStoreState } from './redux/state.js';
+import { initialStoreState } from './src/redux/state.js';
 import { Provider } from 'react-redux';
 import { createAppContainer } from 'react-navigation';
-import { rootSaga } from './redux/sagas/authSagas.js';
+import { rootSaga } from './src/redux/sagas/authSagas.js';
 import { createStore, applyMiddleware,combineReducers } from 'redux';
-import resourcesReducer from './redux/resourcesReducer.js';
-import videoRefsReducer from './redux/videoRefsReducer.js';
-import profilesReducer from './components/Profile/Redux/Reducers/profileReducer.js';
-import authReducer from './components/Authentication/Redux/Reducers/authReducer.js';
-import eventsReducer from './components/Event/Redux/Reducers/eventReducer.js';
+import resourcesReducer from './src/redux/resourcesReducer.js';
+import videoRefsReducer from './src/redux/videoRefsReducer.js';
+import profilesReducer from './src/components/Profile/Redux/Reducers/profileReducer.js';
+import authReducer from './src/components/Authentication/Redux/Reducers/authReducer.js';
+import eventsReducer from './src/components/Event/Redux/Reducers/eventReducer.js';
 import createSagaMiddleware from 'redux-saga'
 
-import FooterNav from './components/NavBars/footerNav.js';
-import SideBar from './components/NavBars/sidebar.js';
+import FooterNav from './src/components/NavBars/footerNav.js';
+import SideBar from './src/components/NavBars/sidebar.js';
 
 import { Switch, Route, Redirect } from 'react-router'
 import { NativeRouter, Link } from 'react-router-native'
 
-import Trubrary from './components/Trubrary/trubrary.js';
-import YouTubeList from './components/Trubrary/youtubeList.js';
-import Activities from './components/Activities.js';
-import SimpleWebview from './components/WebResources/simpleWebView.js';
-import Home from './components/home';
-import CalendarView from './components/calendarView.js';
-import MapView from './components/mapview';
-import ProfileView from './components/Profile/profileview.js';
-import EventView from './components/Event/eventView.js';
+import Trubrary from './src/components/Trubrary/trubrary.js';
+import YouTubeList from './src/components/Trubrary/youtubeList.js';
+import Activities from './src/components/Activities.js';
+import SimpleWebview from './src/components/WebResources/simpleWebView.js';
+import Home from './src/components/home';
+import CalendarView from './src/components/calendarView.js';
+import MapView from './src/components/mapview';
+import ProfileView from './src/components/Profile/profileview.js';
+import EventView from './src/components/Event/eventView.js';
 
 import { createBrowserHistory, createMemoryHistory } from 'history';
-import { COMMON_DARK_BACKGROUND} from './constants.js'
+import { COMMON_DARK_BACKGROUND} from './src/constants.js'
 
 // Logger with default options
 import logger from 'redux-logger';
@@ -137,7 +137,7 @@ export default class Main extends React.Component {
         <Route path="/Activities/EventView" render={(props) => <EventView {...props}  />}/>} />
       </Switch>
       </Container>
-      <App />
+      <BottomNav />
     </NativeRouter>   
       </SideMenu>
       </Provider>

@@ -7,7 +7,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {updateEventLocationByKey} from './Event/Redux/Actions/eventActions.js';
 import {COMMON_ACTIVITY_INDICATOR, COMMON_DARK_BACKGROUND} from '../constants.js'
-import {googlekey as GOOGLE_KEY} from '../app.json';
 
  const STORAGE_KEY = 'ASYNC_STORAGE_NAME_EXAMPLE'
 

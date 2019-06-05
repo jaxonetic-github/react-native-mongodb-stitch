@@ -13,7 +13,7 @@ FETCH_EVENT_FAILURE,LOGIN_SUCCESS,LOGIN_FAILURE, LOGIN_USER_REQUEST, LOGOUT_USER
 import {loginFailed, loginSucceeded,loginUserRequest,dbClientInitialized, dbClientAlreadyInitialized } from '../../components/Authentication/Redux/Actions/authActions.js';
  
 import { addEventSuccess,addEventFailure,removeLocalEvent,deleteEventSuccess,updateEventSuccess, addEventsToLocal, requestFetchEvent, fetchEventFailure, fetchEventSuccess,updateEventFailure,deleteEventFailure } from '../../components/Event/Redux/Actions/eventActions.js'
-import { updateProfileSuccess,updateProfileFailure,fetchProfileSuccess, removeLocalProfile, addProfile,fetchProfileFailure, addProfileSuccess,addProfileFailure,fetchProfileRequest,deleteProfileFailure } from '../../components/Profile/Redux/Actions/profile.js'
+import { deleteProfileSuccess,updateProfileSuccess,updateProfileFailure,fetchProfileSuccess, removeLocalProfile, addProfile,fetchProfileFailure, addProfileSuccess,addProfileFailure,fetchProfileRequest,deleteProfileFailure } from '../../components/Profile/Redux/Actions/profile.js'
 
 import ServicesManager from '../../services/servicesManager.js'
 import {googleAuthenticationPress, _onPressLogout,googleSilentLogin} from './googleSaga.js'
