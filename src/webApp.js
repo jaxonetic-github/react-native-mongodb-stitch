@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import Home from './components/home.js';
 import YouTubeList from './components/Trubrary/youtubeList.js';
 import ProfileView  from './components/Profile/profileview';
-import EventView from './components/Event/eventView.js';
+import EventView from './components/Event/eventView';
 import SimpleWebview from './components/WebResources/simpleWebView';
 
 import CalendarView from './components/calendarView';

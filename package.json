@@ -23,6 +23,7 @@
     "customize-cra": "^0.2.12",
     "fsevents": "^2.0.6",
     "jsdoc": "^3.5.5",
+    "mongodb-stitch-react-native-sdk": "^4.4.0",
     "react": "^16.8.6",
     "react-app-rewired": "^2.1.3",
     "react-icons": "^3.7.0",
