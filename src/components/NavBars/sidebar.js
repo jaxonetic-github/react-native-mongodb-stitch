@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 //actions
 //components
-import Authentication from '../Authentication/authenticationComponent.js';
+import Authentication from '../Authentication/authenticationComponent';
 //constants
 import {COMMON_LISTVIEW_ITEM_SEPARATOR, NEED_AT_LEAST_ANONYMOUS_LOGIN, COMMON_DARK_BACKGROUND, ACTIVE_TINT_COLOR, INACTIVE_TINT_COLOR} from '../../constants.js'
  

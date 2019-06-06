@@ -227,6 +227,6 @@ function matchDispatchToProps(dispatch){
   return bindActionCreators({fetchProfileRequest:fetchProfileRequest, deleteProfileRequest: deleteProfileRequest}, dispatch)
 }
 
-export default withRouter(connect(mapStateToProps, matchDispatchToProps)(SearchAndResultsScreen))
+export default withRouter( connect(mapStateToProps, matchDispatchToProps)(SearchAndResultsScreen))
 
 
