@@ -1,11 +1,11 @@
-import SERTIMA_YOUTUBE_PAYLOAD_MOCK from '../../__mocks__/YoutubeResponses/ivansertima.js';
-import DR_BEN_YOUTUBE_PAYLOAD_MOCK from '../../__mocks__/YoutubeResponses/drben.js';
-import CLAUDANDERSON_YOUTUBE_PAYLOAD_MOCK from '../../__mocks__/YoutubeResponses/claudanderson.js';
-import DRLEONARDJEFFRIES_YOUTUBE_PAYLOAD_MOCK from '../../__mocks__/YoutubeResponses/leonardjeffries.js';
-import DRCRESSWESLING_YOUTUBE_PAYLOAD_MOCK from '../../__mocks__/YoutubeResponses/drcressWesling.js';
-import AMOS_YOUTUBE_PAYLOAD_MOCK from '../../__mocks__/YoutubeResponses/amoswilson.js';
-import DR_CLARKE_YOUTUBE_PAYLOAD_MOCK from '../../__mocks__/YoutubeResponses/johnhenrikclarke.js';
-import LLAILAAFRIKA_YOUTUBE_PAYLOAD_MOCK from '../../__mocks__/YoutubeResponses/llailaAfrika.js';
+import SERTIMA_YOUTUBE_PAYLOAD_MOCK from './../__mocks__/YoutubeResponses/ivansertima.js';
+import DR_BEN_YOUTUBE_PAYLOAD_MOCK from './../__mocks__/YoutubeResponses/drben.js';
+import CLAUDANDERSON_YOUTUBE_PAYLOAD_MOCK from './../__mocks__/YoutubeResponses/claudanderson.js';
+import DRLEONARDJEFFRIES_YOUTUBE_PAYLOAD_MOCK from './../__mocks__/YoutubeResponses/leonardjeffries.js';
+import DRCRESSWESLING_YOUTUBE_PAYLOAD_MOCK from './../__mocks__/YoutubeResponses/drcressWesling.js';
+import AMOS_YOUTUBE_PAYLOAD_MOCK from './../__mocks__/YoutubeResponses/amoswilson.js';
+import DR_CLARKE_YOUTUBE_PAYLOAD_MOCK from './../__mocks__/YoutubeResponses/johnhenrikclarke.js';
+import LLAILAAFRIKA_YOUTUBE_PAYLOAD_MOCK from './../__mocks__/YoutubeResponses/llailaAfrika.js';
 //* ******       Initial Store State ***********/
 
 const profileState = {
