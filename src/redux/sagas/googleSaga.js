@@ -2,7 +2,7 @@
   
  import { call, all,put, takeEvery, take, fork } from 'redux-saga/effects'
 import { GoogleSignin } from 'react-native-google-signin';
-import ServicesManager from '../../services/servicesManager.js'
+import ServicesManager from '../../services/servicesManager'
 import { googleSigninSuccess } from '../../components/Authentication/Redux/Actions/authActions.js'
 import { AsyncStorage } from 'react-native'
 import { LOGOUT_USER_FAILURE } from '../types.js'
@@ -16,7 +16,6 @@ let googleUser =  yield GoogleSignin.getCurrentUser();
 
 try{
  if(playServices && isGoogleUser && !googleUser) 
-
 {
    googleUser = yield GoogleSignin.signInSilently();
    isGoogleUser = yield GoogleSignin.isSignedIn();
