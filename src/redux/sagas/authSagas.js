@@ -15,8 +15,8 @@ import {loginFailed, loginSucceeded,loginUserRequest,dbClientInitialized, dbClie
 import { addEventSuccess,addEventFailure,removeLocalEvent,deleteEventSuccess,updateEventSuccess, addEventsToLocal, requestFetchEvent, fetchEventFailure, fetchEventSuccess,updateEventFailure,deleteEventFailure } from '../../components/Event/Redux/Actions/eventActions.js'
 import { deleteProfileSuccess,updateProfileSuccess,updateProfileFailure,fetchProfileSuccess, removeLocalProfile, addProfile,fetchProfileFailure, addProfileSuccess,addProfileFailure,fetchProfileRequest,deleteProfileFailure } from '../../components/Profile/Redux/Actions/profile.js'
 
-import ServicesManager from '../../services/servicesManager.js'
-import {googleAuthenticationPress, _onPressLogout,googleSilentLogin} from './googleSaga.js'
+import ServicesManager from '../../services/servicesManager'
+import {googleAuthenticationPress, _onPressLogout,googleSilentLogin} from './googleSaga'
 import {resourceData, REMOTE_RESOURCE_STRING} from '../../constants.js'
 
 
