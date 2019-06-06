@@ -11,7 +11,7 @@ import {NEED_AT_LEAST_ANONYMOUS_LOGIN, COMMON_ICON_STYLE, ICON_ANDROID_LOGOUT, I
 import {getLoggedUser} from '../../redux/authSelectors.js';
 
 //import { GoogleLogin } from 'react-google-login-component';
-import GoogleSignInComp from './googleSignIn.js'
+import GoogleSignInComp from './googleSignIn'
 
 const dataArray = [
   { title: "Register", content: "Lorem ipsum dolor sit amet" },

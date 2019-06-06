@@ -33,10 +33,10 @@ import YouTubeList from './src/components/Trubrary/youtubeList.js';
 import Activities from './src/components/Activities.js';
 import SimpleWebview from './src/components/WebResources/simpleWebView.js';
 import Home from './src/components/home';
-import CalendarView from './src/components/calendarView.js';
+import CalendarView from './src/components/calendarView';
 import MapView from './src/components/mapview';
-import ProfileView from './src/components/Profile/profileview.js';
-import EventView from './src/components/Event/eventView.js';
+import ProfileView from './src/components/Profile/profileview';
+import EventView from './src/components/Event/eventView';
 
 import { createBrowserHistory, createMemoryHistory } from 'history';
 import { COMMON_DARK_BACKGROUND} from './src/constants.js'
