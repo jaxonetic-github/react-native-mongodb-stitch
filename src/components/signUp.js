@@ -9,7 +9,7 @@ import {
 } from 'react-native'
 import {  Container,  Header, Content, Card, CardItem, Body} from "native-base";
 
-import GoogleSignInComp from './Authentication/googleSignIn.js'
+import GoogleSignInComp from './Authentication/googleSignIn'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 //import { GoogleSignin, GoogleSigninButton } from 'react-native-google-signin';
