@@ -9,7 +9,6 @@ import sideBarReducer from './src/redux/sideBarReducer.js';
 import { View,Text,YellowBox,NativeEventEmitter, Platform, AppRegistry, NativeModules, AsyncStorage,StatusBar} from 'react-native';
 import { name as appName } from './app.json';
 
-import BottomNav from './src/components/BottomNav.js';
 
 import { initialStoreState } from './src/redux/state.js';
 import { Provider } from 'react-redux';
@@ -22,7 +21,7 @@ import profilesReducer from './src/components/Profile/Redux/Reducers/profileRedu
 import authReducer from './src/components/Authentication/Redux/Reducers/authReducer.js';
 import eventsReducer from './src/components/Event/Redux/Reducers/eventReducer.js';
 import createSagaMiddleware from 'redux-saga'
-
+import BottomNav from './src/components/NavBars/BottomNav.js';
 import FooterNav from './src/components/NavBars/footerNav.js';
 import SideBar from './src/components/NavBars/sidebar.js';
 
