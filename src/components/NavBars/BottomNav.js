@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 //import { FaHome,  FaSearchengin, FaUser,FaRegBuilding } from "react-icons/fa";
 
 
-import { NEED_AT_LEAST_ANONYMOUS_LOGIN,COMMON_DARK_BACKGROUND,COMMON_TEXT_STYLE,iconManager } from '../constants.js';
+import { NEED_AT_LEAST_ANONYMOUS_LOGIN,COMMON_DARK_BACKGROUND,COMMON_TEXT_STYLE,iconManager } from '../../constants.js';
 
 /**
   * A Native-like Bottom Navigation bar for Apple or IOS (and web?)

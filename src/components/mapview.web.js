@@ -1,7 +1,6 @@
 import React from 'react'
 import { ActivityIndicator, StyleSheet, View, TouchableOpacity, Text, Alert} from 'react-native'
 import Input from './textinput'
-import MapView from 'react-native-maps';
 import { Container, Header, Content, Item, Label, Textarea, Form, Button, Left } from "native-base";
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -104,12 +103,7 @@ console.log(this.state);
 <Text>Back></Text></Button></Left>
 </Header>
         <Content padder>
-        <MapView
-        style={styles.map}
-        showsUserLocation={true}>
-
-   
-         </MapView>
+         
           <Item stackedLabel>
             <Label>Address</Label>
 <Text>{longitude}</Text>
