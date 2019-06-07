@@ -7,7 +7,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
-import { Root, Container,Header } from "native-base";
+import { Root } from "native-base";
 import sideBarReducer from './redux/sideBarReducer.js';
 
 

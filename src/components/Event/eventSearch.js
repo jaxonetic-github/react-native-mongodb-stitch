@@ -2,16 +2,16 @@
 import React, { Component } from 'react';
 //import react in our code. 
 import { connect } from 'react-redux';
-import { withRouter } from "react-router";
+import withRouter from '../../withRouterManager.js';
 import { bindActionCreators } from 'redux';
-import { StyleSheet, View, ListView, TextInput, ActivityIndicator,FlatList, Alert} from 'react-native';
-import { SwipeRow,Container, Subtitle, Header, Content, List, ListItem,Title,Icon,
-Picker, Thumbnail, Text, Left, Body, Right, Button } from 'native-base';
+import { StyleSheet, View, TextInput,FlatList} from 'react-native';
+import { SwipeRow,Container, Header, Content,Title,Icon,
+Picker, Thumbnail, Text, Body, Right, Button } from 'native-base';
 import {deleteEventRequest, addEventsToLocal,addEventRequest} from './Redux/Actions/eventActions.js'
 import {COMMON_ACTIVITY_INDICATOR, NO_PHOTO_AVAILABLE_URI, COMMON_DARK_BACKGROUND,ACTIVE_TINT_COLOR, INACTIVE_TINT_COLOR,
 ROUTE_EVENT_VIEW, TEXT_DELETE,EMPTY_STRING, TRANSPARENT_COLOR,ICON_ALL_TRASH,
 GOOGLE_PROVIDER_NAME, LIST_SWIPELEFT_OPENVALUE, LIST_SWIPERIGHT_OPENVALUE, PLACEHOLDER_SEARCH_TEXT, TEXT_VIEW,
-COMMON_LISTVIEW_ITEM_SEPARATOR,NEED_AT_LEAST_ANONYMOUS_LOGIN,ICON_IOS_CIRCLE,ICON_ANDROID_CIRCLE, getDefaultEvent } from '../../constants.js'
+COMMON_LISTVIEW_ITEM_SEPARATOR,NEED_AT_LEAST_ANONYMOUS_LOGIN,ICON_IOS_CIRCLE,ICON_ANDROID_CIRCLE } from '../../constants.js'
 
 /**
  * Represents a component that allows a user to search for events.
@@ -76,8 +76,8 @@ COMMON_LISTVIEW_ITEM_SEPARATOR,NEED_AT_LEAST_ANONYMOUS_LOGIN,ICON_IOS_CIRCLE,ICO
 
 /** Navigate to event-creation screen  */
    _onPress = (itemId) => {
-
- this.props.history.push("/Activities/EventView/"+itemId );
+console.log(ROUTE_EVENT_VIEW+"/"+itemId);
+ this.props.history.push(ROUTE_EVENT_VIEW+"/"+itemId );
   };
   /* Navigate to artist-creation screen on [add] buttonpress  */
   _onPressNew =async () => {
@@ -85,7 +85,7 @@ COMMON_LISTVIEW_ITEM_SEPARATOR,NEED_AT_LEAST_ANONYMOUS_LOGIN,ICON_IOS_CIRCLE,ICO
 //add a new local event
 //const tst= await this.props.addEventRequest(tmpEvt);
 //go to the detail of that local event
-    this.props.history.push("/Activities/EventView");
+    this.props.history.push(ROUTE_EVENT_VIEW);
   }
 
 //onPress={() => this.props.navigation.push('EventView', { })} 
@@ -208,7 +208,7 @@ renderSearchField = () =>(
 
 const mapStateToProps = state => {
    const eventKeys = Object.keys(state.events.events);
-  const isConnected =  ((state.auth!= NEED_AT_LEAST_ANONYMOUS_LOGIN) && state.auth.auth &&  (state.auth.auth.loggedInProviderName=="oauth2-google"));
+  const isConnected =  ((state.auth!== NEED_AT_LEAST_ANONYMOUS_LOGIN) && state.auth.auth &&  (state.auth.auth.loggedInProviderName===GOOGLE_PROVIDER_NAME));
 const isGoogleUser = (isConnected && state.auth.auth.userProfile.identities[0].id);
   
 console.log(isGoogleUser, "--",isConnected, "--",state.auth.auth.userProfile);
@@ -216,7 +216,7 @@ console.log(isGoogleUser, "--",isConnected, "--",state.auth.auth.userProfile);
     isConnected : isConnected,
     isGoogleUser: (isConnected && state.auth.auth.userProfile.identities[0].id),
 
-        canAddEvent : (state.auth!=1) && (state.auth.auth.loggedInProviderName=={GOOGLE_PROVIDER_NAME}),
+        canAddEvent : (state.auth!==1) && (state.auth.auth.loggedInProviderName==={GOOGLE_PROVIDER_NAME}),
 
     eventCount: eventKeys.length, 
     events: eventKeys.map(pkey => state.events.events[pkey])

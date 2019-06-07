@@ -1,24 +1,11 @@
-//This is an example code to Add Search Bar Filter on Listview// 
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-//import react in our code. 
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { StyleSheet, View, ListView, FlatList, Text, TextInput} from 'react-native';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-
-import { SwipeRow,Container, Subtitle, Header, Content, List, ListItem,
-  Title,Icon,Picker, Thumbnail, Label,Item,
-  Tab, Tabs,Card,TabHeading, CardItem} from 'native-base';
-import {resourceData,ALT_LISTVIEW_ITEM_SEPARATOR, COMMON_LISTVIEW_ITEM_SEPARATOR,
-        COMMON_DARK_BACKGROUND,ACTIVE_TINT_COLOR, INACTIVE_TINT_COLOR,GOOGLE_PROVIDER_NAME,NEED_AT_LEAST_ANONYMOUS_LOGIN, NO_PHOTO_AVAILABLE_URI,
-         ROUTE_EVENT_VIEW, ROUTE_SIMPLE_WEB_VIEW, ROUTE_YOUTUBELIST_VIEW,TEXT_VIEW,
-        renderListView, commonViewButton,header} from './../constants.js'
-import WebResourcesList from './WebResources/webResourcesList.js';
+import { StyleSheet, TextInput} from 'react-native';
+import { Container, Content, Tab, Tabs, TabHeading} from 'native-base';
+import {COMMON_DARK_BACKGROUND, header} from './../constants.js'
 import EventSearch from './Event/eventSearch.js'
 import ProfileSearch from './Profile/profileSearch.js'
 
-import {categories} from './../redux/state.js'
 /**
  * Represents a Trubrary component. It is the portal and container for the "Library"
  */
@@ -37,7 +24,6 @@ import {categories} from './../redux/state.js'
   SearchFilterAndUpdateStateFunction(text) {
     //passing the inserted text from textinput to filter user's viewable events
     const newData = this.SearchFilterFunction(text)
-      console.log("item---",newData);
 
     //update state and re-render the list accordingly
     this.setState({ text: text });
@@ -92,12 +78,11 @@ renderSearchField = () =>(
  * Render tabs
  **/
   render() {
-    console.log("------",this.props);
-      return (<Container>
+      return (<Container><Content>
   <Tabs locked>
-    <Tab activeTabStyle={{backgroundColor:"silver"}} tabStyle={{backgroundColor:COMMON_DARK_BACKGROUND}} heading={"Events"}><EventSearch navigation={this.props}/></Tab>
-    <Tab activeTabStyle={{backgroundColor:"silver"}} tabStyle={{backgroundColor:COMMON_DARK_BACKGROUND}} heading={"Profiles"}><ProfileSearch navigation={this.props}/></Tab>
-  </Tabs>
+    <Tab activeTabStyle={{backgroundColor:"silver"}} tabStyle={{backgroundColor:COMMON_DARK_BACKGROUND}} heading={"Events"}><EventSearch/></Tab>
+    <Tab activeTabStyle={{backgroundColor:"silver"}} tabStyle={{backgroundColor:COMMON_DARK_BACKGROUND}} heading={"Profiles"}><ProfileSearch /></Tab>
+  </Tabs></Content>
            </Container>
     );
   }

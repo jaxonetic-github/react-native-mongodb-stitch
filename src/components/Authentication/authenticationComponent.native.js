@@ -85,7 +85,6 @@ if (this.props.isConnected) {
     render(){
 return(
   <Accordion 
-           
             dataArray={dataArray}
             animation={true}
             expanded={true}
@@ -93,8 +92,6 @@ return(
             renderContent={this._renderContent}
           />
 )
-
- 
 }//render
 }
 

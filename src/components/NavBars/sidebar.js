@@ -1,17 +1,17 @@
 import React from "react";
 //import PropTypes from 'prop-types';
+import withRouter from '../../withRouterManager.js';
 
 import { FlatList , Image, StyleSheet } from "react-native";
 //import { Image, StyleSheet } from "react-primitives";
-import { Accordion, Text,View, Container,  ListItem,  Header, Content, Card, CardItem, Icon,Left, Body, Right} from "native-base";
+import { Text, Container,  ListItem, Content, Card, CardItem, Icon,Left} from "native-base";
 //redux 
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 //actions
 //components
 import Authentication from '../Authentication/authenticationComponent';
 //constants
-import {COMMON_LISTVIEW_ITEM_SEPARATOR, NEED_AT_LEAST_ANONYMOUS_LOGIN, COMMON_DARK_BACKGROUND, ACTIVE_TINT_COLOR, INACTIVE_TINT_COLOR} from '../../constants.js'
+import {COMMON_LISTVIEW_ITEM_SEPARATOR, NEED_AT_LEAST_ANONYMOUS_LOGIN, COMMON_DARK_BACKGROUND} from '../../constants.js'
  
 
 
@@ -19,6 +19,10 @@ import {COMMON_LISTVIEW_ITEM_SEPARATOR, NEED_AT_LEAST_ANONYMOUS_LOGIN, COMMON_DA
  * sideBar component manages the drawer sidebar
  */
 class SideBar extends React.Component {
+
+ constructor(props) {
+    super(props);
+  }
 
 
 /** Only show the rows that the user is entitled  to see.  This will be  moved into Stitch User roles later
@@ -49,11 +53,12 @@ renderHeader = () =>{return(
   * Render a listitem/row into the list
   */
       _renderRow=(data) => {
+        console.log(data.item.path);
         let iosIcon = "ios-"+data.item.icon;
         let androidIcon = "md-"+data.item.icon;
                return (
                 <ListItem style={styles.listItemStyles}
-                  button onPress={() => this.props.navigation.navigate(data.item.routeName, {user:true, id:this.props.profileIndex})}>
+                  button onPress={() => this.props.history.push(data.item.path, {user:true, id:this.props.profileIndex})}>
 
                   <Left>
                <Icon ios={iosIcon} android={androidIcon} style={{fontSize: 20, color: '#000'}}/>
@@ -73,12 +78,13 @@ renderHeader = () =>{return(
   * Render
   */
   render() {
+    console.log(this.props);
     return (
       <Container>
 <Content>
 <Card>
 <CardItem>
- <FlatList horizontal
+ <FlatList 
           ListHeaderComponent={this.renderHeader}
           data={this._listDataFilter(this.props.sideBarData)}
           renderItem={this._renderRow}
@@ -115,8 +121,8 @@ const styles = StyleSheet.create({
 })
 
 const mapStateToProps = state => (
-    {isLoggedIn: (state.auth!=1) && (state.auth.auth.loggedInProviderName=="oauth2-google"),
-    profileIndex: ((state.auth!= NEED_AT_LEAST_ANONYMOUS_LOGIN) &&  (state.auth.auth.loggedInProviderName=="oauth2-google") && state.auth.auth.userProfile.identities[0].id) ?state.auth.auth.userProfile.identities[0].id:null,
+    {isLoggedIn: (state.auth!==1) && (state.auth.auth.loggedInProviderName==="oauth2-google"),
+    profileIndex: ((state.auth!== NEED_AT_LEAST_ANONYMOUS_LOGIN) &&  (state.auth.auth.loggedInProviderName==="oauth2-google") && state.auth.auth.userProfile.identities[0].id) ?state.auth.auth.userProfile.identities[0].id:null,
     sideBarData: state.sideBar,
 })
 
@@ -127,7 +133,7 @@ SideBar.propTypes = {
   
   sideBarData:PropTypes.array
 }; */
-export default connect(mapStateToProps, null)(SideBar)
+export default withRouter(connect(mapStateToProps, null)(SideBar))
 
 
 

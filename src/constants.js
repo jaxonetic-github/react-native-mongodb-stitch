@@ -37,13 +37,15 @@ export const EMPTY_STRING = '';
 export const STATE = require('./redux/state.js');
 export const TYPES = require('./redux/types.js');
 
-export const ROUTE_EVENTVIEW = '';
-export const ROUTE_MAPVIEW = 'MapView';
-export const ROUTE_EVENT_CALENDAR = 'EventCalendar';
+export const ROUTE_HOME = '/Home';
+export const ROUTE_TRUBRARY = '/Trubrary';
+export const ROUTE_MAPVIEW = '/MapView';
+export const ROUTE_EVENT_CALENDAR = '/EventCalendar';
 export const ROUTE_SIMPLE_INPUT_VIEW = 'SimpleEventInput';
 export const ROUTE_SIMPLE_WEB_VIEW = '/SimpleWebView';
-export const ROUTE_PROFILE_VIEW = 'ProfileView';
-export const ROUTE_EVENT_VIEW = 'EventView';
+export const ROUTE_PROFILE_VIEW = '/Activities/ProfileView';
+export const ROUTE_ACTIVITIES = '/Activities';
+export const ROUTE_EVENT_VIEW = "/Activities/EventView";
 export const ROUTE_SIMPLE_PROFILE_INPUT = 'SimpleInput';
 
 export const ROUTE_YOUTUBELIST_VIEW = '/YoutubeListView';

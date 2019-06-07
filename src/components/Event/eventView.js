@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet,Image,View} from 'react-native';
-import ImagePicker from 'react-native-image-picker';
-import { Container, Button,Separator,Thumbnail, Header, Content, List, ListItem,
- Text,Textarea, Icon, Title, Left, Body, Right, Switch,Accordion,Item } from 'native-base';
+import { Container, Button,Separator,Thumbnail, Header, Content, ListItem,
+ Text, Icon, Title, Left, Body, Right,Accordion,Item } from 'native-base';
 import { connect } from 'react-redux';
 import {  addEventsToLocal,addEventRequest, updateEventRequest } from './Redux/Actions/eventActions.js';
 import { bindActionCreators } from 'redux';
@@ -14,7 +13,7 @@ import {getDefaultEvent, COMMON_ICON_STYLE,ROUTE_SIMPLE_INPUT_VIEW,ROUTE_EVENT_C
         TEXT_PHONE,TRANSPARENT_COLOR, ICON_IOS_GLOBE, ICON_ANDROID_GLOBE,ICON_IOS_DESCRIPTION,ICON_ANDROID_DESCRIPTION, TEXT_DESCRIPTION,
         ICON_IOS_LOCATION, ICON_ANDROID_LOCATION, ICON_IOS_CALENDAR,ICON_ANDROID_CALENDAR,
         TEXT_NAME,COMMON_DARK_BACKGROUND,ICON_REMOVE_CIRCLE   } from '../../constants.js';
-import { withRouter } from "react-router";
+import withRouter from '../../withRouterManager.js';
 
 import SimpleInputEdit from "../simpleInput.js";
 
@@ -46,11 +45,19 @@ componentDidMount(){
 //  this.setState({dataIndex:tmpEvt.id})
 }
 
+/**
+ * Commit event data to backend
+ */
   _saveEvent = () => {
+    //create Event object from userInfo
     const tmpEvt = getDefaultEvent({ website:this.displayWebsite(), name:this.displayName(), phone:this.displayPhone(), email:this.displayEmail(),
                description:this.props.description, imageURI:this.displayImageURI(), calendar: this.props.calendar, location:this.props.location});
-    console.log(tmpEvt);
-    const request = this.state.dataIndex>-1?this.props.updateEventRequest(this.props.events[this.state.dataIndex]) : this.props.addEventRequest(tmpEvt);
+
+    //Update when we have bogus dataIndex
+    if( this.state.dataIndex && this.state.dataIndex>-1 )
+      this.props.updateEventRequest(this.props.events[this.state.dataIndex]) 
+    else
+       this.props.addEventRequest(tmpEvt);
   };
 
 displayName = () =>(this.state.dataIndex && this.props.events[this.state.dataIndex]?this.props.events[this.state.dataIndex].name:this.props.name)
@@ -156,7 +163,7 @@ style={{ paddingBottom:15,paddingTop:5}}
               <Text>{this.displayLocation()}</Text>
             </Body>
             <Right>   
-                 <Button transparent title="Event Location" onPress={() => this.props.history.push('/MapView',{key:this.state.dataIndex, initialLocation:this.displayLocation()})} >
+                 <Button transparent title="Event Location" onPress={() => this.props.history.push(ROUTE_MAPVIEW,{key:this.state.dataIndex, initialLocation:this.displayLocation()})} >
                  <Icon  style={COMMON_ICON_STYLE}  name="arrow-forward" /></Button>
             </Right>
           </ListItem>
@@ -169,7 +176,7 @@ style={{ paddingBottom:15,paddingTop:5}}
               <Text>{this.displayCalendar()}</Text>
             </Body>
             <Right>   
-                 <Button transparent title="Event Calendar" onPress={() => this.props.history.push('/EventCalendar',{key:this.state.dataIndex, initialDate:this.displayCalendar() })} >
+                 <Button transparent title="Event Calendar" onPress={() => this.props.history.push(ROUTE_EVENT_CALENDAR,{key:this.state.dataIndex, initialDate:this.displayCalendar() })} >
 
                  <Icon  style={COMMON_ICON_STYLE}   name="arrow-forward" />
 </Button>
@@ -194,7 +201,6 @@ style={{ paddingBottom:15,paddingTop:5}}
 
 
 const mapStateToProps = state => {
-  console.log(state);
   return {
     events: state.events.events,
     email: state.events.tmpEvent.email,
@@ -214,5 +220,5 @@ function matchDispatchToProps(dispatch){
   return bindActionCreators({updateEventRequest:updateEventRequest,addEventsToLocal:addEventsToLocal, addEventRequest: addEventRequest }, dispatch)
 }
 
-export default withRouter(connect(mapStateToProps, matchDispatchToProps)(EventView))
+export default connect(mapStateToProps, matchDispatchToProps)(EventView)
 

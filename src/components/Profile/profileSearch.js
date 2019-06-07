@@ -1,14 +1,14 @@
 //This is an example code to Add Search Bar Filter on Listview// 
 import React, { Component } from 'react';
-import { withRouter } from "react-router";
+import withRouter from '../../withRouterManager.js';
 
 //import react in our code. 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { ScrollView, RefreshControl, StyleSheet, View, TextInput, ActivityIndicator, FlatList, Alert} from 'react-native';
-import { SwipeRow, Container, Subtitle, Header, Content, List, ListItem,Title, Thumbnail,Icon, Text, Left, Body, Right, Button } from 'native-base';
+import { StyleSheet, View, TextInput} from 'react-native';
+import { SwipeRow, Container, Header, Content, Title,  Thumbnail,Icon, Text,  Body, Right, Button } from 'native-base';
  import {deleteProfileRequest,fetchProfileRequest} from './Redux/Actions/profile.js'
-import {COMMON_ICON_STYLE, COMMON_DARK_BACKGROUND,COMMON_ACTIVITY_INDICATOR, ACTIVE_TINT_COLOR, INACTIVE_TINT_COLOR, ROUTE_PROFILE_VIEW,
+import {COMMON_ICON_STYLE, COMMON_DARK_BACKGROUND,COMMON_ACTIVITY_INDICATOR, ACTIVE_TINT_COLOR, ROUTE_PROFILE_VIEW,
         COMMON_LISTVIEW_ITEM_SEPARATOR, GOOGLE_PROVIDER_NAME, ROUTE_YOUTUBELIST_VIEW, TEXT_VIEW,NO_PHOTO_AVAILABLE_URI,
         TEXT_ADD_ARTIST,ICON_IOS_CIRCLE,ICON_ANDROID_CIRCLE,ICON_ALL_TRASH,EMPTY_STRING,TRANSPARENT_COLOR, PLACEHOLDER_SEARCH_TEXT,
         TEXT_DELETE, renderListView} from '../../constants.js'
@@ -40,7 +40,7 @@ import {COMMON_ICON_STYLE, COMMON_DARK_BACKGROUND,COMMON_ACTIVITY_INDICATOR, ACT
  */ 
   SearchFilterAndUpdateStateFunction(text) {
     //passing the inserted text from textinput to filter user's viewable events
-    const newData = this.SearchFilterFunction(text)
+   // const newData = this.SearchFilterFunction(text)
 
     //update state and re-render the list accordingly
     this.setState({ text: text });
@@ -83,13 +83,13 @@ import {COMMON_ICON_STYLE, COMMON_DARK_BACKGROUND,COMMON_ACTIVITY_INDICATOR, ACT
 
 /** Navigate to artist-creation screen on [add] buttonpress  */
   _onPress = (itemId) => {console.log("dafdjskalfjdkslafdksal;fjksa;f------",this.itemId);
-this.props.history.push("/Activities/ProfileView/"+itemId );
+this.props.history.push(ROUTE_PROFILE_VIEW+"/"+itemId );
 //this.props.history.goForward();
 }
 
 
 /** Navigate to artist-creation screen on [add] buttonpress  */
-  _onPressNew = () => (this.props.history.push("/Activities/ProfileView/-1" ))
+  _onPressNew = () => (this.props.history.push(ROUTE_PROFILE_VIEW+"/-1" ))
 
 
 /** Navigate to event-creation screen  */
@@ -191,7 +191,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   thumbnailStyle:{width:70 , height:70, borderRadius:15},
-innerHeaderStyle:{backgroundColor: COMMON_DARK_BACKGROUND},
+//innerHeaderStyle:{backgroundColor: COMMON_DARK_BACKGROUND},
   rightText:{alignSelf:"flex-end"},
 
   textStyle: {
@@ -213,8 +213,8 @@ const mapStateToProps = state => {
   const profileKeys = Object.keys(state.profiles.profiles);
 
   return {
-    canAddProfile : (state.auth!=1) && (state.auth.auth.loggedInProviderName==GOOGLE_PROVIDER_NAME),
-    profileIndex : (state.auth!=1) && (state.auth.auth.loggedInProviderName==GOOGLE_PROVIDER_NAME) ? state.auth.auth.userProfile.identities[0].id: null,
+    canAddProfile : (state.auth!==1) && (state.auth.auth.loggedInProviderName===GOOGLE_PROVIDER_NAME),
+    profileIndex : (state.auth!==1) && (state.auth.auth.loggedInProviderName===GOOGLE_PROVIDER_NAME) ? state.auth.auth.userProfile.identities[0].id: null,
     profileCount: profileKeys.length, 
     profiles: profileKeys.map(pkey => state.profiles.profiles[pkey])
   }

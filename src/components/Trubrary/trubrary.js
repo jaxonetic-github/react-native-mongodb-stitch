@@ -1,18 +1,25 @@
 //This is an example code to Add Search Bar Filter on Listview// 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { withRouter } from "react-router";
+
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { StyleSheet, View, ListView, TextInput, ActivityIndicator, FlatList, Alert} from 'react-native';
-import { SwipeRow,Container, Subtitle, Header, Content, List, ListItem,Title,Icon,Picker, Thumbnail, Text, Left, Body, Right, Button ,Accordion,Tab, Tabs,Card, CardItem} from 'native-base';
-import {resourceData,ALT_LISTVIEW_ITEM_SEPARATOR, COMMON_LISTVIEW_ITEM_SEPARATOR,
-        COMMON_DARK_BACKGROUND,ACTIVE_TINT_COLOR, INACTIVE_TINT_COLOR,GOOGLE_PROVIDER_NAME,NEED_AT_LEAST_ANONYMOUS_LOGIN, NO_PHOTO_AVAILABLE_URI,
-         ROUTE_EVENT_VIEW, ROUTE_SIMPLE_WEB_VIEW, ROUTE_YOUTUBELIST_VIEW,TEXT_VIEW,
+import { StyleSheet, View, TextInput, } from 'react-native';
+import { Container,ListItem,Title,Icon,Picker, Thumbnail, Text,Tab, Tabs,Card, CardItem} from 'native-base';
+import { COMMON_LISTVIEW_ITEM_SEPARATOR,
+        COMMON_DARK_BACKGROUND,GOOGLE_PROVIDER_NAME, NO_PHOTO_AVAILABLE_URI,
+         ROUTE_SIMPLE_WEB_VIEW, ROUTE_YOUTUBELIST_VIEW,TEXT_VIEW,
         renderListView, commonViewButton, header} from '../../constants.js'
 import WebResourcesList from '../WebResources/webResourcesList.js';
 import {categories} from '../../redux/state.js'
 
+
+import withRouter from '../../withRouterManager.js';
+/*Platform.select({
+  ios: () => require('react-router-dom'),
+  android: () => require('react-router-dom'),
+  web:() =>require('react-router')
+})();
+*/
 /**
  * Represents a Trubrary component. It is the portal and container for the "Library"
  */

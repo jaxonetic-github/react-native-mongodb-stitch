@@ -36,10 +36,11 @@ import Home from './src/components/home';
 import CalendarView from './src/components/calendarView';
 import MapView from './src/components/mapview';
 import ProfileView from './src/components/Profile/profileview';
-import EventView from './src/components/Event/eventView';
+import EventView from './src/components/Event/eventView.js';
 
 import { createBrowserHistory, createMemoryHistory } from 'history';
-import { COMMON_DARK_BACKGROUND} from './src/constants.js'
+import { COMMON_DARK_BACKGROUND,ROUTE_PROFILE_VIEW,ROUTE_EVENT_VIEW, ROUTE_YOUTUBELIST_VIEW,
+         ROUTE_HOME, ROUTE_ACTIVITIES, ROUTE_TRUBRARY, ROUTE_MAPVIEW} from './src/constants.js'
 
 // Logger with default options
 import logger from 'redux-logger';
@@ -112,33 +113,34 @@ export default class Main extends React.Component {
     sagaMiddleware.run(clean/*subscription*/);
   }
   render() {
-    const menu = <SideBar/>;
+   // const menu = <SideBar history={history}/>;
     return(
       <Root>
       <Provider store={store} >
   
-
- <SideMenu menu={menu}>
-     <NativeRouter history={history} ><Container>
-      <Header style={{backgroundColor:COMMON_DARK_BACKGROUND,height:30}}></Header>
+<NativeRouter history={history} >
+ <SideMenu menu={<SideBar history={history}/>}>
+     <Container>
+      <Header style={{backgroundColor:"green",height:30}}></Header>
        <Switch >
         <Route exact path="/"  render={() => <Home />} />
-        <Route path="/Home" render={() => <Home />}/>
-        <Route path="/MapView" render={(props) => <MapView {...props}/>}/>
-        <Route  path="/Trubrary" render={(props) => <Trubrary {...props} />} />
+        <Route path={ROUTE_HOME} render={() => <Home />}/>
+        <Route path={ROUTE_MAPVIEW} render={(props) => <MapView {...props}/>}/>
+        <Route  path={ROUTE_TRUBRARY} render={(props) => <Trubrary {...props} />} />
         <Route  path="/EventCalendar" render={(props) => <CalendarView {...props} />} />
         <Route  path="/SimpleWebView" render={(props) => <SimpleWebview {...props} />} />
-        <Route  path="/YoutubeListView" render={(props) => <YouTubeList {...props} />} />
-        <Route exact path="/Activities" render={ (props)=> <Activities {...props} />} />
-        <Route exact path="/Activities/ProfileView/" render={(props) => <ProfileView {...props}  />} />
-        <Route path="/Activities/ProfileView/:id" render={(props) => <ProfileView {...props}  />} />
-        <Route path="/Activities/EventView/:id" render={(props) => <EventView {...props}  />}/>} />
-        <Route path="/Activities/EventView" render={(props) => <EventView {...props}  />}/>} />
+        <Route  path={ROUTE_YOUTUBELIST_VIEW} render={(props) => <YouTubeList {...props} />} />
+        <Route exact path={ROUTE_ACTIVITIES} render={ (props)=> <Activities {...props} />} />
+        <Route exact path={ROUTE_PROFILE_VIEW} render={(props) => <ProfileView {...props}  />} />
+        <Route path={ROUTE_PROFILE_VIEW+"/:id"} render={(props) => <ProfileView {...props}  />} />
+        <Route path={ROUTE_EVENT_VIEW+"/:id"} render={(props) => <EventView {...props}  />}/>} />
+        <Route path={ROUTE_EVENT_VIEW} render={(props) => <EventView {...props}  />}/>} />
       </Switch>
       </Container>
       <BottomNav />
-    </NativeRouter>   
+   
       </SideMenu>
+       </NativeRouter>   
       </Provider>
       </Root>
     );

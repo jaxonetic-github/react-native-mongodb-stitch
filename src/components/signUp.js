@@ -7,7 +7,7 @@ import {
   TextInput,
   StyleSheet
 } from 'react-native'
-import {  Container,  Header, Content, Card, CardItem, Body} from "native-base";
+import {  Container, Content, Card, CardItem} from "native-base";
 
 import GoogleSignInComp from './Authentication/googleSignIn'
 import { connect } from 'react-redux';
@@ -78,7 +78,7 @@ async componentDidUpdate() {
           onChangeText={val => this.onChangeText('email', val)}
         />
 
-         {(this.state.signInState == this.STATE_CREATE) &&
+         {(this.state.signInState === this.STATE_CREATE) &&
  <TextInput
           style={styles.input}
           placeholder='Profile Name'
@@ -95,7 +95,7 @@ async componentDidUpdate() {
           placeholderTextColor='white'
           onChangeText={val => this.onChangeText('password', val)}
         />
- {(this.state.signInState == this.STATE_CREATE) &&
+ {(this.state.signInState === this.STATE_CREATE) &&
  <TextInput
           style={styles.input}
           placeholder='Password Confirmation'
@@ -108,17 +108,17 @@ async componentDidUpdate() {
 
 <Card>
 
-  {(this.state.signInState == this.STATE_LOGIN) &&
+  {(this.state.signInState === this.STATE_LOGIN) &&
  <CardItem>
          <GoogleSignInComp />
         </CardItem>
       }
-      {(this.state.signInState == this.STATE_LOGIN) &&
+      {(this.state.signInState === this.STATE_LOGIN) &&
  <CardItem>
           <Text>OR</Text>  
         </CardItem>
       } 
-   {(this.state.signInState == this.STATE_LOGIN) &&
+   {(this.state.signInState === this.STATE_LOGIN) &&
  <CardItem>
         <Button warning
           title='Create Account'
@@ -126,7 +126,7 @@ async componentDidUpdate() {
         />
          </CardItem>
       } 
-   {(this.state.signInState == this.STATE_CREATE) &&
+   {(this.state.signInState === this.STATE_CREATE) &&
  <CardItem>
         <Button disabled
           title='Complete'
