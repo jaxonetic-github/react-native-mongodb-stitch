@@ -14,12 +14,7 @@ import {categories} from '../../redux/state.js'
 
 
 import withRouter from '../../withRouterManager.js';
-/*Platform.select({
-  ios: () => require('react-router-dom'),
-  android: () => require('react-router-dom'),
-  web:() =>require('react-router')
-})();
-*/
+
 /**
  * Represents a Trubrary component. It is the portal and container for the "Library"
  */

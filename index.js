@@ -4,9 +4,9 @@
  * @lint-ignore-every XPLATJSCOPYRIGHT1
 */
 import React, { Component } from "react";
-import { Root, Container,Header } from "native-base";
+import { Root, Container,Header, Left } from "native-base";
 import sideBarReducer from './src/redux/sideBarReducer.js';
-import { View,Text,YellowBox,NativeEventEmitter, Platform, AppRegistry, NativeModules, AsyncStorage,StatusBar} from 'react-native';
+import { StyleSheet, View,Text,YellowBox,NativeEventEmitter, Platform, AppRegistry, NativeModules, AsyncStorage,StatusBar} from 'react-native';
 import { name as appName } from './app.json';
 
 
@@ -39,8 +39,10 @@ import ProfileView from './src/components/Profile/profileview';
 import EventView from './src/components/Event/eventView.js';
 
 import { createBrowserHistory, createMemoryHistory } from 'history';
-import { COMMON_DARK_BACKGROUND,ROUTE_PROFILE_VIEW,ROUTE_EVENT_VIEW, ROUTE_YOUTUBELIST_VIEW,
-         ROUTE_HOME, ROUTE_ACTIVITIES, ROUTE_TRUBRARY, ROUTE_MAPVIEW} from './src/constants.js'
+import { COMMON_DARK_BACKGROUND, COMMON_ICON_STYLE_SILVER, 
+        ROUTE_PROFILE_VIEW,ROUTE_EVENT_VIEW, ROUTE_YOUTUBELIST_VIEW,
+         ROUTE_HOME, ROUTE_ACTIVITIES, ROUTE_TRUBRARY, ROUTE_MAPVIEW, 
+         ICON_TAG_MENU, iconManager} from './src/constants.js'
 
 // Logger with default options
 import logger from 'redux-logger';
@@ -104,14 +106,6 @@ export default class Main extends React.Component {
     super();
   }
   
-  componentDidMount() {
-    //this.subscription = eventEmitter.addListener('onUserAuthenticated',(event)=>{sagaMiddleware.run(saveAuthCode,{payload:event});});
-    // this.subscription = eventEmitter.addListener('onUserAuthenticated',this._grabAuthCode);
-
-    }
-  componentWillUnmount() {
-    sagaMiddleware.run(clean/*subscription*/);
-  }
   render() {
    // const menu = <SideBar history={history}/>;
     return(
@@ -121,7 +115,7 @@ export default class Main extends React.Component {
 <NativeRouter history={history} >
  <SideMenu menu={<SideBar history={history}/>}>
      <Container>
-      <Header style={{backgroundColor:"green",height:30}}></Header>
+      <Header style={styles.headerStyle}><Left>{iconManager(ICON_TAG_MENU, styles.headerIconStyle)}</Left></Header>
        <Switch >
         <Route exact path="/"  render={() => <Home />} />
         <Route path={ROUTE_HOME} render={() => <Home />}/>
@@ -138,7 +132,6 @@ export default class Main extends React.Component {
       </Switch>
       </Container>
       <BottomNav />
-   
       </SideMenu>
        </NativeRouter>   
       </Provider>
@@ -146,5 +139,13 @@ export default class Main extends React.Component {
     );
   }
 }
+
+
+const styles = StyleSheet.create({
+  headerIconStyle: COMMON_ICON_STYLE_SILVER,
+  headerStyle: {backgroundColor:COMMON_DARK_BACKGROUND,height:45},
+  
+});
+
 
 AppRegistry.registerComponent(appName, () => Main);

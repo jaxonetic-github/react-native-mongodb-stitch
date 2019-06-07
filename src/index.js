@@ -9,6 +9,7 @@ import './index.css';
 
 import { Root } from "native-base";
 import sideBarReducer from './redux/sideBarReducer.js';
+import { BrowserRouter, Route } from "react-router-dom";
 
 
 import { initialStoreState } from './redux/state.js';
@@ -31,7 +32,9 @@ import logger from 'redux-logger';
 import * as serviceWorker from './serviceWorker';
 import {decorator as reduxBurgerMenu} from 'redux-burger-menu';
 import {slide as Menu} from 'react-burger-menu';
+import { createBrowserHistory } from 'history';
 
+const history = createBrowserHistory()
 const sagaMiddleware = createSagaMiddleware();
 
 //combine reducers
@@ -42,10 +45,10 @@ const store = createStore(rootReducer, initialStoreState,  applyMiddleware(sagaM
 console.disableYellowBox = true;
 sagaMiddleware.run(rootSaga);
 
-ReactDOM.render(<Root><Provider store={store}><App /></Provider></Root>,
+ReactDOM.render(<Root><Provider store={store}><BrowserRouter history={history}><App /></BrowserRouter></Provider></Root>,
 					 document.getElementById('root'));
-// If you want your app to work offline and load faster, you can change      <WebBottomNav />
 
+// If you want your app to work offline and load faster, you can change<WebBottomNav />
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
 serviceWorker.unregister();

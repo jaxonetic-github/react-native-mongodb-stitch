@@ -7,8 +7,11 @@ import {  addEventsToLocal,addEventRequest, updateEventRequest } from './Redux/A
 import { bindActionCreators } from 'redux';
 import {UPDATE_EVENT_NAME_BY_KEY,UPDATE_EVENT_DESC_BY_KEY, UPDATE_EVENT_EMAIL_BY_KEY,UPDATE_EVENT_PHONE_BY_KEY, UPDATE_EVENT_WEBSITE_BY_KEY,UPDATE_EVENT_IMAGE_BY_KEY,
        ADD_EVENT, ADD_EVENT_NAME, ADD_EVENT_DESC, ADD_EVENT_EMAIL, ADD_EVENT_PHONE, ADD_EVENT_WEBSITE, ADD_EVENT_IMAGE} from '../../redux/types';
-import {getDefaultEvent, COMMON_ICON_STYLE,ROUTE_SIMPLE_INPUT_VIEW,ROUTE_EVENT_CALENDAR,ROUTE_MAPVIEW,
-        TEXT_WEBSITE,ICON_IOS_PERSON, ICON_ANDROID_PERSON,TEXT_SAVE,ICON_IOS_CIRCLE,ICON_ANDROID_CIRCLE,ICON_ALL_ARROWFORWARD,
+import {getDefaultEvent, iconManager,COMMON_ICON_STYLE_SILVER, COMMON_ICON_STYLE,
+      ROUTE_SIMPLE_INPUT_VIEW,ROUTE_EVENT_CALENDAR,ROUTE_MAPVIEW,
+        TEXT_WEBSITE,
+        ICON_TAG_CREATE, ICON_TAG_REMOVE_CIRCLE, ICON_TAG_PHONE,ICON_TAG_MAIL,ICON_TAG_GLOBE,ICON_TAG_DESCRIPTION,ICON_TAG_PERSON,
+        ICON_IOS_PERSON, ICON_ANDROID_PERSON,TEXT_SAVE,ICON_IOS_CIRCLE,ICON_ANDROID_CIRCLE,ICON_ALL_ARROWFORWARD,
         ICON_IOS_MAIL, ICON_ANDROID_MAIL,TEXT_MAIL,ICON_IOS_PORTRAIT,ICON_ANDROID_PORTRAIT,
         TEXT_PHONE,TRANSPARENT_COLOR, ICON_IOS_GLOBE, ICON_ANDROID_GLOBE,ICON_IOS_DESCRIPTION,ICON_ANDROID_DESCRIPTION, TEXT_DESCRIPTION,
         ICON_IOS_LOCATION, ICON_ANDROID_LOCATION, ICON_IOS_CALENDAR,ICON_ANDROID_CALENDAR,
@@ -84,33 +87,35 @@ _renderContent = (item) =>
 /**
  * A header view to display the profile data when not in "Edit" mode
  */
-    _renderHeader=(expanded,icon_ios, icon_droid, iconsStyle,titleText,bodyText,rightComponent)=> 
+    _renderHeader=(expanded,icon,icon_ios, icon_droid, iconsStyle,titleText,bodyText,rightComponent)=> 
             (<View key={titleText}  style={{flex:1,backgroundColor:"white"}}>
               <Item>
-               <Icon ios={icon_ios} android={icon_droid} style={{fontSize: 20, color: 'silver'}}/>
-            <Text style={{color:"silver"}}>{titleText}</Text>
+               <Icon name={icon} style={{fontSize: 20, color: 'silver'}}/>
+              {iconManager(icon,styles.iconStyle )}
+            <Text style={{color:"silver"}}>{titleText},{icon_ios}</Text>
             </Item>
             <Text style={{flex:1,alignSelf:"center",justifyContent:"center",backgroundColor:"white"}}>{bodyText}</Text>
-            {expanded
-          ? <Icon style={{fontSize: 20, color: 'silver', flex:1, alignSelf:"flex-end"}} name={ICON_REMOVE_CIRCLE} />
-          : <Icon style={{fontSize: 20, color: 'silver', position:"absolute", right:5, top:20}} name="create"></Icon>}
+            {expanded ?
+              iconManager(icon,{fontSize: 20, color: 'silver', flex:1, alignSelf:"flex-end"} ):
+                        iconManager(ICON_TAG_CREATE,{fontSize: 20, color: 'silver', position:"absolute", right:5, top:20} )
+         }
           </View>)
 
   render() {
   const profileData= [
-    {key:TEXT_NAME,titleText:TEXT_NAME, icon_ios:ICON_IOS_PERSON,icon_droid:ICON_ANDROID_PERSON,
+    {key:TEXT_NAME,titleText:TEXT_NAME, icon:ICON_TAG_PERSON, icon_ios:ICON_IOS_PERSON,icon_droid:ICON_ANDROID_PERSON,
      updateAction:UPDATE_EVENT_NAME_BY_KEY, addAction:ADD_EVENT_NAME,
       iconStyle:COMMON_DARK_BACKGROUND,displayText:this.displayName(), actionIcon:this.arrowIcon() },
-    {key:TEXT_MAIL,titleText:TEXT_MAIL, icon_ios:ICON_IOS_MAIL,icon_droid:ICON_ANDROID_MAIL,
+    {key:TEXT_MAIL,titleText:TEXT_MAIL, icon:ICON_TAG_MAIL, icon_ios:ICON_IOS_MAIL,icon_droid:ICON_ANDROID_MAIL,
       updateAction:UPDATE_EVENT_EMAIL_BY_KEY, addAction:ADD_EVENT_EMAIL,
       iconStyle:COMMON_DARK_BACKGROUND,displayText:this.displayEmail(), actionIcon:this.arrowIcon() },
-    {key:TEXT_PHONE,titleText:TEXT_PHONE, icon_ios:ICON_IOS_PORTRAIT,icon_droid:ICON_ANDROID_PORTRAIT,
+    {key:TEXT_PHONE,titleText:TEXT_PHONE, icon:ICON_TAG_PHONE, icon_ios:ICON_IOS_PORTRAIT,icon_droid:ICON_ANDROID_PORTRAIT,
       updateAction:UPDATE_EVENT_PHONE_BY_KEY, addAction:ADD_EVENT_PHONE,
       iconStyle:COMMON_DARK_BACKGROUND,displayText:this.displayPhone(), actionIcon:this.arrowIcon() },
-    {key:TEXT_WEBSITE,titleText:TEXT_WEBSITE, icon_ios:ICON_IOS_GLOBE,icon_droid:ICON_ANDROID_GLOBE,
+    {key:TEXT_WEBSITE,titleText:TEXT_WEBSITE, icon:ICON_TAG_GLOBE,icon_ios:ICON_IOS_GLOBE,icon_droid:ICON_ANDROID_GLOBE,
            updateAction:UPDATE_EVENT_WEBSITE_BY_KEY, addAction:ADD_EVENT_WEBSITE,
       iconStyle:COMMON_DARK_BACKGROUND,displayText:this.displayWebsite(), actionIcon:this.arrowIcon() },
-    {key:TEXT_DESCRIPTION,titleText:TEXT_DESCRIPTION, icon_ios:ICON_IOS_DESCRIPTION,icon_droid:ICON_ANDROID_DESCRIPTION,
+    {key:TEXT_DESCRIPTION,titleText:TEXT_DESCRIPTION,icon:ICON_TAG_DESCRIPTION, icon_ios:ICON_IOS_DESCRIPTION,icon_droid:ICON_ANDROID_DESCRIPTION,
       updateAction:UPDATE_EVENT_DESC_BY_KEY, addAction:ADD_EVENT_DESC,
       iconStyle:COMMON_DARK_BACKGROUND,displayText:this.displayDescription(), actionIcon:this.arrowIcon() }
       ];
@@ -124,7 +129,7 @@ style={{ paddingBottom:15,paddingTop:5}}
        renderHeader= {(item, expanded)=> {
           const title = item;
             return (    
-              this._renderHeader(expanded,item.icon_ios, item.icon_droid, COMMON_ICON_STYLE, item.titleText, item.displayText,
+              this._renderHeader(expanded,item.icon,item.icon_ios, item.icon_droid, COMMON_ICON_STYLE, item.titleText, item.displayText,
                   item.displayText,null )
             );
           }}/>);
@@ -199,6 +204,12 @@ style={{ paddingBottom:15,paddingTop:5}}
   }
 }
 
+
+const styles = StyleSheet.create({
+ 
+    iconStyle:COMMON_ICON_STYLE_SILVER,
+    
+})
 
 const mapStateToProps = state => {
   return {

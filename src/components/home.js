@@ -6,14 +6,16 @@ import SimpleWebView from './WebResources/simpleWebView.js';
 //import { WebGLView } from "react-native-webgl";
 import { ROUTE_SIMPLE_WEB_VIEW, COMMON_DARK_BACKGROUND,TEXT_EVERYWHERE,TEXT_All, LOCATION_LIST,CATEGORY_LIST,
       TEXT_CHOOSE_VIBE, TEXT_WHATS_GOING_ON,COMMON_ICON_STYLE,COMMON_ICON_STYLE_MAROON,COMMON_ICON_STYLE_GOLD, COMMON_LISTVIEW_ITEM_SEPARATOR ,
-       ICON_IOS_INFORMATION, ICON_ANDROID_INFORMATION , header} from '../constants.js';
+       ICON_IOS_INFORMATION, ICON_ANDROID_INFORMATION ,
+       iconManager, header} from '../constants.js';
 import WebResourcesList from './WebResources/webResourcesList.js';
 //import FitImage from 'react-native-fit-image';
 import { Container, Header, Content, Card, CardItem,ListItem, Thumbnail,Button, Text, Icon,Right,Subtitle, Title, Toast,Left, Body,Form, Picker as AltPicker } from 'native-base';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-
+import { FaHome,  FaSearchengin, FaUser,FaRegBuilding,FaEdit,FaThList } from "react-icons/fa";
+import { GiHamburgerMenu } from 'react-icons/gi';
 import {PermissionsAndroid} from 'react-native';
 
 /**
@@ -104,7 +106,6 @@ quoteCard = ()=>(<Card>
 </CardItem>
 <CardItem>
   <TouchableOpacity style={{ top:5, right:0}}>
-  <Icon ios={ICON_IOS_INFORMATION} android={ICON_ANDROID_INFORMATION} style={COMMON_ICON_STYLE}/>
    </TouchableOpacity>
 <TouchableOpacity  style={styles.touchable}  >
 <Thumbnail style={{width:220 , height:220, borderRadius:15}} 

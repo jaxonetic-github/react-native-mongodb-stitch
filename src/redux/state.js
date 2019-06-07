@@ -178,8 +178,10 @@ const webResources = [
 const resourcesData ={youTubeResources: youTubeResources, webResources:webResources,
                              onlineMediaContent:onlineMediaContent, digitalResources:digitalResources};
 
-const sideBarData = [{routeName:"Home", label:"Home",path:"/" ,requiresVerification:false, icon:"home"}, {routeName:"ProfileView", label:"Profile",path:"/Activities/ProfileView/", requiresVerification:true, icon:"person"}, 
-                      {routeName:"Activities", label:"Activities", path:"/Activities", requiresVerification:false, icon:"search"},{routeName:"Trubrary", label:"Library",path:"/Trubrary", requiresVerification:false, icon:"business",videoData:null,onlineMediaContent:null,webResources:null} ];
+const sideBarData = [{routeName:"Home", label:"Home",path:"/" ,requiresVerification:false, icon:"home"},
+                     {routeName:"ProfileView", label:"Profile",path:"/Activities/ProfileView/", requiresVerification:true, icon:"person"}, 
+                    {routeName:"Activities", label:"Activities", path:"/Activities", requiresVerification:false, icon:"search"},
+                    {routeName:"Trubrary", label:"Library",path:"/Trubrary", requiresVerification:false, icon:"business",videoData:null,onlineMediaContent:null,webResources:null} ];
 
 export const initialStoreState = {
   profiles: profileState,

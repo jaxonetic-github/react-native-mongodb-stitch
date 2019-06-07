@@ -1,7 +1,9 @@
 import React from 'react'
-import { View ,ActivityIndicator,FlatList, Text, TouchableOpacity,Tab,Tabs } from 'react-native';
+import { Platform, View ,ActivityIndicator,FlatList, Text, TouchableOpacity,Tab,Tabs } from 'react-native';
 import {ListItem, Thumbnail, Title, Button, Header,Left,Icon,Body,Right} from 'native-base';
-import { FaHome,  FaSearchengin, FaUser,FaRegBuilding,FaEdit } from "react-icons/fa";
+import { FaHome,  FaSearchengin, FaUser,FaRegBuilding,FaEdit,FaThList } from "react-icons/fa";
+import { GiHamburgerMenu } from 'react-icons/gi';
+import {IoMdMenu} from 'react-icons/io';
 
 export const NO_PHOTO_AVAILABLE_URI =  "https://static.wixstatic.com/media/84428b_aec5877604ff494295b3af5af0b27a67~mv2.png";
 
@@ -77,17 +79,43 @@ export const ICON_ALL_ARROWFORWARD = 'arrow-forward';
 export const ICON_IOS_INFORMATION = 'ios-information-circle';
 export const ICON_ANDROID_INFORMATION = 'md-information-circle';
 
-export const iconManager =(icon)=>{
-  switch(icon)
+
+export const ICON_TAG_HOME = "home";
+export const ICON_TAG_PHONE = "phone";
+export const ICON_TAG_MAIL = "mail";
+export const ICON_TAG_GLOBE = "globe";
+export const ICON_TAG_DESCRIPTION = "globe";
+
+export const ICON_TAG_MENU = "menu";
+export const ICON_TAG_PERSON = "person";
+export const ICON_TAG_SEARCH = "search";
+export const ICON_TAG_BUSINESS = "business";
+export const ICON_TAG_CREATE = "create";
+export const ICON_TAG_REMOVE_CIRCLE = "remove-circle";
+
+export const iconManager =(iconTag, style)=>{
+  let icon = null;
+  const webPlatform = (Platform.OS === 'web') ;
+
+  switch(iconTag)
   {
-    case "home": return <FaHome/>;
-    case "search": return <FaHome/>;
-    case "business": return <FaHome/>;
-    case "edit": return <FaEdit/>;
-    default :
-    return <FaRegBuilding/>
+    case ICON_TAG_HOME: icon = webPlatform? <FaHome style={style}/> : <Icon name={iconTag} style={style} />; break;
+    case ICON_TAG_GLOBE: icon = webPlatform? <FaHome style={style}/> : <Icon name={iconTag} style={style} />; break;
+    case ICON_TAG_DESCRIPTION: icon = webPlatform? <FaHome style={style}/> : <Icon name={iconTag} style={style} />; break;
+    case ICON_TAG_MENU: icon = webPlatform ? <GiHamburgerMenu style={style} /> : <Icon name={iconTag} style={style}/>; break;
+    case ICON_TAG_PERSON: icon = webPlatform? <FaHome/> : <Icon name={iconTag} style={style} />; break;
+    case ICON_TAG_PHONE: icon = webPlatform ? <GiHamburgerMenu/> : <Icon name={iconTag} style={style}/>; break;
+    case ICON_TAG_MAIL: icon = webPlatform ? <FaHome/> : <Icon name={iconTag} style={style} />; break;
+    case ICON_TAG_SEARCH: icon = webPlatform ? <GiHamburgerMenu/> : <Icon name={iconTag} style={style}/>; break;
+    case ICON_TAG_BUSINESS: icon = webPlatform ? <FaHome/> : <Icon name={iconTag} style={style} />; break;
+    case ICON_TAG_CREATE: icon = webPlatform ? <FaHome/> : <Icon name={iconTag} style={style} />; break;
+    case ICON_TAG_REMOVE_CIRCLE: icon = webPlatform ? <FaHome/> : <Icon name={iconTag} style={style} />; break;
+  default ://no default
+   break;
   }
+  return icon;
 }
+
 // Label Text
 export const PLACEHOLDER_SEARCH_TEXT = "Search Here";
 export const TEXT_WEBSITE = "Website";
@@ -116,14 +144,14 @@ export const EVENTS = 'Events';
 
 export const TEXT_WHATS_GOING_ON = "What's going on in ...?";
 export const TEXT_CHOOSE_VIBE = '"choose a vibe"';
-export const TEXT_CURRENT_IMAGE ="Select an Image?"
+export const TEXT_CURRENT_IMAGE ="Select an Image?";
 // CSS Constants
 export const COMMON_DARK_BACKGROUND = '#243244';
 export const INACTIVE_TINT_COLOR = '#9ab';
 export const ACTIVE_TINT_COLOR = '#b8bb49';
 export const TRANSPARENT_COLOR = 'transparent';
 
-//************ Common Components
+//************ Common Components //
 const listItemSeparatorStyle = { height: 2, backgroundColor:COMMON_DARK_BACKGROUND  };
 export const COMMON_TEXT_STYLE = {padding:15, color:"white"};
 export const COMMON_ACTIVITY_INDICATOR = <View style={{ flex: 1, paddingTop: 20 ,justifyContent: 'space-around'}}><ActivityIndicator /></View>;
@@ -131,7 +159,7 @@ export const COMMON_LISTVIEW_ITEM_SEPARATOR = ()=> <View style={listItemSeparato
 export const ALT_LISTVIEW_ITEM_SEPARATOR = ()=> <View style={{flex:1,paddingTop:10, height: 20, backgroundColor:COMMON_DARK_BACKGROUND  }} />;
 export const COMMON_ICON_STYLE = {fontSize: 20, color: 'black'};
 export const COMMON_ICON_STYLE_MAROON = {fontSize: 20, color: 'maroon'};
-export const COMMON_ICON_STYLE_GOLD = {fontSize: 20, color: 'gold'};
+export const COMMON_ICON_STYLE_SILVER = {fontSize: 20, color: 'silver'};
 /**
  * Displays a list, where each element of the list must have a title,url, and imageURI variable
  * @param keyExtractor: records of the form {title:, imageURI:...,}
