@@ -11,7 +11,9 @@ import {deleteEventRequest, addEventsToLocal,addEventRequest} from './Redux/Acti
 import {COMMON_ACTIVITY_INDICATOR, NO_PHOTO_AVAILABLE_URI, COMMON_DARK_BACKGROUND,ACTIVE_TINT_COLOR, INACTIVE_TINT_COLOR,
 ROUTE_EVENT_VIEW, TEXT_DELETE,EMPTY_STRING, TRANSPARENT_COLOR,ICON_ALL_TRASH,
 GOOGLE_PROVIDER_NAME, LIST_SWIPELEFT_OPENVALUE, LIST_SWIPERIGHT_OPENVALUE, PLACEHOLDER_SEARCH_TEXT, TEXT_VIEW,
-COMMON_LISTVIEW_ITEM_SEPARATOR,NEED_AT_LEAST_ANONYMOUS_LOGIN,ICON_IOS_CIRCLE,ICON_ANDROID_CIRCLE } from '../../constants.js'
+COMMON_LISTVIEW_ITEM_SEPARATOR,NEED_AT_LEAST_ANONYMOUS_LOGIN,ICON_IOS_CIRCLE,ICON_ANDROID_CIRCLE,
+STATES } from '../../constants.js'
+import CalendarView from '../calendarView';
 
 /**
  * Represents a component that allows a user to search for events.
@@ -50,6 +52,11 @@ COMMON_LISTVIEW_ITEM_SEPARATOR,NEED_AT_LEAST_ANONYMOUS_LOGIN,ICON_IOS_CIRCLE,ICO
  * @Rreturn events with the text parameter in part of it's data fields
  */
   SearchFilterFunction(text) {
+
+    formatCalendarObject = (calendar) =>{
+      const aux = (calendar.year ? calendar.year+"-"+calendar.month+"-"+calendar.day : calendar)
+      return aux;
+}
     //passing the inserted text in textinput
     const newData = this.props.events.filter(function(item) {
 
@@ -59,7 +66,7 @@ COMMON_LISTVIEW_ITEM_SEPARATOR,NEED_AT_LEAST_ANONYMOUS_LOGIN,ICON_IOS_CIRCLE,ICO
       const phone = item.phone ? item.phone.toUpperCase() : ''.toUpperCase();
       const website = item.website ? item.website.toUpperCase() : ''.toUpperCase();
       const location = item.location ? item.location.toUpperCase() : ''.toUpperCase();
-      const calendar = item.calendar ? item.calendar.toUpperCase() : ''.toUpperCase();
+      const calendar = item.calendar ?formatCalendarObject( item.calendar): ''.toUpperCase();
       const email = item.email ? item.email.toUpperCase() : ''.toUpperCase();
 
       const textData = text.toUpperCase();
@@ -100,6 +107,9 @@ console.log(ROUTE_EVENT_VIEW+"/"+itemId);
   * @param {object} item - event Data item
   */
 _renderItem = (item) => { 
+  formatCalendarObject = (calendar) =>{
+ return (calendar.year ? calendar.year+"-"+calendar.month+"-"+calendar.day : calendar)
+}
   return(<SwipeRow
             leftOpenValue={LIST_SWIPELEFT_OPENVALUE}
             rightOpenValue={LIST_SWIPERIGHT_OPENVALUE}
@@ -114,7 +124,7 @@ _renderItem = (item) => {
               <Thumbnail source={{uri:/*item.item.imageURI||*/NO_PHOTO_AVAILABLE_URI}}/>
               <View style={styles.innerViewStyle}>
                   <Title style={styles.rightText} >{item.item.name}</Title>
-                  <Text style={styles.rightText} >{item.item.calendar}</Text>
+                  <Text style={styles.rightText} >{formatCalendarObject(item.item.calendar)}</Text>
                <Text note numberOfLines={2}>{item.item.description}</Text>
               </View>
               </View>
@@ -164,6 +174,11 @@ renderSearchField = () =>(
       return (COMMON_ACTIVITY_INDICATOR );
     }
   const locations = this.props.events.map((event)=>(<Picker.Item key={event.id} label={event.location} value={event.location} />));
+  const states = STATES.states.map((event)=>(<Picker.Item key={event} label={event} value={event} />));
+  const months = [{key:"01", label:"january"},{key:"02", label:"february"},{key:"03", label:"march"},{key:"04", label:"april"},
+                  {key:"05", label:"may"},{key:"06", label:"june"},{key:"07", label:"july"},{key:"08", label:"august"},
+                  {key:"09", label:"september"},{key:"10", label:"october"},{key:"11", label:"november"},{key:"12", label:"december"}].map((month)=>
+                    (<Picker.Item key={month.key} label={month.label} value={month.key} />));
 
     return (
       //ListView to show with textinput used as search bar 
@@ -176,18 +191,30 @@ renderSearchField = () =>(
            {this.addButton()}
             </Right>
         </Header>
-       <Content>
+       <Content >
+       <CalendarView groupView/>
+       <View style={{width:300, backgroundColor:"silver"}}>
+         <Picker
+              mode="dropdown"
+              iosHeader="Locations"
+              iosIcon={<Icon name="arrow-dropdown-circle" style={{ color: "#007aff", fontSize: 25 }} />}
+              selectedValue={this.state.location}
+            >
+            <Picker.Item key={"All-States"} label={"By States"} value={"All"} />
+             {states}
+            </Picker>
+            </View>
             <Picker
               mode="dropdown"
               iosHeader="Locations"
               iosIcon={<Icon name="arrow-dropdown-circle" style={{ color: "#007aff", fontSize: 25 }} />}
-              style={{ width: undefined }}
+          
               selectedValue={this.state.location}
               onValueChange={this.onLocationChange.bind(this)}
             >
-            <Picker.Item key={"All"} label={"All Locations"} value={"All"} />
+            <Picker.Item key={"All"} label={"By Locations"} value={"All"} />
              {locations}
-            </Picker>
+            </Picker> 
         <FlatList
             leftOpenValue={LIST_SWIPELEFT_OPENVALUE}
             rightOpenValue={LIST_SWIPERIGHT_OPENVALUE}

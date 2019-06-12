@@ -11,47 +11,102 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {Calendar} from 'react-native-calendars';
 import {updateEventCalendarByKey} from './Event/Redux/Actions/eventActions.js'
+import moment from 'moment';
 
-
+/**
+ * If no initial date is given, the current month and group view is assumed
+ */
 class CalendarView extends Component {
   constructor(props) {
     super(props);
-    console.log(this.prop);
-    this.state = {key:this.props.history.location.state.key, dates:[], selected:this.props.history.location.state.initialDate};
-    this.onDayPress = this.onDayPress.bind(this);
+    console.log(props);
+    if (this.props.history)
+    {
+      this.state = {key:this.props.history.location.state.key, markedDates:[], selected:this.props.history.location.state.initialDate};
+    }
+    else if (props && props.groupView)
+    {
+
+      //find the dates for this month
+      const thisMonth = moment().format('MM');
+      const filteredEvents = this.props.events.filter((event)=>(event.calendar.month===thisMonth));
+      console.log("THis Month", thisMonth,"\n",filteredEvents);
+ const filteredDates = this.props.events.map((event)=>{
+       return (event.calendar.month && (event.calendar.month===moment().format('MM'))) ?
+        this.createMarkedDate(event.calendar) : null;
+      } );
+
+      this.state = {markedDates:filteredDates, selected:moment().format('YYYY-MM-DD')}
+    }
+    //this.onDayPress = this.onDayPress.bind(this);
   }
 
+
+createMarkedDate = (calendar) => {
+  const stringFormat =  calendar.year+"-"+calendar.month+"-"+calendar.day
+  const entry = {formattedDate:stringFormat , dateStyle:{marked: true, selected:true, selectedColor: 'red', dotColor: 'red', activeOpacity: 4}};
+  return entry;
+}
+
+
+componentDidMount =()=>{
+  const thisMonth = moment().format('MM');
+  
+  console.log("mounting calendarview");
+  console.log(this.props.events,"---",this.props.events.filter((evt)=>{
+    console.log(evt);
+    return (evt.calendar.month==="06");}));
+  const filteredDates = this.props.events.map((event)=>{
+       return (event.calendar.month && (event.calendar.month===thisMonth)) ?
+        this.createMarkedDate(event.calendar) : null;
+      } );
+  console.log(filteredDates);
+  this.setState({markedDates:filteredDates});
+}
+
+  calendarFilteredData = ()=>{
+    
+  }
   render() {
-    const markedDates = {[this.state.selected]: {selected: true, marked: true, selectedColor: 'blue'}}
+    console.log(this.props.events,"rernder",this.state.markedDates);
+
+    const vacation = {key:'vacation', color: 'red', selectedDotColor: 'blue'};
+const massage = {key:'massage', color: 'blue', selectedDotColor: 'blue'};
+const workout = {key:'workout', color: 'green'};
+let markedDates_ex = {};//{'2019-06-25': {dots: [vacation, massage, workout], selected: true, selectedColor: 'red'}};
+for(let i=0; i<this.state.markedDates.length;i++){
+console.log(this.state.markedDates.length,"----",this.state.markedDates[i]);
+ markedDates_ex[this.state.markedDates[i].formattedDate]= this.state.markedDates[i].dateStyle;
+
+}
+
+  const markingType='multi-dot'
+
+    console.log(markedDates_ex,"render:=>", this.state.markedDates);
+    const dates = {dates};
     return (
-      <Container>
-       <Header  style={{backgroundColor: COMMON_DARK_BACKGROUND, height:55, color:"white"}}>
-<Left><Button transparent onPress={()=>{this.props.history.push("/Activities/EventView/"+this.state.key )}}>
-<Text>Back</Text></Button></Left>
-</Header>
-      <ScrollView style={styles.container}>        
+      <View style={{backgroundColor:"red"}}>
+       
         <Text style={styles.text}>{this.state.selected}</Text>
         <Calendar
           style={styles.calendar}
            onDayPress={this.onDayPress}
           onDayLongPress={this.onDayLongPress}
-          markingType={'multi-period'}
-          current={this.state.selected}
-          markedDates={markedDates}
+          markingType={markingType}
+          markedDates={markedDates_ex}
           hideArrows={false}
         />
-      </ScrollView>
-      </Container>
+      </View>
     );
   }
 
-  onDayPress(day) {
-    console.log(this.props.location,"----",day.dateString);
-    this.setState({
+  onDayPress=(day) =>{
+    //console.log(this.props.location,"----",day.dateString);
+   /* this.setState({
       selected: day.dateString
-    });
+    });*/
     
-    this.props.updateEventCalendarByKey({payload:day.dateString, key:this.props.location.state.key});
+    this.props.updateEventCalendarByKey({payload:{year:moment(day.dateString).format('YYYY'), month:moment(day.dateString).format('MM'), day:moment(day.dateString).format('DD')}, key:this.props.location.state.key});
   }
 }
 
@@ -77,9 +132,17 @@ const styles = StyleSheet.create({
 
 
 
+const mapStateToProps = state => {
+   const eventKeys = Object.keys(state.events.events);
+   const evts = eventKeys.map(pkey => state.events.events[pkey]);
+   console.log(evts);
+  return {       events: evts }
+
+}
+
 function matchDispatchToProps(dispatch){
   return bindActionCreators({updateEventCalendarByKey: updateEventCalendarByKey}, dispatch)
 }
 
-export default connect(null,matchDispatchToProps )(CalendarView)
+export default connect(mapStateToProps,matchDispatchToProps )(CalendarView)
 
