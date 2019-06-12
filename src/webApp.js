@@ -32,15 +32,15 @@ export default class App extends Component {
   }
 
 render=()=>(
-  <div id="outer-container" >
+  <div id="outer-container" style={{backgroundColor:COMMON_DARK_BACKGROUND}}>
     <Menu isOpen id="menu" pageWrapId={'page-wrap'} outerContainerId={'outer-container'} >
       <SideBar />
     </Menu>
-    <main id="page-wrap">
-      <div style={{backgroundColor:COMMON_DARK_BACKGROUND}}>{iconManager(ICON_TAG_MENU, styles.headerIconStyle)}</div>
+    <main id="page-wrap" style={{backgroundColor:COMMON_DARK_BACKGROUND}}>
+      <div style={{backgroundColor:COMMON_DARK_BACKGROUND}}>{iconManager(ICON_TAG_MENU, COMMON_ICON_STYLE_SILVER)}</div>
       <Route exact path="/"  render={() => <Home />} />
-      <Route path={ROUTE_HOME} render={() => <Home />}/>
-      <Route path={ROUTE_MAPVIEW} render={(props) => <MapView {...props}/>}/>
+      <Route path={ROUTE_HOME} render={() => <Home />} />
+      <Route path={ROUTE_MAPVIEW} render={(props) => <MapView {...props}/>} />
       <Route  path={ROUTE_TRUBRARY} render={(props) => <Trubrary {...props} />} />
       <Route  path="/EventCalendar" render={(props) => <CalendarView {...props} />} />
       <Route  path="/SimpleWebView" render={(props) => <SimpleWebview {...props} />} />
@@ -48,8 +48,8 @@ render=()=>(
       <Route exact path={ROUTE_ACTIVITIES} render={ (props)=> <Activities {...props} />} />
       <Route exact path={ROUTE_PROFILE_VIEW} render={(props) => <ProfileView {...props}  />} />
       <Route path={ROUTE_PROFILE_VIEW+"/:id"} render={(props) => <ProfileView {...props}  />} />
-      <Route path={ROUTE_EVENT_VIEW+"/:id"} render={(props) => <EventView {...props}  />}/>} />
-      <Route path={ROUTE_EVENT_VIEW} render={(props) => <EventView {...props}  />}/>} />
+      <Route path={ROUTE_EVENT_VIEW+"/:id"} render={(props) => <EventView {...props}  />} />
+      <Route path={ROUTE_EVENT_VIEW} render={(props) => <EventView {...props}  />} />
     </main></div>)     
 }
 

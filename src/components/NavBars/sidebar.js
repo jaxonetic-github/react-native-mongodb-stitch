@@ -2,7 +2,7 @@ import React from "react";
 //import PropTypes from 'prop-types';
 import withRouter from '../../withRouterManager.js';
 
-import { FlatList , Image, StyleSheet } from "react-native";
+import { FlatList ,Header, Image, StyleSheet } from "react-native";
 //import { Image, StyleSheet } from "react-primitives";
 import { Text, Container,  ListItem, Content, Card, CardItem, Icon,Left} from "native-base";
 //redux 
@@ -18,6 +18,7 @@ import {COMMON_LISTVIEW_ITEM_SEPARATOR, NEED_AT_LEAST_ANONYMOUS_LOGIN,
 
 /**
  * sideBar component manages the drawer sidebar
+ * SideBar renders a header and an array of ListItems 
  */
 class SideBar extends React.Component {
 
@@ -30,10 +31,7 @@ class SideBar extends React.Component {
 */
 _listDataFilter= (data) =>{
   const tmpData = data.filter((item)=>{
-
-  return ((item.requiresVerification && this.props.isLoggedIn)|| !item.requiresVerification)?true:false;
-
-  })
+      return ((item.requiresVerification && this.props.isLoggedIn)|| !item.requiresVerification)?true:false;})
 
   return tmpData;
 }
@@ -57,10 +55,9 @@ renderHeader = () =>{return(
                return (
                 <ListItem style={styles.listItemStyles}
                   button onPress={() => this.props.history.push(data.item.path, {user:true, id:this.props.profileIndex})}>
-
                   <Left>
                   {iconManager(data.item.icon, styles.headerIconStyle)}
-               <Text>{data.item.label}</Text>
+               <Text style={styles.menuItemStyles}>{data.item.label}</Text>
               </Left>            
             </ListItem>)
              }
@@ -76,31 +73,22 @@ renderHeader = () =>{return(
   * Render
   */
   render() {
-    console.log(this.props);
-    return (
-      <Container>
-<Content>
-<Card>
-<CardItem>
- <FlatList 
+    return (<Container style={{backgroundColor:COMMON_DARK_BACKGROUND}}><Content padding><Card><CardItem>
+        <FlatList 
           ListHeaderComponent={this.renderHeader}
           data={this._listDataFilter(this.props.sideBarData)}
           renderItem={this._renderRow}
           keyExtractor={this._keyExtractor}
            ItemSeparatorComponent = {COMMON_LISTVIEW_ITEM_SEPARATOR}
         />
- </CardItem>  
- <CardItem>      
-<Authentication/>
-</CardItem>
-</Card>
-     </Content>
-      </Container>
-    );
+       </CardItem>  
+       <CardItem><Authentication/></CardItem>
+      </Card></Content></Container>);
   }
 }
 
 const styles = StyleSheet.create({
+  menuItemStyles:{marginLeft: 10},
   headerImageStyles:{
               height: 120,
               width: 250,
@@ -109,12 +97,8 @@ const styles = StyleSheet.create({
               top: 10
             },
   listItemStyles:{ flex: 1, padding: 0, borderRadius: 15 },
-  container: {
-    backgroundColor:COMMON_DARK_BACKGROUND,
-        borderRadius: 14,
-    
-    alignItems: 'center',
-    height:125
+  container: {marginTop:30,
+    backgroundColor:COMMON_DARK_BACKGROUND, borderRadius: 14, alignItems: 'center',height:125
   }
 })
 

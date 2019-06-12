@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import Calendar from 'react-calendar';
 import {
   Text,
   StyleSheet,
@@ -10,14 +11,14 @@ import {COMMON_DARK_BACKGROUND} from '../constants.js'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {updateEventCalendarByKey} from './Event/Redux/Actions/eventActions.js'
+import moment from 'moment';
 
 
 class CalendarView extends Component {
   constructor(props) {
     super(props);
     console.log(this.prop);
-    this.state = {key:this.props.history.location.state.key, dates:[], selected:this.props.history.location.state.initialDate};
-    this.onDayPress = this.onDayPress.bind(this);
+    this.state = { date: new Date(),key:this.props.history.location.state.key, dates:[], selected:this.props.history.location.state.initialDate};
   }
 
   render() {
@@ -30,20 +31,23 @@ class CalendarView extends Component {
 </Header>
       <ScrollView style={styles.container}>        
         <Text style={styles.text}>{this.state.selected}</Text>
-        
+              <div>
+        <Calendar
+          onChange={this.onChange}
+          value={this.state.date}
+        />
+      </div>
+  
       </ScrollView>
       </Container>
     );
   }
 
-  onDayPress(day) {
-    console.log(this.props.location,"----",day.dateString);
-    this.setState({
-      selected: day.dateString
-    });
-    
-    this.props.updateEventCalendarByKey({payload:day.dateString, key:this.props.location.state.key});
-  }
+onChange = (date) => {
+  this.setState({ date, selected:moment(date).format('YYYY-MM-DD') });
+this.props.updateEventCalendarByKey({payload:moment(date).format('YYYY-MM-DD'), key:this.props.location.state.key});
+}
+
 }
 
 const styles = StyleSheet.create({

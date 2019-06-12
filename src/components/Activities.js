@@ -78,7 +78,7 @@ renderSearchField = () =>(
  * Render tabs
  **/
   render() {
-      return (<Container><Content>
+      return (<Container><Content padding>
   <Tabs locked>
     <Tab activeTabStyle={{backgroundColor:"silver"}} tabStyle={{backgroundColor:COMMON_DARK_BACKGROUND}} heading={"Events"}><EventSearch/></Tab>
     <Tab activeTabStyle={{backgroundColor:"silver"}} tabStyle={{backgroundColor:COMMON_DARK_BACKGROUND}} heading={"Profiles"}><ProfileSearch /></Tab>

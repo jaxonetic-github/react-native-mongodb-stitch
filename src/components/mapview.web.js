@@ -1,11 +1,11 @@
 import React from 'react'
 import { ActivityIndicator, StyleSheet, View, TouchableOpacity, Text, Alert} from 'react-native'
 import Input from './textinput'
-import { Container, Header, Content, Item, Label, Textarea, Form, Button, Left } from "native-base";
+import { Picker,Container, Header, Content, Item, Label, Textarea, Form, Button, Left } from "native-base";
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {updateEventLocationByKey} from './Event/Redux/Actions/eventActions.js';
-import {COMMON_ACTIVITY_INDICATOR, COMMON_DARK_BACKGROUND} from '../constants.js'
+import {COMMON_ACTIVITY_INDICATOR, COMMON_DARK_BACKGROUND,LOCATION_LIST} from '../constants.js'
 
  const STORAGE_KEY = 'ASYNC_STORAGE_NAME_EXAMPLE'
 
@@ -90,6 +90,7 @@ this.setState({location:region})
 
 render() {
 console.log(this.state);
+  const locations = LOCATION_LIST.map((event)=>(<Picker.Item key={event.label} label={event.label} value={event.value} />));
 
 if(!this.state)  return (COMMON_ACTIVITY_INDICATOR)
 const longitude = this.state.position?this.state.position.longitude:null;
@@ -112,6 +113,17 @@ console.log(this.state);
 <Text>{this.state.location}</Text>
             <Input  inputInitialValue={this.state.location} inputType={this.state.inputType} updateChange={this.onAddressChange} />
           </Item>
+            <Picker
+              mode="dropdown"
+              iosHeader="Locations"
+              iosIcon={<Icon name="arrow-dropdown-circle" style={{ color: "#007aff", fontSize: 25 }} />}
+              style={{ width: undefined }}
+              selectedValue={this.state.location}
+              //onValueChange={this.onLocationChange.bind(this)}
+            >
+            <Picker.Item key={"All"} label={"All Locations"} value={"All"} />
+             {locations}
+            </Picker>
         </Content>
       </Container>
 

@@ -9,7 +9,7 @@ import {UPDATE_EVENT_NAME_BY_KEY,UPDATE_EVENT_DESC_BY_KEY, UPDATE_EVENT_EMAIL_BY
        ADD_EVENT, ADD_EVENT_NAME, ADD_EVENT_DESC, ADD_EVENT_EMAIL, ADD_EVENT_PHONE, ADD_EVENT_WEBSITE, ADD_EVENT_IMAGE} from '../../redux/types';
 import {getDefaultEvent, iconManager,COMMON_ICON_STYLE_SILVER, COMMON_ICON_STYLE,
       ROUTE_SIMPLE_INPUT_VIEW,ROUTE_EVENT_CALENDAR,ROUTE_MAPVIEW,
-        TEXT_WEBSITE,
+        TEXT_WEBSITE,ICON_TAG_ARROW_RIGHT,ICON_TAG_LOCATION,ICON_TAG_CALENDAR,ICON_TAG_BACK,ICON_TAG_ADD_CIRCLE,
         ICON_TAG_CREATE, ICON_TAG_REMOVE_CIRCLE, ICON_TAG_PHONE,ICON_TAG_MAIL,ICON_TAG_GLOBE,ICON_TAG_DESCRIPTION,ICON_TAG_PERSON,
         ICON_IOS_PERSON, ICON_ANDROID_PERSON,TEXT_SAVE,ICON_IOS_CIRCLE,ICON_ANDROID_CIRCLE,ICON_ALL_ARROWFORWARD,
         ICON_IOS_MAIL, ICON_ANDROID_MAIL,TEXT_MAIL,ICON_IOS_PORTRAIT,ICON_ANDROID_PORTRAIT,
@@ -19,6 +19,7 @@ import {getDefaultEvent, iconManager,COMMON_ICON_STYLE_SILVER, COMMON_ICON_STYLE
 import withRouter from '../../withRouterManager.js';
 
 import SimpleInputEdit from "../simpleInput.js";
+import moment from 'moment';
 
 /**
 *   ProfileView - The Screen to view and potentially edit a event. 
@@ -54,7 +55,10 @@ componentDidMount(){
   _saveEvent = () => {
     //create Event object from userInfo
     const tmpEvt = getDefaultEvent({ website:this.displayWebsite(), name:this.displayName(), phone:this.displayPhone(), email:this.displayEmail(),
-               description:this.props.description, imageURI:this.displayImageURI(), calendar: this.props.calendar, location:this.props.location});
+               description:this.props.description, imageURI:this.displayImageURI(), calendar: {year:moment(this.props.calendar).format('YYYY'), month:moment(this.props.calendar).format('MM'), day:moment(this.props.calendar).format('DD')},
+                location:this.props.location, 
+    locationInfo:{state:'NY', country:'USA', location:'1600 Pennsylvania Ave, Washington DC', longitude:-122, latitude:33},
+});
 
     //Update when we have bogus dataIndex
     if( this.state.dataIndex && this.state.dataIndex>-1 )
@@ -66,8 +70,11 @@ componentDidMount(){
 displayName = () =>(this.state.dataIndex && this.props.events[this.state.dataIndex]?this.props.events[this.state.dataIndex].name:this.props.name)
 displayPhone = () =>(this.state.dataIndex && this.props.events[this.state.dataIndex]?this.props.events[this.state.dataIndex].phone:this.props.phone)
 displayWebsite = () =>(this.state.dataIndex && this.props.events[this.state.dataIndex]?this.props.events[this.state.dataIndex].website:this.props.website)
-displayLocation= () =>(this.state.dataIndex && this.props.events[this.state.dataIndex]?this.props.events[this.state.dataIndex].location:this.props.location)
-displayCalendar= () =>(this.state.dataIndex && this.props.events[this.state.dataIndex]?this.props.events[this.state.dataIndex].calendar:this.props.calendar)
+displayLocation = () =>(this.state.dataIndex && this.props.events[this.state.dataIndex]?this.props.events[this.state.dataIndex].location:this.props.location)
+formatCalendarObject = (calendar) =>{
+ return (calendar.year ? calendar.year+"-"+calendar.month+"-"+calendar.day : calendar)
+}
+displayCalendar = () =>(this.state.dataIndex && this.props.events[this.state.dataIndex]?this.formatCalendarObject(this.props.events[this.state.dataIndex].calendar):formatCalendarObject(this.props.calendar))
 displayEmail = () =>(this.state.dataIndex && this.props.events[this.state.dataIndex]?this.props.events[this.state.dataIndex].email:this.props.email)
 displayDescription = () =>(this.state.dataIndex && this.props.events[this.state.dataIndex]?this.props.events[this.state.dataIndex].description:this.props.description)
 displayImageURI = () =>(this.state.dataIndex && this.props.events[this.state.dataIndex]?this.props.events[this.state.dataIndex].imageURI:this.props.imageURI)
@@ -87,20 +94,20 @@ _renderContent = (item) =>
 /**
  * A header view to display the profile data when not in "Edit" mode
  */
-    _renderHeader=(expanded,icon,icon_ios, icon_droid, iconsStyle,titleText,bodyText,rightComponent)=> 
+    _renderHeader=(expanded,icon,iconsStyle,titleText,bodyText)=> 
             (<View key={titleText}  style={{flex:1,backgroundColor:"white"}}>
               <Item>
-               <Icon name={icon} style={{fontSize: 20, color: 'silver'}}/>
+             
               {iconManager(icon,styles.iconStyle )}
-            <Text style={{color:"silver"}}>{titleText},{icon_ios}</Text>
+            <Text style={{color:"silver"}}>{titleText}</Text>
             </Item>
             <Text style={{flex:1,alignSelf:"center",justifyContent:"center",backgroundColor:"white"}}>{bodyText}</Text>
-            {expanded ?
-              iconManager(icon,{fontSize: 20, color: 'silver', flex:1, alignSelf:"flex-end"} ):
-                        iconManager(ICON_TAG_CREATE,{fontSize: 20, color: 'silver', position:"absolute", right:5, top:20} )
-         }
-          </View>)
 
+          </View>)
+         //    {expanded ?
+         //      iconManager(icon,{fontSize: 20, color: 'silver', flex:1, alignSelf:"flex-end"} ):
+         //                iconManager(ICON_TAG_CREATE,{fontSize: 20, color: 'silver', position:"absolute", right:5, top:20} )
+         // }
   render() {
   const profileData= [
     {key:TEXT_NAME,titleText:TEXT_NAME, icon:ICON_TAG_PERSON, icon_ios:ICON_IOS_PERSON,icon_droid:ICON_ANDROID_PERSON,
@@ -121,47 +128,40 @@ _renderContent = (item) =>
       ];
 
  const items = profileData.map((record, index)=>{
-return (<Accordion  key={record.key}
-style={{ paddingBottom:15,paddingTop:5}}
-        dataArray={[record]}
-        animation={true}
-         renderContent={this._renderContent}
-       renderHeader= {(item, expanded)=> {
-          const title = item;
+    return (<Accordion  key={record.key}
+                      style={{ paddingBottom:15,paddingTop:5}}
+                  dataArray={[record]}
+                  animation={true}
+              renderContent={this._renderContent}
+              renderHeader = {(item, expanded)=> {
+                                  const title = item;
+          console.log(expanded, item);
             return (    
-              this._renderHeader(expanded,item.icon,item.icon_ios, item.icon_droid, COMMON_ICON_STYLE, item.titleText, item.displayText,
+              this._renderHeader(expanded,item.icon, COMMON_ICON_STYLE, item.titleText, item.displayText,
                   item.displayText,null )
             );
           }}/>);
  });
-    return (
-      <Container style={{backgroundColor: COMMON_DARK_BACKGROUND}}>
-              
-          <Header  style={{backgroundColor: COMMON_DARK_BACKGROUND, height:55, color:"white"}}>
-            <Body>
-              <Title>Event {this.state.dataIndex}</Title>
-            </Body>
-
-            <Right>             
+return (
+      <Container style={styles.containerStyle}>       
+        <Header  style={styles.headerStyle}>
+          <Left><Button transparent>{iconManager(ICON_TAG_BACK,COMMON_ICON_STYLE)}</Button></Left>
+          <Body><Title>Event {this.state.dataIndex}</Title></Body>
+          <Right>             
             <Button transparent  onPress={() => this._saveEvent()} >
- 
-             <Icon ios={ICON_IOS_CIRCLE} android={ICON_ANDROID_CIRCLE} style={COMMON_ICON_STYLE}/>
-
-               <Text>{TEXT_SAVE}</Text>
+             {iconManager(ICON_TAG_ADD_CIRCLE,COMMON_ICON_STYLE)}
+             <Text>{TEXT_SAVE}</Text>
             </Button>
-
-            </Right>
+          </Right>
         </Header>
         <Content padder>
-
-          {items}
-
-          <Separator bordered>
-            <Text style={{flex:1,alignSelf:"center"}}>Time & Place</Text>
+        {items}
+        <Separator bordered>
+        <Text style={{flex:1,alignSelf:"center"}}>Time & Place</Text>
           </Separator>
-  <ListItem style={{backgroundColor: "silver"}}>
+  <ListItem style={{backgroundColor: "silver",marginLeft:0}}>
             <Left>
-                <Icon ios={ICON_IOS_LOCATION} android={ICON_ANDROID_LOCATION} style={COMMON_ICON_STYLE}/>
+            {iconManager(ICON_TAG_LOCATION,COMMON_ICON_STYLE )}
               <Text>Location</Text>
             </Left>
             <Body>
@@ -169,12 +169,13 @@ style={{ paddingBottom:15,paddingTop:5}}
             </Body>
             <Right>   
                  <Button transparent title="Event Location" onPress={() => this.props.history.push(ROUTE_MAPVIEW,{key:this.state.dataIndex, initialLocation:this.displayLocation()})} >
-                 <Icon  style={COMMON_ICON_STYLE}  name="arrow-forward" /></Button>
+                {iconManager(ICON_TAG_ARROW_RIGHT,COMMON_ICON_STYLE)}
+                 </Button>
             </Right>
           </ListItem>
-  <ListItem style={{backgroundColor: "white"}}>
+  <ListItem style={{backgroundColor: "white",marginLeft:0}}>
             <Left>
-                <Icon ios={ICON_IOS_CALENDAR} android={ICON_ANDROID_CALENDAR} style={COMMON_ICON_STYLE}/>
+            {iconManager(ICON_TAG_CALENDAR,COMMON_ICON_STYLE )}
               <Text>Calendar</Text>
             </Left>
             <Body>
@@ -182,12 +183,11 @@ style={{ paddingBottom:15,paddingTop:5}}
             </Body>
             <Right>   
                  <Button transparent title="Event Calendar" onPress={() => this.props.history.push(ROUTE_EVENT_CALENDAR,{key:this.state.dataIndex, initialDate:this.displayCalendar() })} >
-
-                 <Icon  style={COMMON_ICON_STYLE}   name="arrow-forward" />
-</Button>
+                  {iconManager(ICON_TAG_ARROW_RIGHT,COMMON_ICON_STYLE)}
+                </Button>
             </Right>
           </ListItem>
-          <ListItem style={{backgroundColor: "silver"}}>
+          <ListItem style={{backgroundColor: "silver",marginLeft:0}}>
               <Left>
               <Text>Current Image</Text>
               </Left>
@@ -197,7 +197,6 @@ style={{ paddingBottom:15,paddingTop:5}}
             <Right>
             </Right>
             </ListItem>
-
         </Content>
       </Container>
     );
@@ -207,7 +206,9 @@ style={{ paddingBottom:15,paddingTop:5}}
 
 const styles = StyleSheet.create({
  
-    iconStyle:COMMON_ICON_STYLE_SILVER,
+    iconStyle:COMMON_ICON_STYLE,
+    containerStyle:{backgroundColor: COMMON_DARK_BACKGROUND},
+    headerStyle:{backgroundColor: COMMON_DARK_BACKGROUND, height:55, color:"white"},
     
 })
 
@@ -219,7 +220,7 @@ const mapStateToProps = state => {
     phone: state.events.tmpEvent.phone,
     website: state.events.tmpEvent.website,
     location: state.events.tmpEvent.location,
-        calendar: state.events.tmpEvent.calendar,
+    calendar: state.events.tmpEvent.calendar,
 
     description: state.events.tmpEvent.description,
     imageURI: state.events.tmpEvent.imageURI

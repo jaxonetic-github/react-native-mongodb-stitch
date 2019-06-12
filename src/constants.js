@@ -1,8 +1,11 @@
 import React from 'react'
 import { Platform, View ,ActivityIndicator,FlatList, Text, TouchableOpacity,Tab,Tabs } from 'react-native';
 import {ListItem, Thumbnail, Title, Button, Header,Left,Icon,Body,Right} from 'native-base';
-import { FaHome,  FaSearchengin, FaUser,FaRegBuilding,FaEdit,FaThList } from "react-icons/fa";
+import {FaBars, FaArrowCircleRight,FaArrowLeft,FaPlusCircle,FaMinusCircle,FaCalendar,FaMapMarker,FaCommentingO,FaPhoneSquare, FaSearch,FaGlobe,FaExternalLink,FaHourglass2,FaHome,  FaSearchengin, FaUser,FaRegBuilding,FaEdit,FaThList } from "react-icons/fa";
 import { GiHamburgerMenu } from 'react-icons/gi';
+
+import {MdSend} from 'react-icons/md'
+
 import {IoMdMenu} from 'react-icons/io';
 
 export const NO_PHOTO_AVAILABLE_URI =  "https://static.wixstatic.com/media/84428b_aec5877604ff494295b3af5af0b27a67~mv2.png";
@@ -79,20 +82,31 @@ export const ICON_ALL_ARROWFORWARD = 'arrow-forward';
 export const ICON_IOS_INFORMATION = 'ios-information-circle';
 export const ICON_ANDROID_INFORMATION = 'md-information-circle';
 
+export const ICON_TAG_CALENDAR = "calendar";
 
 export const ICON_TAG_HOME = "home";
-export const ICON_TAG_PHONE = "phone";
+export const ICON_TAG_BACK = "back-arrow";
+export const ICON_TAG_EDIT = "edit"
+export const ICON_TAG_PHONE = "call";
 export const ICON_TAG_MAIL = "mail";
 export const ICON_TAG_GLOBE = "globe";
+export const ICON_TAG_LOCATION = "pin";
 export const ICON_TAG_DESCRIPTION = "globe";
-
+export const ICON_TAG_EXTERNAL_LINK = "external-link";
 export const ICON_TAG_MENU = "menu";
 export const ICON_TAG_PERSON = "person";
 export const ICON_TAG_SEARCH = "search";
 export const ICON_TAG_BUSINESS = "business";
 export const ICON_TAG_CREATE = "create";
-export const ICON_TAG_REMOVE_CIRCLE = "remove-circle";
-
+export const ICON_TAG_REMOVE_CIRCLE = "minus-circle";
+export const ICON_TAG_ADD_CIRCLE = "plus-circle";
+export const ICON_TAG_ARROW_RIGHT ="arrow-forward";
+//
+//hourglass2
+/**
+* @param iconTag : an identifing tag for the icon [home, menu,...]
+* @param style   : a style object for the icon
+*/
 export const iconManager =(iconTag, style)=>{
   let icon = null;
   const webPlatform = (Platform.OS === 'web') ;
@@ -100,16 +114,20 @@ export const iconManager =(iconTag, style)=>{
   switch(iconTag)
   {
     case ICON_TAG_HOME: icon = webPlatform? <FaHome style={style}/> : <Icon name={iconTag} style={style} />; break;
-    case ICON_TAG_GLOBE: icon = webPlatform? <FaHome style={style}/> : <Icon name={iconTag} style={style} />; break;
-    case ICON_TAG_DESCRIPTION: icon = webPlatform? <FaHome style={style}/> : <Icon name={iconTag} style={style} />; break;
-    case ICON_TAG_MENU: icon = webPlatform ? <GiHamburgerMenu style={style} /> : <Icon name={iconTag} style={style}/>; break;
-    case ICON_TAG_PERSON: icon = webPlatform? <FaHome/> : <Icon name={iconTag} style={style} />; break;
-    case ICON_TAG_PHONE: icon = webPlatform ? <GiHamburgerMenu/> : <Icon name={iconTag} style={style}/>; break;
-    case ICON_TAG_MAIL: icon = webPlatform ? <FaHome/> : <Icon name={iconTag} style={style} />; break;
-    case ICON_TAG_SEARCH: icon = webPlatform ? <GiHamburgerMenu/> : <Icon name={iconTag} style={style}/>; break;
-    case ICON_TAG_BUSINESS: icon = webPlatform ? <FaHome/> : <Icon name={iconTag} style={style} />; break;
-    case ICON_TAG_CREATE: icon = webPlatform ? <FaHome/> : <Icon name={iconTag} style={style} />; break;
-    case ICON_TAG_REMOVE_CIRCLE: icon = webPlatform ? <FaHome/> : <Icon name={iconTag} style={style} />; break;
+    case ICON_TAG_BACK: icon = webPlatform? <FaArrowLeft style={style}/> : <Icon name={iconTag} style={style} />; break;
+    case ICON_TAG_LOCATION: icon = webPlatform? <FaMapMarker style={style}/> : <Icon name={iconTag} style={style} />; break;
+    case ICON_TAG_GLOBE: icon = webPlatform? <FaGlobe style={style}/> : <Icon name={iconTag} style={style} />; break;
+    case ICON_TAG_CALENDAR: icon = webPlatform? <FaCalendar style={style}/> : <Icon name={iconTag} style={style} />; break;
+    case ICON_TAG_DESCRIPTION: icon = webPlatform? <FaCommentingO style={style}/> : <Icon name={iconTag} style={style} />; break;
+    case ICON_TAG_MENU: icon = webPlatform ? <FaBars style={style} /> : <Icon name={iconTag} style={style}/>; break;
+    case ICON_TAG_PERSON: icon = webPlatform? <FaUser style={style} /> : <Icon name={iconTag} style={style} />; break;
+    case ICON_TAG_PHONE: icon = webPlatform ? <FaPhoneSquare style={style} /> : <Icon name={iconTag} style={style}/>; break;
+    case ICON_TAG_MAIL: icon = webPlatform ? <MdSend style={style} /> : <Icon name={iconTag} style={style} />; break;
+    case ICON_TAG_SEARCH: icon = webPlatform ? <FaSearchengin style={style} /> : <Icon name={iconTag} style={style}/>; break;
+    case ICON_TAG_BUSINESS: icon = webPlatform ? <FaRegBuilding style={style} /> : <Icon name={iconTag} style={style} />; break;
+    case ICON_TAG_CREATE: icon = webPlatform ? <FaPlusCircle style={style} /> : <Icon name={iconTag} style={style} />; break;
+    case ICON_TAG_REMOVE_CIRCLE: icon = webPlatform ? <FaMinusCircle style={style} /> : <Icon name={iconTag} style={style} />; break;
+    case ICON_TAG_ARROW_RIGHT: icon = webPlatform ? <FaArrowCircleRight style={style} /> : <Icon name={iconTag} style={style} />; break;
   default ://no default
    break;
   }
@@ -157,7 +175,7 @@ export const COMMON_TEXT_STYLE = {padding:15, color:"white"};
 export const COMMON_ACTIVITY_INDICATOR = <View style={{ flex: 1, paddingTop: 20 ,justifyContent: 'space-around'}}><ActivityIndicator /></View>;
 export const COMMON_LISTVIEW_ITEM_SEPARATOR = ()=> <View style={listItemSeparatorStyle} />;
 export const ALT_LISTVIEW_ITEM_SEPARATOR = ()=> <View style={{flex:1,paddingTop:10, height: 20, backgroundColor:COMMON_DARK_BACKGROUND  }} />;
-export const COMMON_ICON_STYLE = {fontSize: 20, color: 'black'};
+export const COMMON_ICON_STYLE = {fontSize: 20, color: COMMON_DARK_BACKGROUND};
 export const COMMON_ICON_STYLE_MAROON = {fontSize: 20, color: 'maroon'};
 export const COMMON_ICON_STYLE_SILVER = {fontSize: 20, color: 'silver'};
 /**
@@ -189,6 +207,11 @@ export const renderListView = (keyExtractor,headerComponent,renderItemComponent,
   buttonTextShell:{ borderWidth:1, borderRadius:10, backgroundColor:"maroon"}
 }
 
+/**
+ *   Show a common button
+ *  @param buttonText: text displayed by the button
+ *  @param buttonPressAction: callback to handle the button-press event
+ */
 export const commonViewButton = (buttonText,buttonPressAction) =>(
  <View  style={COMMON_VIEWBUTTON_STYLES.customOuterStyle}  >
                <View style={COMMON_VIEWBUTTON_STYLES.buttonOuterShell}>
@@ -231,6 +254,11 @@ export const STITCH_ANONYMOUS_PROVIDER = 'anon-user';
 //export const getRunningFunctionName = () => getRunningFunctionName.caller.name;
 
 /** ************ TEST MOCKS   ************** */
+export const STATES =
+{
+      "key": "United States",
+      "states": ["Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "District of Columbia", "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", "Ohio", "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming"]
+    }
 export const LOCATION_LIST = [{label:"Washington", value:"WA"}, {label:"Tucson", value:"AZ"}, {label:"District of Columbia", value:"DC"}];
 export const CATEGORY_LIST = [{label:"Educational", value:"Educational"}, {label:"Economics", value:"Economics"}, {label:"Commerce", value:"Commerce"}, {label:"Healing", value:"Healing"}, {label:"Capoeira", value:"Capoeira"}];
 export const SUBCATEGORY_LIST = [{label:"Mental Slavery", value:"Mental Slavery", }, {label:"War", value:"War"}, {label:"Solutions", value:"Solutions"},

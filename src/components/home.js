@@ -123,7 +123,7 @@ source={{uri:'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Dr_Ben.j
 videoReferences = (promotions)=>{
   const innerViews = promotions.map((promotion,i)=>(
           <View  key={i} style={styles.videoRefsInnerView}>
-            <Title>{promotion.title}</Title>
+            <Text>{promotion.title}</Text>
             <TouchableOpacity>
               <Thumbnail style={styles.videoRefsThumbnail} source={{uri:promotion.imageURI}}/>
            </TouchableOpacity><Text>{promotion.subTitle}</Text></View>));
@@ -134,7 +134,7 @@ videoReferences = (promotions)=>{
 pastPresentFutureComponent = ()=>(<Card>
   <CardItem>
   <Text>Our Story... Truth</Text>
-  <Subtitle>These videos are priceless. </Subtitle><Subtitle> Buy them, watch them, gift them, watch them again!!!</Subtitle>
+  <Text>These videos are priceless. </Text><Text> Buy them, watch them, gift them, watch them again!!!</Text>
   </CardItem>
   <CardItem>
    <View style={styles.pastPresFutureStyle}>

@@ -50,7 +50,9 @@ const eventState = {
     website: 'www.event.com',
     email: 'abc@eventemail.com',
     phone: '5551234567',
-    calendar: '2018-03-22',
+    calendar: {year: "2019", month: "06", day: "22"},
+    dateInfo:{year:'2019', month:'01', day:'22'},
+    locationInfo:{state:'NY', country:'USA', location:'1600 Pennsylvania Ave, Washington DC', longitude:-122, latitude:33},
     location: '1600 Pennsylvania Ave, Washington DC',
     description: 'Interesting Event Info',
     imageURI: 'file:///var/mobile/Containers/Data/Application/96EAD515-4EBC-4788-A22C-AAF4C83B5AE6/Library/Caches/ExponentExperienceData/%2540anonymous%252FGathering-43db4615-f691-4f2d-908f-daa4fcf37f38/ImagePicker/3CF05F8C-A9E1-44B0-B482-6C3DF285F45A.jpg',
@@ -61,8 +63,9 @@ const eventState = {
       name: 'Jax Event',
       website: 'http://peace.unity.earth',
       email: 'abc@email.com',
+      calendar: {year: "2019", month: "06", day: "12"},
+      locationInfo:{state:'NY', country:'USA', location:'1600 Pennsylvania Ave, Washington DC'},
       phone: '5551234567',
-      calendar: '2018-03-22',
       location: '1600 Pennsylvania Ave, Washington DC',
       description: 'Many positive moves for the Collectives',
       imageURI: 'file:///var/mobile/Containers/Data/Application/96EAD515-4EBC-4788-A22C-AAF4C83B5AE6/Library/Caches/ExponentExperienceData/%2540anonymous%252FGathering-43db4615-f691-4f2d-908f-daa4fcf37f38/ImagePicker/3CF05F8C-A9E1-44B0-B482-6C3DF285F45A.jpg',
@@ -73,7 +76,9 @@ const eventState = {
       name: 'Nami Production',
       website: 'www.website.com',
       email: 'nami@bar.com',
-      calendar: '2018-03-25',
+      calendar: {year:'2019', month:'06', day:'25', hour:'14', minute:'00'},
+      locationInfo:{state:'NY', country:'USA', location:'1600 Pennsylvania Ave, Washington DC'},
+      dateInfo:{year:'2019', month:'06', day:'25', hour:'14', minute:'00'},
       location: '1600 Pennsylvania Ave, Washington DC',
       phone: '5559876543',
       description: 'Faery dust science',
@@ -163,9 +168,11 @@ const faqs=[{question:'Where did "white" people come from?',
              }
             ];
 
-const videoMediaPromotions = [{key:"0", title: 'Unity', imageURI: "https://s3.amazonaws.com/classconnection/480/flashcards/2867480/png/screen_shot_2015-10-25_at_82913_pm-150A232408E23829107-thumb400.png",subTitle:'Pschent' },
-{key:"1", title:'The Civilizers' , imageURI: "http://msta1913.org/images/050168.png" ,subTitle:'Moors' },
-{key:"2", title: 'Cosmos', imageURI:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSbc9-O2_z-FLq7d81nDgX2ajeo5EN294EsaVBe0cW7wleDbgsRbg" ,subTitle:'Aquarius' }]
+const videoMediaPromotions = [{key:"0", title: 'Solidarity', imageURI: "https://s3.amazonaws.com/classconnection/480/flashcards/2867480/png/screen_shot_2015-10-25_at_82913_pm-150A232408E23829107-thumb400.png",subTitle:'Actions Of Unity' },
+{key:"1", title:'The Prophet' , imageURI: "http://msta1913.org/images/050168.png" ,subTitle:'The Social Blackness' },
+{key:"2", title:'"Africans" in America' , imageURI: "http://msta1913.org/images/050168.png" ,subTitle:'Our Pschology' },
+{key:"3", title:'Distortions' ,  imageURI:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSbc9-O2_z-FLq7d81nDgX2ajeo5EN294EsaVBe0cW7wleDbgsRbg", subTitle:"MisConceptions" },
+]
 
 const webResources = [
   { title: "Africa_Town", url:"https://africatownseattle.com",  imageURI:"https://blackmonk-saas.s3.amazonaws.com/media/schema_africatownseattlecom/sitelogo/3442af33-4c17-4f37-be96-07088fc18182.png" },
