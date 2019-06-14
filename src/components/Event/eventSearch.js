@@ -6,13 +6,13 @@ import withRouter from '../../withRouterManager.js';
 import { bindActionCreators } from 'redux';
 import { StyleSheet, View, TextInput,FlatList} from 'react-native';
 import { SwipeRow,Container, Header, Content,Title,Icon,
-Picker, Thumbnail, Text, Body, Right, Button } from 'native-base';
+Picker, Thumbnail, Text, Body, Right, Button, Toast } from 'native-base';
 import {deleteEventRequest, addEventsToLocal,addEventRequest} from './Redux/Actions/eventActions.js'
 import {COMMON_ACTIVITY_INDICATOR, NO_PHOTO_AVAILABLE_URI, COMMON_DARK_BACKGROUND,ACTIVE_TINT_COLOR, INACTIVE_TINT_COLOR,
 ROUTE_EVENT_VIEW, TEXT_DELETE,EMPTY_STRING, TRANSPARENT_COLOR,ICON_ALL_TRASH,
 GOOGLE_PROVIDER_NAME, LIST_SWIPELEFT_OPENVALUE, LIST_SWIPERIGHT_OPENVALUE, PLACEHOLDER_SEARCH_TEXT, TEXT_VIEW,
 COMMON_LISTVIEW_ITEM_SEPARATOR,NEED_AT_LEAST_ANONYMOUS_LOGIN,ICON_IOS_CIRCLE,ICON_ANDROID_CIRCLE,
-STATES } from '../../constants.js'
+STATES,ICON_TAG_EDIT,COMMON_ICON_STYLE_MAROON, iconManager } from '../../constants.js'
 import CalendarView from '../calendarView';
 
 /**
@@ -123,6 +123,13 @@ _renderItem = (item) => {
               <View style={styles.viewStyle}>
               <Thumbnail source={{uri:/*item.item.imageURI||*/NO_PHOTO_AVAILABLE_URI}}/>
               <View style={styles.innerViewStyle}>
+              {item.item.hasBeenModifiedLocally?<Button onPress={() =>
+              Toast.show({
+                text: "Event only temporarily modified on device",
+                buttonText: "Okay",
+                buttonTextStyle: { color: "#008000" },
+                buttonStyle: { backgroundColor: "#5cb85c" }
+              })} ><Text> {iconManager(ICON_TAG_EDIT,COMMON_ICON_STYLE_MAROON)}</Text></Button>:null}
                   <Title style={styles.rightText} >{item.item.name}</Title>
                   <Text style={styles.rightText} >{formatCalendarObject(item.item.calendar)}</Text>
                <Text note numberOfLines={2}>{item.item.description}</Text>
@@ -192,7 +199,7 @@ renderSearchField = () =>(
             </Right>
         </Header>
        <Content >
-       <CalendarView groupView/>
+       <CalendarView generalView/>
        <View style={{width:300, backgroundColor:"silver"}}>
          <Picker
               mode="dropdown"
@@ -200,7 +207,7 @@ renderSearchField = () =>(
               iosIcon={<Icon name="arrow-dropdown-circle" style={{ color: "#007aff", fontSize: 25 }} />}
               selectedValue={this.state.location}
             >
-            <Picker.Item key={"All-States"} label={"By States"} value={"All"} />
+            <Picker.Item key={"All-States"} label={"Search By State"} value={"All"} />
              {states}
             </Picker>
             </View>
@@ -212,7 +219,7 @@ renderSearchField = () =>(
               selectedValue={this.state.location}
               onValueChange={this.onLocationChange.bind(this)}
             >
-            <Picker.Item key={"All"} label={"By Locations"} value={"All"} />
+            <Picker.Item key={"All"} label={"Search By Locations"} value={"All"} />
              {locations}
             </Picker> 
         <FlatList

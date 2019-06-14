@@ -7,17 +7,17 @@ import SimpleWebView from './WebResources/simpleWebView.js';
 import { ROUTE_SIMPLE_WEB_VIEW, COMMON_DARK_BACKGROUND,TEXT_EVERYWHERE,TEXT_All, LOCATION_LIST,CATEGORY_LIST,
       TEXT_CHOOSE_VIBE, TEXT_WHATS_GOING_ON,COMMON_ICON_STYLE,COMMON_ICON_STYLE_MAROON,COMMON_ICON_STYLE_GOLD, COMMON_LISTVIEW_ITEM_SEPARATOR ,
        ICON_IOS_INFORMATION, ICON_ANDROID_INFORMATION ,
-       iconManager, header} from '../constants.js';
+       iconManager, header,commonViewButton} from '../constants.js';
 import WebResourcesList from './WebResources/webResourcesList.js';
 //import FitImage from 'react-native-fit-image';
-import { Container, Header, Content, Card, CardItem,ListItem, Thumbnail,Button, Text, Icon,Right,Subtitle, Title, Toast,Left, Body,Form, Picker as AltPicker } from 'native-base';
+import { DeckSwiper,Container, Header, Content, Card, CardItem,ListItem,Item, Thumbnail,Button, Text, Icon,Right,Subtitle, Title, Toast,Left, Body,Form, Picker as AltPicker } from 'native-base';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { FaHome,  FaSearchengin, FaUser,FaRegBuilding,FaEdit,FaThList } from "react-icons/fa";
 import { GiHamburgerMenu } from 'react-icons/gi';
 import {PermissionsAndroid} from 'react-native';
-
+import Client from 'shopify-buy';
 /**
  * This is the home screen of the app. 
  * The content will be changing 
@@ -37,17 +37,27 @@ class Home extends React.Component {
   };*/
   constructor(props) {
     super(props);
-    console.log(this.props.navigation);
     this.state = {
       locations : LOCATION_LIST,categories:CATEGORY_LIST,
       selectedCategory:undefined,
       selectedState: undefined,
       menuVisible: false,
     };
+   
   }
 
-/*    async componentDidMount() {
-       
+async componentDidMount() {
+   const client = Client.buildClient({
+  domain: 'tawy-online.myshopify.com',
+  storefrontAccessToken: '4988830c31c5c9a2156e172b8e012d52'
+});
+  // Fetch all collections, including their products
+client.collection.fetchAllWithProducts().then((collections) => {
+  // Do something with the collections
+  console.log(collections);
+  console.log(collections[0].products);
+});
+ /*          
 const granted = await PermissionsAndroid.check( PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION );
 
 if (granted) {
@@ -68,13 +78,11 @@ else {
       
     } else {
       console.log('Location permission denied');
-    }
-    }*/
-
+  }*/
+  }
+    
 moundBuilders=()=>(<View><Card><CardItem>
-    <TouchableOpacity style={{position:"absolute", top:5, right:0}}>
- <Icon ios={ICON_IOS_INFORMATION} android={ICON_ANDROID_INFORMATION} style={COMMON_ICON_STYLE}/>
-   </TouchableOpacity>
+
     <View style={{alignItems:"center", margin:5}}>
     <Image style={{width:280 ,height:250}} source={{uri:"https://dasg7xwmldix6.cloudfront.net/episodes/521925_fDB81ij7.jpg"}} />
     <Thumbnail style={{borderRadius:15, width:200}}
@@ -84,7 +92,10 @@ moundBuilders=()=>(<View><Card><CardItem>
     </View>
        </CardItem>
     </Card>
-        <Card>
+       </View>)
+
+
+showcaseView=()=>(<View><Card>
            <CardItem>
                <TouchableOpacity  style={{position:"absolute", top:5, right:0}}>
  <Icon ios={ICON_IOS_INFORMATION} android={ICON_ANDROID_INFORMATION} style={COMMON_ICON_STYLE}/>
@@ -99,6 +110,10 @@ moundBuilders=()=>(<View><Card><CardItem>
     source={{uri:"https://astralquest.com/"}}/>
     </View>
       </CardItem></Card></View>)
+
+ 
+
+
 
 quoteCard = ()=>(<Card>
 <CardItem>
@@ -126,26 +141,34 @@ videoReferences = (promotions)=>{
             <Text>{promotion.title}</Text>
             <TouchableOpacity>
               <Thumbnail style={styles.videoRefsThumbnail} source={{uri:promotion.imageURI}}/>
+              {commonViewButton(promotion.title)}
            </TouchableOpacity><Text>{promotion.subTitle}</Text></View>));
 
-          return (<Card><CardItem><View style={styles.videoRefsOuterStyle} >{innerViews}</View></CardItem></Card>)
+          return (<Card style={{flex:1}}><CardItem><View style={styles.videoRefsOuterStyle} >{innerViews}</View></CardItem></Card>)
     }
 
-pastPresentFutureComponent = ()=>(<Card>
+
+/**
+* @param : digitalResources ex. this.props.digitalResources
+*/
+pastPresentFutureComponent = (digitalResources)=>(<Card style={{flex:1}}>
   <CardItem>
-  <Text>Our Story... Truth</Text>
-  <Text>These videos are priceless. </Text><Text> Buy them, watch them, gift them, watch them again!!!</Text>
+  <Text>Our Story... Truth, These videos are priceless,  Buy them, watch them, gift them, watch them again!!!</Text>
   </CardItem>
   <CardItem>
    <View style={styles.pastPresFutureStyle}>
 
-   <FlatList horizontal data={this.props.digitalResources} 
+   <FlatList horizontal data={digitalResources} 
             renderItem={(item)=>{
+              console.log(item.item.title);
               return(<ListItem style={{flex:1, borderRadius:15, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around' }}>
                  <View style={{flex:1,padding:5, backgroundColor:COMMON_DARK_BACKGROUND, borderRadius:5}}>
-                <TouchableOpacity style={{ borderWidth:1, borderRadius:10, backgroundColor:"maroon"}} >
-               <Text style={{color:"gold", paddingLeft:10, paddingRight:10, paddingTop:5, paddingBottom:5}}>{item.item.title}</Text>
-              </TouchableOpacity></View></ListItem>)
+                 <Thumbnail style={styles.videoRefsThumbnail} source={{uri:item.item.imageURI}}/>
+               <Item>
+               <Text>{item.item.title}</Text>
+               {commonViewButton(item.item.title)}
+               </Item>
+                </View></ListItem>)
           }}
            ItemSeparatorComponent = {COMMON_LISTVIEW_ITEM_SEPARATOR}
         />
@@ -162,11 +185,25 @@ pastPresentFutureComponent = ()=>(<Card>
   render() {
     return(
     <Container style={{backgroundColor:COMMON_DARK_BACKGROUND, flex:1, height:"100%"}}>
-      <Content padder>
-        {this.quoteCard()}
-        {this.pastPresentFutureComponent()}
-        {this.videoReferences(this.props.videoReferencePromotions)}
-        {this.moundBuilders()}
+      <Content>
+      <View style={{paddingBottom:55}}>
+              {this.pastPresentFutureComponent(this.props.videoReferencePromotions)}
+
+        {this.videoReferences(this.props.digitalResources)}
+      </View>
+      <View style={{flex:1}}>
+      <DeckSwiper 
+            dataSource={[this.quoteCard(),this.moundBuilders(), this.showcaseView()]}
+            renderItem={item =>
+              <Card style={{ elevation: 3 ,padding:30, backgroundColor:COMMON_DARK_BACKGROUND}}>
+                <CardItem style={{ elevation: 3, height:300, backgroundColor:"maroon" }}>
+                  {item}
+                </CardItem>
+              </Card>
+            }
+          />
+      </View>
+
       </Content>
      </Container>)};
 

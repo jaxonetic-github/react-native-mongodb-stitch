@@ -36,7 +36,8 @@ import  CrudService from "./stitchCRUD_api.js"
     
     let client = await ServicesManager.dbClient(REMOTE_RESOURCE_STRING);
     this.db = client.getServiceClient(RemoteMongoClient.factory, ATLAS_FACTORY).db(DBNAME);
-    this.stitchCrudServices = new CrudService(this.db, ServicesManager.dbClient);
+   this.crud = this.stitchCrudServices = new CrudService(this.db, ServicesManager.dbClient);
+   
   }
 
 
@@ -109,7 +110,7 @@ return authorizedUser;
 // Now remove user1
 //await client.auth.removeUser();
 
-  const unAuthorizedUser = await this.client.auth.logout();
+  const unAuthorizedUser = await (this.client?this.client.auth.logout():false);
  
 return unAuthorizedUser;
 }catch(error){

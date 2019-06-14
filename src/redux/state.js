@@ -170,8 +170,8 @@ const faqs=[{question:'Where did "white" people come from?',
 
 const videoMediaPromotions = [{key:"0", title: 'Solidarity', imageURI: "https://s3.amazonaws.com/classconnection/480/flashcards/2867480/png/screen_shot_2015-10-25_at_82913_pm-150A232408E23829107-thumb400.png",subTitle:'Actions Of Unity' },
 {key:"1", title:'The Prophet' , imageURI: "http://msta1913.org/images/050168.png" ,subTitle:'The Social Blackness' },
-{key:"2", title:'"Africans" in America' , imageURI: "http://msta1913.org/images/050168.png" ,subTitle:'Our Pschology' },
-{key:"3", title:'Distortions' ,  imageURI:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSbc9-O2_z-FLq7d81nDgX2ajeo5EN294EsaVBe0cW7wleDbgsRbg", subTitle:"MisConceptions" },
+//{key:"2", title:'"Africans" in America' , imageURI: "http://msta1913.org/images/050168.png" ,subTitle:'Our Pschology' },
+{key:"2", title:'Distortions' ,  imageURI:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSbc9-O2_z-FLq7d81nDgX2ajeo5EN294EsaVBe0cW7wleDbgsRbg", subTitle:"MisConceptions" },
 ]
 
 const webResources = [

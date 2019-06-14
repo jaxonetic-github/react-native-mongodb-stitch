@@ -88,14 +88,19 @@ _renderItem = (item) =>
 
   render() {
 console.log(this.state,":TRUBRARY:", this.props);
+  const buttonPressAction = () => this.props.history.push(ROUTE_SIMPLE_WEB_VIEW, {record:{url:'https://tawy-online.myshopify.com' , title:"Tawy - Shop"}});
 
     return (
       //ListView to show with textinput used as search bar 
       <Container style={styles.viewStyle}>
-      <Content>
+      <Header>{commonViewButton("Discounted Products", buttonPressAction)}</Header>
+      <Content >
+     
+
         <FlatList style={{backgroundColor:COMMON_DARK_BACKGROUND, margin:0, padding:0}}
                 data={this.props.webResources}
                 renderItem={this._renderItem}
+                
                 keyExtractor={this._keyExtractor}
                 ItemSeparatorComponent = {COMMON_LISTVIEW_ITEM_SEPARATOR}
         />

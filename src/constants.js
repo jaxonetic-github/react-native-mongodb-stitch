@@ -86,7 +86,7 @@ export const ICON_TAG_CALENDAR = "calendar";
 
 export const ICON_TAG_HOME = "home";
 export const ICON_TAG_BACK = "back-arrow";
-export const ICON_TAG_EDIT = "edit"
+export const ICON_TAG_EDIT = "save"
 export const ICON_TAG_PHONE = "call";
 export const ICON_TAG_MAIL = "mail";
 export const ICON_TAG_GLOBE = "globe";
@@ -119,6 +119,7 @@ export const iconManager =(iconTag, style)=>{
     case ICON_TAG_GLOBE: icon = webPlatform? <FaGlobe style={style}/> : <Icon name={iconTag} style={style} />; break;
     case ICON_TAG_CALENDAR: icon = webPlatform? <FaCalendar style={style}/> : <Icon name={iconTag} style={style} />; break;
     case ICON_TAG_DESCRIPTION: icon = webPlatform? <FaCommentingO style={style}/> : <Icon name={iconTag} style={style} />; break;
+    case ICON_TAG_EDIT: icon = webPlatform ? <MdSend style={style} /> : <Icon name={iconTag} style={style}/>; break;
     case ICON_TAG_MENU: icon = webPlatform ? <FaBars style={style} /> : <Icon name={iconTag} style={style}/>; break;
     case ICON_TAG_PERSON: icon = webPlatform? <FaUser style={style} /> : <Icon name={iconTag} style={style} />; break;
     case ICON_TAG_PHONE: icon = webPlatform ? <FaPhoneSquare style={style} /> : <Icon name={iconTag} style={style}/>; break;
