@@ -1,7 +1,2 @@
 os:osx
-language:ruby
 osx_image: xcode10
-language: ruby
-rvm:
- - 2.2
- - jruby
