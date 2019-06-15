@@ -33,16 +33,10 @@ let mock = true; // true will mock unless it the anon authorization test passes
     service =  new ServicesManager(REMOTE_RESOURCE_STRING);
     await service.initialize();
     authorizedUser= await service.authorizeAnonymously();
-    console.log("authorizedUser is "+authorizedUser);
     mock = authorizedUser.error;
   });
 
-  /**
- * After all tests have been run, cleanly close down Stitch DB service
- */
-  afterAll(() => {
-  // Todo::Close Stitch  ex. service.clean()
-  });
+
 
   it('1. authorizes successfully', async () => {
     // expect(results.errorStack).toBeFalsy();
@@ -54,7 +48,6 @@ let mock = true; // true will mock unless it the anon authorization test passes
   it('2. deletes Events', async () => {
     if (!mock) {
       const gen = await service.crud.deleteManyEvents();
-      console.log(gen);
       expect(gen).toBeTruthy();
     } else {
 
@@ -93,5 +86,12 @@ let mock = true; // true will mock unless it the anon authorization test passes
   it('attempts to logout', async () => {
     const results = await service.logout();
     expect(results).toBeFalsy();
+  });
+    /**
+ * After all tests have been run, cleanly close down Stitch DB service
+ */
+  afterAll(async() => {
+  // Todo::Close Stitch  ex. service.clean()
+  console.log("after all");
   });
 });

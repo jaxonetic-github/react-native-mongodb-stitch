@@ -8,9 +8,9 @@
     "test-web": "react-app_rewired test",
     "eject-web": "react-scripts eject",
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "test": "jest __tests__/*.js --detectOpenHandles",
+    "test": "jest __tests__/*.js --detectOpenHandles --forceExit",
     "lint": "eslint *.js **/*.js --fix",
-    "jesttest": "node ./node_modules/jest/bin/jest.js --watchAll"
+    "jesttest": "node ./node_modules/jest/bin/jest.js --watchAll --forceExit"
   },
   "dependencies": {
     "@babel/plugin-proposal-async-generator-functions": "^7.2.0",

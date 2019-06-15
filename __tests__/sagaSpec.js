@@ -66,10 +66,19 @@ describe('Integration tests between Sagas, and backend services (MongoStitch)', 
       authorizedUser = await service.authorizeAnonymously();
       // expect(results.errorStack).toBeFalsy();
       expect(authorizedUser.error).toBeFalsy();
-      console.log(authorizedUser.isLoggedIn);
+      //console.log(authorizedUser.isLoggedIn);
     } catch (error) {
       failedToConnectOrAuthorize = true;
     }
+  });
+
+    afterAll(async () => {
+  //jest.setTimeout(JEST_TIME_OUT);
+
+   
+      service.logout();
+     console.log("jdljafdsafdafdsaf");
+
   });
 
 /*
@@ -200,7 +209,6 @@ it('inserts mock event into DB', () => {
 */
     it('6. fetches events, if any, from DB', async () => {
     const results = await service.crud.fetchEvents();
-    console.log(results);
     expect(results.length).toBeGreaterThanOrEqual(0);
   });
 

@@ -35,11 +35,16 @@ import  CrudService from "./stitchCRUD_api.js"
   async initialize(){
     
     let client = await ServicesManager.dbClient(REMOTE_RESOURCE_STRING);
-    this.db = client.getServiceClient(RemoteMongoClient.factory, ATLAS_FACTORY).db(DBNAME);
-   this.crud = this.stitchCrudServices = new CrudService(this.db, ServicesManager.dbClient);
+    this.db = await client.getServiceClient(RemoteMongoClient.factory, ATLAS_FACTORY).db(DBNAME);
+    this.stitchCrudServices = new CrudService(this.db, ServicesManager.dbClient);
+   this.crud = this.stitchCrudServices;
    
   }
 
+
+async clean=()=>{
+
+}
 
 /**
  * Privately retrieve the google keys required for google sign in and Geocoding API
@@ -52,7 +57,8 @@ async configureGoogleKeys(){
    const retrieveGoogleApiKey = await client.callFunction(FUNCTION_RETRIEVE_GOOGLE_APIKEY);
    
    // configure react-native-google-signin
-   GoogleSignin.configure({scope:GOOGLESIGNIN_OPTION_SCOPE, response_type:GOOGLESIGNIN_OPTION_RESPONSE_TYPE, iosClientId:googleIosClientKey.secret, webClientId:googleWebClientKey.secret});
+   GoogleSignin.configure({scope:GOOGLESIGNIN_OPTION_SCOPE, response_type:GOOGLESIGNIN_OPTION_RESPONSE_TYPE,
+    iosClientId:googleIosClientKey.secret, webClientId:googleWebClientKey.secret});
    
    // initialize Geocoder with
    Geocoder.init(retrieveGoogleApiKey.secret);
