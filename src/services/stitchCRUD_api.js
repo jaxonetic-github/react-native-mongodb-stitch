@@ -172,7 +172,6 @@ return results;
 
    try {
     const client = await this.client();
-
     const profileCollection = await client.callFunction(FUNCTION_INSERTPROFILE,[profile]);  
     return profileCollection;
   }
@@ -193,7 +192,8 @@ return results;
         const client = await this.client();
 
     const eventsCollection = await client.callFunction(FUNCTION_INSERTEVENT,[event]);
-    return eventsCollection;
+  
+  return eventsCollection;
   }
   catch(error) {
     return({errorStack:error, arg:event});

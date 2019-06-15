@@ -2,10 +2,8 @@
 // import  {fetchEvents,getDBClient,_onPressLogin} from '../redux/sagas/authSagas.js';
 import 'isomorphic-fetch'; // --> https://github.com/facebook/react-native/issues/11537
 // import { cloneableGenerator } from '@redux-saga/testing-utils';
-import {
-  JEST_TIME_OUT, STATE, TYPES, getDefaultProfile, getDefaultEvent,
-} from '../constants.js';
-import DBService from '../services/dbService.js';
+import { JEST_TIME_OUT, STATE, TYPES, getDefaultProfile, getDefaultEvent, REMOTE_RESOURCE_STRING } from '../src/constants.js';
+import ServicesManager from '../src/services/servicesManager.js';
 
 // import {insertProfile, insertEvent, deleteEvent, deleteProfile, fetchEvents, fetchProfiles, _onPressLogin, _onPressLogout}
 /**
@@ -32,8 +30,11 @@ let mock = true; // true will mock unless it the anon authorization test passes
   beforeAll(async () => {
     jest.setTimeout(JEST_TIME_OUT);
 
-    service = new DBService();
+    service =  new ServicesManager(REMOTE_RESOURCE_STRING);
+    await service.initialize();
     authorizedUser= await service.authorizeAnonymously();
+    console.log("authorizedUser is "+authorizedUser);
+    mock = authorizedUser.error;
   });
 
   /**
@@ -45,14 +46,15 @@ let mock = true; // true will mock unless it the anon authorization test passes
 
   it('1. authorizes successfully', async () => {
     // expect(results.errorStack).toBeFalsy();
-    expect(authorizedUser.isLoggedIn).toBeTruthy();
-    mock = false;
+    expect(authorizedUser).toBeTruthy();
+   
   });
 
 
   it('2. deletes Events', async () => {
     if (!mock) {
-      const gen = await service.deleteManyEvents();
+      const gen = await service.crud.deleteManyEvents();
+      console.log(gen);
       expect(gen).toBeTruthy();
     } else {
 
@@ -60,7 +62,7 @@ let mock = true; // true will mock unless it the anon authorization test passes
   });
 
   it('3. deletes Profiles', async () => {
-    const gen = await service.deleteManyProfiles();
+    const gen = await service.crud.deleteManyProfiles();
     expect(gen).toBeTruthy();
   });
 
@@ -69,21 +71,21 @@ let mock = true; // true will mock unless it the anon authorization test passes
   it('5. inserts an event', async () => {
     // console.log(testEventAction);
     const evt = getDefaultEvent();
-    let insert = await service.insertSingleEvent(evt);
+    let insert = await service.crud.insertSingleEvent(evt);
     expect(insert).toBeTruthy();
 
-    let events = await service.fetchEvents();
+    let events = await service.crud.fetchEvents();
 
   });
 
 
   it('6. fetches events, if any, from DB', async () => {
-    const results = await service.fetchEvents();
+    const results = await service.crud.fetchEvents();
     expect(results.length).toBeGreaterThanOrEqual(0);
   });
 
   it('7. fetches profiles, if any, from DB', async () => {
-    const results = await service.fetchProfiles();
+    const results = await service.crud.fetchProfiles();
     expect(results.length).toBeGreaterThanOrEqual(0);
   });
 

@@ -77,7 +77,7 @@ async configureGoogleKeys(){
   
   return  authorizedUser;
  }catch(error){
-  return{errorStack:'authorizeAnonymously() => '+error};
+  return{error};
  }
 }
 

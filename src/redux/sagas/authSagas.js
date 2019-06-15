@@ -26,10 +26,8 @@ import {resourceData, REMOTE_RESOURCE_STRING} from '../../constants.js'
  * @param action,  redux action with a profile object as payload
  */
   export function* insertProfile(service, action) {
-
    try {
 const results =  yield call (service.insertSingleProfile, action.payload);
-
 if(results && results.insertedId){
    yield put(addProfileSuccess(results));
       const profiles  = yield call ( fetchProfiles, service );
@@ -39,8 +37,10 @@ if(results && results.insertedId){
           //no client
            yield put(addProfileFailure(results))
         }
+
   }catch(error) {
-    yield put(addProfileFailure(error))
+    yield put(addProfileFailure(error));
+    return null;
   }
 
   }
@@ -211,10 +211,9 @@ try{
        {
             yield put(fetchProfileFailure(profiles.errorStack+profiles.error.message) )
        }
-               console.log("profiles",profiles);
-
 return profiles;
  }catch(error) { //catch unexpected errors
+
     yield put(fetchProfileFailure(error))
   }
   
@@ -304,7 +303,6 @@ export  function* rootSaga() {
   const service =  new ServicesManager(REMOTE_RESOURCE_STRING);
   console.log("rootsaga",service);
 yield service.initialize()
-console.log("post rootsaga",service.dbServices);
 //  yield service.authListen();
 
 try{
