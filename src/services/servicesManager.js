@@ -42,9 +42,6 @@ import  CrudService from "./stitchCRUD_api.js"
   }
 
 
-async clean=()=>{
-
-}
 
 /**
  * Privately retrieve the google keys required for google sign in and Geocoding API
