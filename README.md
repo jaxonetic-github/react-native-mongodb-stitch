@@ -1,4 +1,4 @@
-
+[![Build Status](https://travis-ci.com/jaxonetic-github/react-native-mongodb-stitch.svg?branch=master)](https://travis-ci.com/jaxonetic-github/react-native-mongodb-stitch)
 
 ### Architecture
 Mongo Stitch Cloud for the backend.
