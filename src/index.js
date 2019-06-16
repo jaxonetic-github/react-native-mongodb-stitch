@@ -21,7 +21,7 @@ import videoRefsReducer from './redux/videoRefsReducer.js';
 import profilesReducer from './components/Profile/Redux/Reducers/profileReducer.js';
 import authReducer from './components/Authentication/Redux/Reducers/authReducer.js';
 import eventsReducer from './components/Event/Redux/Reducers/eventReducer.js';
-import createSagaMiddleware from 'redux-saga'
+import createSagaMiddleware from 'redux-saga';
 
 
 import App from './webApp.js';
@@ -34,7 +34,9 @@ import {decorator as reduxBurgerMenu} from 'redux-burger-menu';
 import {slide as Menu} from 'react-burger-menu';
 import { createBrowserHistory } from 'history';
 
-const history = createBrowserHistory()
+//A browser history object for navigation
+const history = createBrowserHistory();
+
 const sagaMiddleware = createSagaMiddleware();
 
 //combine reducers

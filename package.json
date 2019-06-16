@@ -2,6 +2,7 @@
   "name": "Tamari",
   "version": "0.0.1",
   "private": true,
+  "hostname":"jaxonetic-github.github.io",
   "scripts": {
     "start-web": "react-app-rewired start",
     "build-web": "react-app-rewired scripts build",

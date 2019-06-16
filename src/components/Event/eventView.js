@@ -74,7 +74,7 @@ displayLocation = () =>(this.state.dataIndex && this.props.events[this.state.dat
 formatCalendarObject = (calendar) =>{
  return (calendar.year ? calendar.year+"-"+calendar.month+"-"+calendar.day : calendar)
 }
-displayCalendar = () =>(this.state.dataIndex && this.props.events[this.state.dataIndex]?this.formatCalendarObject(this.props.events[this.state.dataIndex].calendar):formatCalendarObject(this.props.calendar))
+displayCalendar = () =>(this.state.dataIndex && this.props.events[this.state.dataIndex]?this.formatCalendarObject(this.props.events[this.state.dataIndex].calendar):this.formatCalendarObject(this.props.calendar))
 displayEmail = () =>(this.state.dataIndex && this.props.events[this.state.dataIndex]?this.props.events[this.state.dataIndex].email:this.props.email)
 displayDescription = () =>(this.state.dataIndex && this.props.events[this.state.dataIndex]?this.props.events[this.state.dataIndex].description:this.props.description)
 displayImageURI = () =>(this.state.dataIndex && this.props.events[this.state.dataIndex]?this.props.events[this.state.dataIndex].imageURI:this.props.imageURI)

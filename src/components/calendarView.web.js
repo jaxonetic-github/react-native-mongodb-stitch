@@ -1,12 +1,7 @@
 import React, {Component} from 'react';
 import Calendar from 'react-calendar';
-import {
-  Text,
-  StyleSheet,
-  ScrollView,
-  View
-} from 'react-native';
-import { Container, Header, Content, Item, Label, Button, Left } from "native-base";
+import { Text, StyleSheet, ScrollView } from 'react-native';
+import { Container, Header, Button, Left } from "native-base";
 import {COMMON_DARK_BACKGROUND} from '../constants.js'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -22,7 +17,7 @@ class CalendarView extends Component {
   }
 
   render() {
-    const markedDates = {[this.state.selected]: {selected: true, marked: true, selectedColor: 'blue'}}
+   // const markedDates = {[this.state.selected]: {selected: true, marked: true, selectedColor: 'blue'}}
     return (
       <Container>
        <Header  style={{backgroundColor: COMMON_DARK_BACKGROUND, height:55, color:"white"}}>

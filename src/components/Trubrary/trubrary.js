@@ -6,9 +6,9 @@ import { connect } from 'react-redux';
 import { StyleSheet, View, TextInput, } from 'react-native';
 import { Container,ListItem,Title,Icon,Picker, Thumbnail, Text,Tab, Tabs,Card, CardItem} from 'native-base';
 import { COMMON_LISTVIEW_ITEM_SEPARATOR,
-        COMMON_DARK_BACKGROUND,GOOGLE_PROVIDER_NAME, NO_PHOTO_AVAILABLE_URI,
+        COMMON_DARK_BACKGROUND, NO_PHOTO_AVAILABLE_URI,
          ROUTE_SIMPLE_WEB_VIEW, ROUTE_YOUTUBELIST_VIEW,TEXT_VIEW,
-        renderListView, commonViewButton, header} from '../../constants.js'
+        renderListView, commonViewButton} from '../../constants.js'
 import WebResourcesList from '../WebResources/webResourcesList.js';
 import {categories} from '../../redux/state.js'
 

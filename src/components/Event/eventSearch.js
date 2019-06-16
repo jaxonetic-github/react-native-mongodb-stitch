@@ -53,7 +53,7 @@ import CalendarView from '../calendarView';
  */
   SearchFilterFunction(text) {
 
-    formatCalendarObject = (calendar) =>{
+   const formatCalendarObject = (calendar) =>{
       const aux = (calendar.year ? calendar.year+"-"+calendar.month+"-"+calendar.day : calendar)
       return aux;
 }
@@ -107,7 +107,7 @@ console.log(ROUTE_EVENT_VIEW+"/"+itemId);
   * @param {object} item - event Data item
   */
 _renderItem = (item) => { 
-  formatCalendarObject = (calendar) =>{
+ const formatCalendarObject = (calendar) =>{
  return (calendar.year ? calendar.year+"-"+calendar.month+"-"+calendar.day : calendar)
 }
   return(<SwipeRow

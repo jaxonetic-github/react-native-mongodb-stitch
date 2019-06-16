@@ -190,6 +190,7 @@ const sideBarData = [{routeName:"Home", label:"Home",path:"/" ,requiresVerificat
                     {routeName:"Activities", label:"Activities", path:"/Activities", requiresVerification:false, icon:"search"},
                     {routeName:"Trubrary", label:"Library",path:"/Trubrary", requiresVerification:false, icon:"business",videoData:null,onlineMediaContent:null,webResources:null} ];
 
+
 export const initialStoreState = {
   profiles: profileState,
   events: eventState,

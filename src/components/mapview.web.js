@@ -1,7 +1,7 @@
 import React from 'react'
 import { ActivityIndicator, StyleSheet, View, TouchableOpacity, Text, Alert} from 'react-native'
 import Input from './textinput'
-import { Picker,Container, Header, Content, Item, Label, Textarea, Form, Button, Left } from "native-base";
+import { Picker,Container, Header, Content, Icon, Item, Label, Textarea, Form, Button, Left } from "native-base";
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {updateEventLocationByKey} from './Event/Redux/Actions/eventActions.js';
