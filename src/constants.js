@@ -42,7 +42,7 @@ export const EMPTY_STRING = '';
 export const STATE = require('./redux/state.js');
 export const TYPES = require('./redux/types.js');
 
-export const ROUTE_HOME = '/Home';
+export const ROUTE_HOME = '/react-native-mongodb-stitch/Home';
 export const ROUTE_TRUBRARY = '/Trubrary';
 export const ROUTE_MAPVIEW = '/MapView';
 export const ROUTE_EVENT_CALENDAR = '/EventCalendar';
