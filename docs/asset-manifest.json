@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/static/css/main.34de6062.chunk.css",
-    "main.js": "/static/js/main.98be41e2.chunk.js",
-    "main.js.map": "/static/js/main.98be41e2.chunk.js.map",
-    "runtime~main.js": "/static/js/runtime~main.a8a9905a.js",
-    "runtime~main.js.map": "/static/js/runtime~main.a8a9905a.js.map",
-    "static/css/2.c51b6406.chunk.css": "/static/css/2.c51b6406.chunk.css",
-    "static/js/2.e7f7fe22.chunk.js": "/static/js/2.e7f7fe22.chunk.js",
-    "static/js/2.e7f7fe22.chunk.js.map": "/static/js/2.e7f7fe22.chunk.js.map",
-    "index.html": "/index.html",
-    "precache-manifest.5a2eec654d8b3a245029420a8d6a5056.js": "/precache-manifest.5a2eec654d8b3a245029420a8d6a5056.js",
-    "service-worker.js": "/service-worker.js",
-    "static/css/2.c51b6406.chunk.css.map": "/static/css/2.c51b6406.chunk.css.map",
-    "static/css/main.34de6062.chunk.css.map": "/static/css/main.34de6062.chunk.css.map"
+    "main.css": "/react-native-mongodb-stitch/static/css/main.34de6062.chunk.css",
+    "main.js": "/react-native-mongodb-stitch/static/js/main.b20fb97a.chunk.js",
+    "main.js.map": "/react-native-mongodb-stitch/static/js/main.b20fb97a.chunk.js.map",
+    "runtime~main.js": "/react-native-mongodb-stitch/static/js/runtime~main.09a1a849.js",
+    "runtime~main.js.map": "/react-native-mongodb-stitch/static/js/runtime~main.09a1a849.js.map",
+    "static/css/2.c51b6406.chunk.css": "/react-native-mongodb-stitch/static/css/2.c51b6406.chunk.css",
+    "static/js/2.e7f7fe22.chunk.js": "/react-native-mongodb-stitch/static/js/2.e7f7fe22.chunk.js",
+    "static/js/2.e7f7fe22.chunk.js.map": "/react-native-mongodb-stitch/static/js/2.e7f7fe22.chunk.js.map",
+    "index.html": "/react-native-mongodb-stitch/index.html",
+    "precache-manifest.81ad402545ec7e46770663c60ee3a64e.js": "/react-native-mongodb-stitch/precache-manifest.81ad402545ec7e46770663c60ee3a64e.js",
+    "service-worker.js": "/react-native-mongodb-stitch/service-worker.js",
+    "static/css/2.c51b6406.chunk.css.map": "/react-native-mongodb-stitch/static/css/2.c51b6406.chunk.css.map",
+    "static/css/main.34de6062.chunk.css.map": "/react-native-mongodb-stitch/static/css/main.34de6062.chunk.css.map"
   }
 }
