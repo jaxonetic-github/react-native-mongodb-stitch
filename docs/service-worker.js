@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/react-native-mongodb-stitch/precache-manifest.414416a42fd6ea8bf1342c22e4b31a62.js"
+  "/react-native-mongodb-stitch/precache-manifest.419ce025d973d2f02832299d93aa3b2a.js"
 );
 
 self.addEventListener('message', (event) => {

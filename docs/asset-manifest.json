@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/react-native-mongodb-stitch/static/css/main.34de6062.chunk.css",
-    "main.js": "/react-native-mongodb-stitch/static/js/main.82313d26.chunk.js",
-    "main.js.map": "/react-native-mongodb-stitch/static/js/main.82313d26.chunk.js.map",
+    "main.js": "/react-native-mongodb-stitch/static/js/main.54aea0ad.chunk.js",
+    "main.js.map": "/react-native-mongodb-stitch/static/js/main.54aea0ad.chunk.js.map",
     "runtime~main.js": "/react-native-mongodb-stitch/static/js/runtime~main.09a1a849.js",
     "runtime~main.js.map": "/react-native-mongodb-stitch/static/js/runtime~main.09a1a849.js.map",
     "static/js/2.c4438976.chunk.js": "/react-native-mongodb-stitch/static/js/2.c4438976.chunk.js",
     "static/js/2.c4438976.chunk.js.map": "/react-native-mongodb-stitch/static/js/2.c4438976.chunk.js.map",
     "index.html": "/react-native-mongodb-stitch/index.html",
-    "precache-manifest.414416a42fd6ea8bf1342c22e4b31a62.js": "/react-native-mongodb-stitch/precache-manifest.414416a42fd6ea8bf1342c22e4b31a62.js",
+    "precache-manifest.419ce025d973d2f02832299d93aa3b2a.js": "/react-native-mongodb-stitch/precache-manifest.419ce025d973d2f02832299d93aa3b2a.js",
     "service-worker.js": "/react-native-mongodb-stitch/service-worker.js",
     "static/css/main.34de6062.chunk.css.map": "/react-native-mongodb-stitch/static/css/main.34de6062.chunk.css.map"
   }

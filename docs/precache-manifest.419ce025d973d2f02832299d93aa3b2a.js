@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "79eee8db64cf47ac9908121e80073ffa",
+    "revision": "f459c2f84db331bbff6850af845efa74",
     "url": "/react-native-mongodb-stitch/index.html"
   },
   {
-    "revision": "658f063ca2f17fac7943",
+    "revision": "fee2f1aaf9bec44e146e",
     "url": "/react-native-mongodb-stitch/static/css/main.34de6062.chunk.css"
   },
   {
@@ -12,8 +12,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/react-native-mongodb-stitch/static/js/2.c4438976.chunk.js"
   },
   {
-    "revision": "658f063ca2f17fac7943",
-    "url": "/react-native-mongodb-stitch/static/js/main.82313d26.chunk.js"
+    "revision": "fee2f1aaf9bec44e146e",
+    "url": "/react-native-mongodb-stitch/static/js/main.54aea0ad.chunk.js"
   },
   {
     "revision": "6420a3d0db9e92ca675b",
