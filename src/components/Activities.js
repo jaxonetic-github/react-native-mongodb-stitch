@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { StyleSheet, TextInput} from 'react-native';
-import { Container, Content, Tab, Tabs, TabHeading} from 'native-base';
-import {COMMON_DARK_BACKGROUND, header} from './../constants.js'
+import { Container, Content, Tab, Tabs} from 'native-base';
+import {COMMON_DARK_BACKGROUND} from './../constants.js'
 import EventSearch from './Event/eventSearch.js'
 import ProfileSearch from './Profile/profileSearch.js'
 

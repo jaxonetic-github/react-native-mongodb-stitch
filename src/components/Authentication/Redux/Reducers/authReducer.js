@@ -27,8 +27,9 @@ const authReducer = (state={}, action) => {
                   auth: { ...state.auth } 
               };
     case LOGIN_SUCCESS:
+    console.log("login success identites");
       return {
-                  app: { ...state.app, registeredUser:action.payload.userProfile.identities[0].id },
+                  app: { ...state.app, registeredUser:(action.payload.identities?action.payload.identities[0].id:action.payload.userProfile.identities[0].id) },
                   auth: action.payload  
               };
     case LOGOUT_USER:

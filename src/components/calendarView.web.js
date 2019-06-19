@@ -12,16 +12,28 @@ import moment from 'moment';
 class CalendarView extends Component {
   constructor(props) {
     super(props);
-    console.log(this.prop);
-    this.state = { date: new Date(),key:this.props.history.location.state.key, dates:[], selected:this.props.history.location.state.initialDate};
+    console.log(this.props);
+
+    if (this.props.history)
+    {
+      this.state = {key:this.props.history.location.state.key, markedDates:[], selected:this.props.history.location.state.initialDate};
+    }
+    else 
+      if (props && props.generalView)
+      {
+        //find the dates for this month
+        const thisMonth = moment().format('YYYY-MM-DD');
+        const filteredDates =[thisMonth];// this.calendarFilteredData(thisMonth);
+        this.state = {date:new Date(), markedDates:filteredDates, selected:thisMonth}
+      }
   }
 
   render() {
    // const markedDates = {[this.state.selected]: {selected: true, marked: true, selectedColor: 'blue'}}
     return (
       <Container>
-       <Header  style={{backgroundColor: COMMON_DARK_BACKGROUND, height:55, color:"white"}}>
-<Left><Button transparent onPress={()=>{this.props.history.push("/Activities/EventView/"+this.state.key )}}>
+       <Header  style={{backgroundColor: COMMON_DARK_BACKGROUND, height:55}}>
+<Left><Button transparent onPress={()=>{this.props.history.goBack()}}>
 <Text>Back</Text></Button></Left>
 </Header>
       <ScrollView style={styles.container}>        

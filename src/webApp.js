@@ -17,13 +17,14 @@ import SideBar from './components/NavBars/sidebar.js';
 import {slide as Menu} from 'react-burger-menu';
 
 import {   COMMON_DARK_BACKGROUND, COMMON_ICON_STYLE_SILVER,
-        ROUTE_PROFILE_VIEW, ROUTE_EVENT_VIEW, ROUTE_YOUTUBELIST_VIEW,
-         ROUTE_HOME, ROUTE_ACTIVITIES, ROUTE_TRUBRARY, ROUTE_MAPVIEW, ROUTE_EVENT_CALENDAR ,
+        ROUTE_PROFILE_VIEW, ROUTE_EVENT_VIEW, ROUTE_YOUTUBELIST_VIEW,ROUTE_REMOTE_ROOT,
+ROUTE_ROOT,ROUTE_HOME, ROUTE_ACTIVITIES, ROUTE_TRUBRARY, ROUTE_MAPVIEW, ROUTE_EVENT_CALENDAR ,
        ICON_TAG_MENU, iconManager} from './constants.js';
 
 /**
  *. The routed content and layout of the web application.  The equivalent
- *. of index.web.js
+ *. of index.web.js      //<Route path={ROUTE_HOME} render={(props) => <Home  {...props} />} />
+
  */
 export default class App extends Component {
  
@@ -38,9 +39,9 @@ render=()=>(
     </Menu>
     <main id="page-wrap" style={{backgroundColor:COMMON_DARK_BACKGROUND}}>
       <div style={{backgroundColor:COMMON_DARK_BACKGROUND}}>{iconManager(ICON_TAG_MENU, COMMON_ICON_STYLE_SILVER)}</div>
-      <Route exact path="/"  render={() => <Home />} />
-      <Route path={ROUTE_HOME} render={() => <Home />} />
-      <Route path={ROUTE_MAPVIEW} render={(props) => <MapView {...props}/>} />
+      <Route exact path={ROUTE_ROOT}   render={(props) => <Home  {...props} />}   />
+      <Route path={ROUTE_REMOTE_ROOT} render={(props) => <Home  {...props} />} />
+      <Route path={ROUTE_MAPVIEW} render={(props) => <MapView {...props} />} />
       <Route  path={ROUTE_TRUBRARY} render={(props) => <Trubrary {...props} />} />
       <Route  path="/EventCalendar" render={(props) => <CalendarView {...props} />} />
       <Route  path="/SimpleWebView" render={(props) => <SimpleWebview {...props} />} />
@@ -50,6 +51,7 @@ render=()=>(
       <Route path={ROUTE_PROFILE_VIEW+"/:id"} render={(props) => <ProfileView {...props}  />} />
       <Route path={ROUTE_EVENT_VIEW+"/:id"} render={(props) => <EventView {...props}  />} />
       <Route path={ROUTE_EVENT_VIEW} render={(props) => <EventView {...props}  />} />
+
     </main></div>)     
 }
 

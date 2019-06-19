@@ -9,8 +9,9 @@ import './index.css';
 
 import { Root } from "native-base";
 import sideBarReducer from './redux/sideBarReducer.js';
-import { BrowserRouter, Route } from "react-router-dom";
+import { BrowserRouter,MemoryRouter, Route,HashRouter,Router } from "react-router-dom";
 
+//import App from './components/home.js';
 
 import { initialStoreState } from './redux/state.js';
 import { Provider } from 'react-redux';
@@ -32,10 +33,10 @@ import logger from 'redux-logger';
 import * as serviceWorker from './serviceWorker';
 import {decorator as reduxBurgerMenu} from 'redux-burger-menu';
 import {slide as Menu} from 'react-burger-menu';
-import { createBrowserHistory } from 'history';
+import { createBrowserHistory,createHashHistory,createMemoryHistory } from 'history';
 
 //A browser history object for navigation
-const history = createBrowserHistory();
+const history = createHashHistory();
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -46,8 +47,8 @@ const store = createStore(rootReducer, initialStoreState,  applyMiddleware(sagaM
 
 console.disableYellowBox = true;
 sagaMiddleware.run(rootSaga);
-
-ReactDOM.render(<Root><Provider store={store}><BrowserRouter history={history}><App /></BrowserRouter></Provider></Root>,
+console.log(process.env.PUBLIC_URL);
+ReactDOM.render(<div><Root><Provider store={store}><HashRouter basename={process.env.PUBLIC_URL}  history={history}><App /></HashRouter></Provider></Root></div>,
 					 document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change<WebBottomNav />

@@ -2,9 +2,9 @@ import React from "react";
 //import PropTypes from 'prop-types';
 import withRouter from '../../withRouterManager.js';
 
-import { FlatList ,Header, Image, StyleSheet } from "react-native";
+import { FlatList , Image, StyleSheet } from "react-native";
 //import { Image, StyleSheet } from "react-primitives";
-import { Text, Container,  ListItem, Content, Card, CardItem, Icon,Left} from "native-base";
+import { Text, Container,  ListItem, Content, Card, CardItem,Left} from "native-base";
 //redux 
 import { connect } from 'react-redux';
 //actions
@@ -22,16 +22,13 @@ import {COMMON_LISTVIEW_ITEM_SEPARATOR, NEED_AT_LEAST_ANONYMOUS_LOGIN,
  */
 class SideBar extends React.Component {
 
- constructor(props) {
-    super(props);
-  }
 
-
-/** Only show the rows that the user is entitled  to see.  This will be  moved into Stitch User roles later
-*/
+/**
+ * Only show the rows that the user is entitled  to see.  This will be  moved into Stitch User roles later
+ */
 _listDataFilter= (data) =>{
-  const tmpData = data.filter((item)=>{
-      return ((item.requiresVerification && this.props.isLoggedIn)|| !item.requiresVerification)?true:false;})
+  const tmpData =data?  data.filter((item)=>{
+      return ((item.requiresVerification && this.props.isLoggedIn)|| !item.requiresVerification)?true:false;}):[];
 
   return tmpData;
 }
