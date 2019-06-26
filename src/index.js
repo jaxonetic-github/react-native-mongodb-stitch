@@ -23,7 +23,7 @@ import profilesReducer from './components/Profile/Redux/Reducers/profileReducer.
 import authReducer from './components/Authentication/Redux/Reducers/authReducer.js';
 import eventsReducer from './components/Event/Redux/Reducers/eventReducer.js';
 import createSagaMiddleware from 'redux-saga';
-
+import { createBrowserHistory,createHashHistory,createMemoryHistory } from 'history';
 
 import App from './webApp.js';
 
@@ -33,12 +33,11 @@ import logger from 'redux-logger';
 import * as serviceWorker from './serviceWorker';
 import {decorator as reduxBurgerMenu} from 'redux-burger-menu';
 import {slide as Menu} from 'react-burger-menu';
-import { createBrowserHistory,createHashHistory,createMemoryHistory } from 'history';
 
-//A browser history object for navigation
-const history = createHashHistory();
 
 const sagaMiddleware = createSagaMiddleware();
+//A browser history object for navigation
+const history = createMemoryHistory();
 
 //combine reducers
 const rootReducer = combineReducers({profiles: profilesReducer, events:eventsReducer, auth: authReducer, resourcesData:resourcesReducer, 
@@ -48,7 +47,9 @@ const store = createStore(rootReducer, initialStoreState,  applyMiddleware(sagaM
 console.disableYellowBox = true;
 sagaMiddleware.run(rootSaga);
 console.log(process.env.PUBLIC_URL);
-ReactDOM.render(<div><Root><Provider store={store}><HashRouter basename={process.env.PUBLIC_URL}  history={history}><App /></HashRouter></Provider></Root></div>,
+//ReactDOM.render(<div><Root><Provider store={store}><BrowserRouter basename={process.env.PUBLIC_URL} ><App /></BrowserRouter></Provider></Root></div>,
+//					 document.getElementById('root'));
+ReactDOM.render(<div><Root><Provider store={store}><Router basename={process.env.PUBLIC_URL}  history={history} ><App /></Router></Provider></Root></div>,
 					 document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change<WebBottomNav />

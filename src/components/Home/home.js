@@ -1,40 +1,28 @@
 import React, { Component } from "react";
-
 import { TouchableHighlight, StyleSheet,Error, View ,Image, TouchableOpacity,TouchableIcon, FlatList,
 Picker, Modal} from 'react-native';
-import SimpleWebView from './WebResources/simpleWebView.js';
-//import { WebGLView } from "react-native-webgl";
 import { ROUTE_SIMPLE_WEB_VIEW, COMMON_DARK_BACKGROUND,TEXT_EVERYWHERE,TEXT_All, LOCATION_LIST,CATEGORY_LIST,
       TEXT_CHOOSE_VIBE, TEXT_WHATS_GOING_ON,COMMON_ICON_STYLE,COMMON_ICON_STYLE_MAROON,COMMON_ICON_STYLE_GOLD, COMMON_LISTVIEW_ITEM_SEPARATOR ,
        ICON_IOS_INFORMATION, ICON_ANDROID_INFORMATION ,
-       iconManager, header,commonViewButton} from '../constants.js';
-import WebResourcesList from './WebResources/webResourcesList.js';
-//import FitImage from 'react-native-fit-image';
+       iconManager, header,commonViewButton} from '../../constants.js';
 import { DeckSwiper,Container, Header, Content, Card, CardItem,ListItem,Item, Thumbnail,Button, Text, Icon,Right,Subtitle, Title, Toast,Left, Body,Form, Picker as AltPicker } from 'native-base';
-
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { FaHome,  FaSearchengin, FaUser,FaRegBuilding,FaEdit,FaThList } from "react-icons/fa";
-import { GiHamburgerMenu } from 'react-icons/gi';
+
 import {PermissionsAndroid} from 'react-native';
 import Client from 'shopify-buy';
+
+import { Link } from 'react-router';
+import withRouter from '../../withRouterManager.js';
+
+
 /**
  * This is the home screen of the app. 
  * The content will be changing 
  //navigation.getParam('title', 'A Nested Details Screen')||"BAR",
  */
 class Home extends React.Component {
-/*static navigationOptions = ({ navigation, navigationOptions }) => {
-  console.log(navigation,"_--------------HOME---------------------------*********************");
-    return {
-      headerRight:<Button  onPress={() => navigation.toggleDrawer()}><Icon ios='ios-menu' android="md-menu" style={{fontSize: 25, color: 'white'}}/></Button>,
-      title: "jkhk",
-            headerStyle: {backgroundColor:COMMON_DARK_BACKGROUND },
-      headerTintColor: 'gold',
-      headerTitleStyle: {fontWeight: 'bold'} 
 
-    };
-  };*/
   constructor(props) {
     super(props);
     this.state = {
@@ -177,12 +165,53 @@ pastPresentFutureComponent = (digitalResources)=>(<Card style={{flex:1}}>
 </Card>)
 
 
+        renderPicker = (list, placeholder) => {
+    const widget =   <Form>
+            <AltPicker
+              mode="dropdown"
+              placeholder={placeholder}
+
+              style={{ width: 200 }}
+              selectedValue={this.state.selectedCategory}
+              onValueChange={this.onCategoryValueChange.bind(this)}
+            >
+ {list.map((value, index) => {
+        return <Picker.Item label={value.label} value={value.value} key={value.value} />
+      })}  
+            </AltPicker>
+          </Form>
+
+        return widget;
+    };
+
+  onValueChange(value: string) {
+    this.setState({
+      locations        : LOCATION_LIST,
+      categories       :CATEGORY_LIST,
+      selectedCategory : this.state.selectedCategory,
+      selectedState   : value
+    });
+  }
+
+  onCategoryValueChange(value: string) {
+    this.setState({
+locations : LOCATION_LIST,categories:CATEGORY_LIST,
+      selectedCategory: value,
+      selectedState: this.state.selectedState,
+    });
+  }
+  async onSeeVideo() {
+   this.setState({modalVisible:true});
+  }
 
 
 /**
  * Render the home view 
  */
   render() {
+                  const { match, location, history } = this.props;
+
+    console.log(this.props);
     return(
     <Container style={{backgroundColor:COMMON_DARK_BACKGROUND, flex:1, height:"100%"}}>
       <Content>
@@ -192,16 +221,19 @@ pastPresentFutureComponent = (digitalResources)=>(<Card style={{flex:1}}>
         {this.videoReferences(this.props.digitalResources)}
       </View>
       <View style={{flex:1}}>
-      <DeckSwiper 
-            dataSource={[this.quoteCard(),this.moundBuilders(), this.showcaseView()]}
-            renderItem={item =>
-              <Card style={{ elevation: 3 ,padding:30, backgroundColor:COMMON_DARK_BACKGROUND}}>
-                <CardItem style={{ elevation: 3, height:300, backgroundColor:"maroon" }}>
-                  {item}
-                </CardItem>
-              </Card>
-            }
-          />
+<Card>
+            <CardItem>
+                
+
+              <Text>{TEXT_WHATS_GOING_ON}</Text>
+
+              {this.renderPicker(this.state.locations, TEXT_EVERYWHERE)}
+              <Text>With a ...?</Text>
+              {this.renderPicker(this.state.categories,TEXT_CHOOSE_VIBE)}
+             
+              
+            </CardItem>
+          </Card>
       </View>
 
       </Content>
@@ -225,4 +257,4 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => ({digitalResources: state.resourcesData.digitalResources,
                                   videoReferencePromotions: state.videoMediaPromotions})
 
-export default connect(mapStateToProps, null)(Home)
+export default withRouter(connect(mapStateToProps, null)(Home))

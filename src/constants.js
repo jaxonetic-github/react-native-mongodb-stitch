@@ -8,6 +8,7 @@ import {MdSend} from 'react-icons/md'
 
 import {IoMdMenu} from 'react-icons/io';
 
+
 export const NO_PHOTO_AVAILABLE_URI =  "https://static.wixstatic.com/media/84428b_aec5877604ff494295b3af5af0b27a67~mv2.png";
 
 /*************  Stitch **************/
@@ -43,17 +44,17 @@ export const STATE = require('./redux/state.js');
 export const TYPES = require('./redux/types.js');
 
 export const ROUTE_ROOT = '/';
-export const ROUTE_REMOTE_ROOT = '/react-native-mongodb-stitch/';
-export const ROUTE_HOME = '/react-native-mongodb-stitch/Home';
+export const ROUTE_REMOTE_ROOT = '/';
+export const ROUTE_HOME = '/Home';
 export const ROUTE_TRUBRARY = '/Trubrary';
 export const ROUTE_MAPVIEW = '/MapView';
-export const ROUTE_EVENT_CALENDAR = '/react-native-mongodb-stitch/EventCalendar';
-export const ROUTE_SIMPLE_INPUT_VIEW = 'SimpleEventInput';
+export const ROUTE_EVENT_CALENDAR = '/EventCalendar';
+export const ROUTE_SIMPLE_INPUT_VIEW = '/SimpleEventInput';
 export const ROUTE_SIMPLE_WEB_VIEW = '/SimpleWebView';
 export const ROUTE_PROFILE_VIEW = '/Activities/ProfileView';
 export const ROUTE_ACTIVITIES = '/Activities';
 export const ROUTE_EVENT_VIEW = "/Activities/EventView";
-export const ROUTE_SIMPLE_PROFILE_INPUT = 'SimpleInput';
+export const ROUTE_SIMPLE_PROFILE_INPUT = '/SimpleInput';
 
 export const ROUTE_YOUTUBELIST_VIEW = '/YoutubeListView';
 

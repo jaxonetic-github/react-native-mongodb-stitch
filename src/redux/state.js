@@ -150,8 +150,6 @@ const CATEGORY_PSYCHOLOGY = "Psychology";
 const CATEGORY_OCCULT    = "Occult";
 const CATEGORY_MOVER    = "Mover";
 
-export const categories=[{title:CATEGORY_HISTORY, description:""}, {title:CATEGORY_ECONOMICS, description:""}, {title:CATEGORY_PSYCHOLOGY, description:""},
-                  {title:CATEGORY_OCCULT, description:""}, {title:CATEGORY_MOVER, description:""}];
 
 const subjects=[{etymology:"", description:"language has been weaponized"}];
 
@@ -190,6 +188,8 @@ const sideBarData = [{routeName:"Home", label:"Home",path:"/" ,requiresVerificat
                     {routeName:"Activities", label:"Activities", path:"/Activities", requiresVerification:false, icon:"search"},
                     {routeName:"Trubrary", label:"Library",path:"/Trubrary", requiresVerification:false, icon:"business",videoData:null,onlineMediaContent:null,webResources:null} ];
 
+export const categories=[{title:CATEGORY_HISTORY, description:""}, {title:CATEGORY_ECONOMICS, description:""}, {title:CATEGORY_PSYCHOLOGY, description:""},
+                  {title:CATEGORY_OCCULT, description:""}, {title:CATEGORY_MOVER, description:""}];
 
 export const initialStoreState = {
   profiles: profileState,

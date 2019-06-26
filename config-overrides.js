@@ -29,14 +29,14 @@ module.exports = override(
   ),
 );
 
-module: {
-    rules: [
+{
+    [
         {
             test: path.join(__dirname, '.'),
             exclude: /(node_modules)/,
             loader: 'babel-loader',
             options: {
-                presets: ['@babel/preset-env',
+                presets: ['@babel/preset-env','react-native',
                           '@babel/react',{
                           'plugins': ['@babel/plugin-proposal-class-properties']}]
             }

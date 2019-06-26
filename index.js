@@ -25,14 +25,14 @@ import BottomNav from './src/components/NavBars/BottomNav.js';
 import FooterNav from './src/components/NavBars/footerNav.js';
 import SideBar from './src/components/NavBars/sidebar.js';
 
-import { Switch, Route, Redirect } from 'react-router'
-import { NativeRouter, Link } from 'react-router-native'
+import { Switch, Route, Redirect,Link } from 'react-router'
+import { NativeRouter } from 'react-router-native'
 
-import Trubrary from './src/components/Trubrary/trubrary.js';
+import Trubrary from './src/components/Trubrary/trubrary';
 import YouTubeList from './src/components/Trubrary/youtubeList.js';
-import Activities from './src/components/Activities.js';
+import Activities from './src/components/Activities/Activities';
 import SimpleWebview from './src/components/WebResources/simpleWebView.js';
-import Home from './src/components/home';
+import Home from './src/components/Home/home';
 import CalendarView from './src/components/calendarView';
 import MapView from './src/components/mapview';
 import ProfileView from './src/components/Profile/profileview';
@@ -40,7 +40,7 @@ import EventView from './src/components/Event/eventView.js';
 
 import { createBrowserHistory, createMemoryHistory } from 'history';
 import { COMMON_DARK_BACKGROUND, COMMON_ICON_STYLE_SILVER, 
-        ROUTE_PROFILE_VIEW,ROUTE_EVENT_VIEW, ROUTE_YOUTUBELIST_VIEW,
+        ROUTE_PROFILE_VIEW,ROUTE_EVENT_VIEW, ROUTE_YOUTUBELIST_VIEW,ROUTE_ROOT,
          ROUTE_HOME, ROUTE_ACTIVITIES, ROUTE_TRUBRARY, ROUTE_MAPVIEW, 
          ICON_TAG_MENU, iconManager} from './src/constants.js'
 
@@ -112,13 +112,13 @@ export default class Main extends React.Component {
       <Root>
       <Provider store={store} >
   
-<NativeRouter history={history} >
- <SideMenu menu={<SideBar history={history}/>}>
+<NativeRouter >
+ <SideMenu menu={<SideBar/>}>
      <Container>
       <Header style={styles.headerStyle}><Left>{iconManager(ICON_TAG_MENU, styles.headerIconStyle)}</Left></Header>
        <Switch >
-        <Route exact path="/"  render={() => <Home />} />
-        <Route path={ROUTE_HOME} render={() => <Home />}/>
+        <Route exact path={ROUTE_ROOT}  component={Home} />
+        <Route path={ROUTE_HOME} component={Home}/>
         <Route path={ROUTE_MAPVIEW} render={(props) => <MapView {...props}/>}/>
         <Route  path={ROUTE_TRUBRARY} render={(props) => <Trubrary {...props} />} />
         <Route  path="/EventCalendar" render={(props) => <CalendarView {...props} />} />

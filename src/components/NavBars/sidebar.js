@@ -22,6 +22,10 @@ import {COMMON_LISTVIEW_ITEM_SEPARATOR, NEED_AT_LEAST_ANONYMOUS_LOGIN,
  */
 class SideBar extends React.Component {
 
+  constructor(props) {
+    super(props);
+    console.log("sidebar props",this.props);
+    }
 
 /**
  * Only show the rows that the user is entitled  to see.  This will be  moved into Stitch User roles later

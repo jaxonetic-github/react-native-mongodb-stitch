@@ -30,12 +30,14 @@ class CalendarView extends Component {
 
   render() {
    // const markedDates = {[this.state.selected]: {selected: true, marked: true, selectedColor: 'blue'}}
-    return (
-      <Container>
-       <Header  style={{backgroundColor: COMMON_DARK_BACKGROUND, height:55}}>
+   const header =<Header  style={{backgroundColor: COMMON_DARK_BACKGROUND, height:55}}>
 <Left><Button transparent onPress={()=>{this.props.history.goBack()}}>
 <Text>Back</Text></Button></Left>
 </Header>
+
+    return (
+      <Container>
+       {this.props.generalView ?null: header}
       <ScrollView style={styles.container}>        
         <Text style={styles.text}>{this.state.selected}</Text>
               <div>
@@ -63,7 +65,7 @@ const styles = StyleSheet.create({
     paddingTop: 5,
     borderBottomWidth: 1,
     borderColor: '#eee',
-    height: 350
+   
   },
   text: {
     textAlign: 'center',

@@ -203,9 +203,7 @@ renderSearchField = () =>(
        <View style={{width:300, backgroundColor:"silver"}}>
          <Picker
               mode="dropdown"
-              iosHeader="Locations"
-              iosIcon={<Icon name="arrow-dropdown-circle" style={{ color: "#007aff", fontSize: 25 }} />}
-              selectedValue={this.state.location}
+                         selectedValue={this.state.location}
             >
             <Picker.Item key={"All-States"} label={"Search By State"} value={"All"} />
              {states}

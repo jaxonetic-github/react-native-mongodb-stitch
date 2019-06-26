@@ -36,7 +36,7 @@ const imageLoaderConfiguration = {
   
 
 module.exports = {
-  
+   devtool: 'source-map',
   optimization: {
     // We no not want to minimize our code.
     minimize: false

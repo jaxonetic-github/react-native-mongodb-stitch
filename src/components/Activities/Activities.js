@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { StyleSheet, TextInput, Platform} from 'react-native';
-import { Container, Content, Tab, Tabs} from 'native-base';
-import {COMMON_DARK_BACKGROUND} from './../constants.js'
-import EventSearch from './Event/eventSearch'
-import ProfileSearch from './Profile/profileSearch.js'
-
+import { Container, Content , Tab as NativeTab, Tabs as NativeTabs} from 'native-base';
+import {COMMON_DARK_BACKGROUND} from '../../constants.js'
+import EventSearch from '../Event/eventSearch'
+import ProfileSearch from '../Profile/profileSearch.js'
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import "react-tabs/style/react-tabs.css";
 /**
  * Represents a Trubrary component. It is the portal and container for the "Library"
  */
@@ -73,23 +74,31 @@ renderSearchField = () =>(
     });
   }
 
-
 /** React Render
  * Render tabs
  **/
   render() {
- 
 
-      return (<Container><Content padding>
-  <Tabs locked>
-    <Tab activeTabStyle={{backgroundColor:"silver"}} tabStyle={{backgroundColor:COMMON_DARK_BACKGROUND}} heading={"Eventsss"}><EventSearch/></Tab>
-    <Tab activeTabStyle={{backgroundColor:"silver"}} tabStyle={{backgroundColor:COMMON_DARK_BACKGROUND}} heading={"Profiles"}><ProfileSearch /></Tab>
-  </Tabs></Content>
-           </Container>
-    );
+  const webActivitiesView =()=>(<Container><Content padding>
+        <Tabs>
+    <TabList>
+      <Tab>Events</Tab>
+      <Tab>Profile</Tab>
+    </TabList>
+    <TabPanel ><EventSearch/></TabPanel>
+    <TabPanel ><ProfileSearch /></TabPanel>
+  </Tabs>
+</Content></Container>);
+  
+ const nativeView =()=><NativeTabs locked>
+    <NativeTab activeTabStyle={{backgroundColor:"silver"}} tabStyle={{backgroundColor:COMMON_DARK_BACKGROUND}} heading={"Events"}><EventSearch/></NativeTab>
+    <NativeTab activeTabStyle={{backgroundColor:"silver"}} tabStyle={{backgroundColor:COMMON_DARK_BACKGROUND}} heading={"Profiles"}><ProfileSearch /></NativeTab>
+  </NativeTabs>
+
+      return Platform.OS === 'web' ? webActivitiesView() : nativeView();
   }
-}
 
+}
 
 
 /**
