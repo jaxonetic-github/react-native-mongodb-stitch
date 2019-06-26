@@ -1,7 +1,7 @@
 [![Build Status](https://travis-ci.com/jaxonetic-github/react-native-mongodb-stitch.svg?branch=master)](https://travis-ci.com/jaxonetic-github/react-native-mongodb-stitch)
 
 ### Architecture
-Mongo Stitch Cloud for the backend.
+[Mongo Stitch Atlas Cloud](https://www.mongodb.com/cloud/stitch) for the backend as a new and cloud alternative to Google Cloud or AWS
 React Native for the front end 
    --redux saga, Native Module, Google Signin, Apple Maps, MongdDB Stitch integration
 
@@ -22,6 +22,9 @@ React Native for the front end
 
 *** This app uses KEYS and ID's from Google and StreetySmarts.  They are stored securely (I hope) as Secrets and accessed via Stitch Functions which are similar to AWS Lambdas.  @See services/dbService.
 
+### Docker Hub
+The webpack bundle for the react-native-web build can be pulled from -->  https://hub.docker.com/r/jaxonetic/tawy.
+An initial 
 
 ### Vagrant
 <div>
