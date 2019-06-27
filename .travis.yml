@@ -13,4 +13,4 @@ deploy:
   on:
     branch: master
 after_success:
-  - git subtree push --prefix dist origin gh-pages
+  - npm run deploy
