@@ -45,9 +45,6 @@ react-native run-android
 
 <hr/>
 
-
-
-
 #### Web
 To view the react-native-web results 
 ```
