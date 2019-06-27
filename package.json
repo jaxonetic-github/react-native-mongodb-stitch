@@ -2,7 +2,7 @@
   "name": "Tamari",
   "version": "0.0.3",
   "private": true,
-
+  "homepage": "https://jaxonetic-github.github.io/react-native-mongodb-stitch",
   "scripts": {
     "deploy":"git subtree push --prefix dist origin gh-pages",
     "start-web": "react-app-rewired start",
