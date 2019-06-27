@@ -40,9 +40,9 @@ react-native run-android
 
 Produces
 <div>
-<img src="https://github.com/jaxonetic-github/react-native-mongodb-stitch/blob/master/images/ios-demo.gif" align="left" height="300" width="170" >
+<img src="https://github.com/jaxonetic-github/react-native-mongodb-stitch/blob/master/images/ios_demo.gif" align="left" height="300" width="170" >
 </div>
-
+<hr/>
 
 #### Web
 To view the react-native-web results 
