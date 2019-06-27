@@ -12,7 +12,7 @@ import { connect } from 'react-redux';
 import Authentication from '../Authentication/authenticationComponent';
 //constants
 import {COMMON_LISTVIEW_ITEM_SEPARATOR, NEED_AT_LEAST_ANONYMOUS_LOGIN,
- COMMON_DARK_BACKGROUND,COMMON_ICON_STYLE, iconManager} from '../../constants.js'
+ COMMON_DARK_BACKGROUND,COMMON_ICON_STYLE,ROUTE_PROFILE_VIEW, iconManager} from '../../constants.js'
  
 
 
@@ -51,11 +51,12 @@ renderHeader = () =>{return(
 
 /** 
   * Render a listitem/row into the list
+  * @param data:  a sidebar data record
   */
       _renderRow=(data) => {
                return (
                 <ListItem style={styles.listItemStyles}
-                  button onPress={() => this.props.history.push(data.item.path, {user:true, id:this.props.profileIndex})}>
+                  button onPress={() => this.props.history.push(data.item.path.indexOf(ROUTE_PROFILE_VIEW)>=0?data.item.path+this.props.profileIndex:data.item.path, {user:true, id:this.props.profileIndex})}>
                   <Left>
                   {iconManager(data.item.icon, styles.headerIconStyle)}
                <Text style={styles.menuItemStyles}>{data.item.label}</Text>

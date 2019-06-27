@@ -145,7 +145,7 @@ _renderContent = (item) =>
 return (
       <Container style={styles.containerStyle}>       
         <Header  style={styles.headerStyle}>
-          <Left><Button transparent>{iconManager(ICON_TAG_BACK,COMMON_ICON_STYLE)}</Button></Left>
+          <Left><Button transparent></Button></Left>
           <Body><Title>Event {this.state.dataIndex}</Title></Body>
           <Right>             
             <Button transparent  onPress={() => this._saveEvent()} >
