@@ -2,8 +2,9 @@
   "name": "Tamari",
   "version": "0.0.3",
   "private": true,
-  "homepage": ".",
+  "homepage": "react-native-mongodb-stitch",
   "scripts": {
+    "deploy":"git subtree push --prefix dist origin gh-pages",
     "start-web": "react-app-rewired start",
     "build-web": "react-app-rewired build",
     "test-web": "react-app_rewired test",
