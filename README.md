@@ -24,17 +24,27 @@ React Native for the front end
 
 
 
-### Screenshots
+### How build and run
 
+##### IOS
 ```
-react-native run-ios   Or   react-native run-android
+cd ios && pod install
+cd ..
+react-native run-ios 
+```
+
+##### Android
+```
+react-native run-android
 ```
 
 Produces
-
+<div>
 <img src="https://github.com/jaxonetic-github/react-native-mongodb-stitch/blob/master/images/profileDemoUpdate.gif" align="left" height="300" width="170" >
+</div>
 
 
+#### Web
 To view the react-native-web results 
 ```
 yarn start-web  or yarn build-web 
@@ -92,3 +102,5 @@ end
  vagrant up
 </code>
 </pre></div>
+
+
