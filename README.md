@@ -28,17 +28,20 @@ React Native for the front end
 <img src="https://github.com/jaxonetic-github/react-native-mongodb-stitch/blob/master/images/ios_demo.gif" align="left" height="300" width="170" >
 
 ##### IOS
+
 ```
 cd ios && pod install
 cd ..
 react-native run-ios 
 ```
 
+
 ##### Android
 ```
 react-native run-android
 ```
 
+<hr/>
 
 
 
