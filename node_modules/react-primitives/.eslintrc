@@ -1,0 +1,22 @@
+{
+  "parser": "babel-eslint",
+  "extends": "airbnb",
+  "rules": {
+    "prefer-template": 0,
+    "new-cap": 0,
+    "no-use-before-define": 0,
+    "arrow-body-style": 0,
+    // triple equals is required except for when comparing with null
+    "eqeqeq": [2, "allow-null"],
+    // Allow console methods, which get removed during build process
+    "no-console": 0,
+    // Disable `arrow-parens` because it conflicts with Flow.
+    "arrow-parens": 0,
+    "global-require": 0,
+    "react/jsx-filename-extension": 0,
+    "no-underscore-dangle": 0,
+    "import/no-extraneous-dependencies": 0,
+    "react/no-unused-prop-types": 0,
+    "react/require-default-props": 0
+  }
+}
