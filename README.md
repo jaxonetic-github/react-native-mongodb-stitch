@@ -18,7 +18,8 @@ React Native for the front end
 * `src/components/Authentication` - The applications react components and redux files that handle authentication and connectivity changes
 * `ios/Podfile` - IOS specific modifications
 * `android` - Android specific modifications
-* `docs` - Documentation coming ... Until then, I am temporarily serving github pages from here with the react-native-web version. 
+* `docs` - Documentation coming
+* `dist` -  
 * `__tests__/DBServicesSpec.js` - Unit Tests for the dbServices.js file
 * `__tests__/sagaSpec.js` - Integration Test for Redux Saga flows
 
@@ -53,7 +54,7 @@ To view the react-native-web results
 yarn start-web  or yarn build-web 
 ```
 
-The results of which can be found [here](https://jaxonetic-github.github.io/react-native-mongodb-stitch/)
+The results of which can be viewed [here](https://jaxonetic-github.github.io/react-native-mongodb-stitch/).
 
 
 ### Docker Hub (Portable staging implementation)
