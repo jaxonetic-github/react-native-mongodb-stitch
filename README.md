@@ -19,7 +19,7 @@ React Native for the front end
 * `ios/Podfile` - IOS specific modifications
 * `android` - Android specific modifications
 * `docs` - Documentation coming
-* `dist` -  
+* `dist` - serve react-native-web from here 
 * `__tests__/DBServicesSpec.js` - Unit Tests for the dbServices.js file
 * `__tests__/sagaSpec.js` - Integration Test for Redux Saga flows
 
