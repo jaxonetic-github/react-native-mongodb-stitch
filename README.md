@@ -35,6 +35,7 @@ cd ..
 react-native run-ios 
 ```
 
+<hr/>
 
 ##### Android
 ```
