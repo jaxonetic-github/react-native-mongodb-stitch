@@ -225,7 +225,7 @@ locations : LOCATION_LIST,categories:CATEGORY_LIST,
             <CardItem>
                 
 
-              <Text>{TEXT_WHATS_GOING_ON}continuously developed</Text>
+              <Text>{TEXT_WHATS_GOING_ON}</Text>
 
               {this.renderPicker(this.state.locations, TEXT_EVERYWHERE)}
               <Text>With a ...?</Text>
