@@ -13,4 +13,5 @@ deploy:
   on:
     branch: master
 after_success:
+  - npm run build-web
   - npm run deploy
