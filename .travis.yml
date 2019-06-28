@@ -12,5 +12,3 @@ deploy:
   verbose: true
   on:
     branch: master
-after_success:
-  - npm run deploy
