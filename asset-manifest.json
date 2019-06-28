@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "react-native-mongodb-stitch/static/css/main.34de6062.chunk.css",
-    "main.js": "react-native-mongodb-stitch/static/js/main.9acb79fc.chunk.js",
-    "main.js.map": "react-native-mongodb-stitch/static/js/main.9acb79fc.chunk.js.map",
-    "runtime~main.js": "react-native-mongodb-stitch/static/js/runtime~main.8d0590e1.js",
-    "runtime~main.js.map": "react-native-mongodb-stitch/static/js/runtime~main.8d0590e1.js.map",
-    "static/css/2.19f13041.chunk.css": "react-native-mongodb-stitch/static/css/2.19f13041.chunk.css",
-    "static/js/2.80c9c239.chunk.js": "react-native-mongodb-stitch/static/js/2.80c9c239.chunk.js",
-    "static/js/2.80c9c239.chunk.js.map": "react-native-mongodb-stitch/static/js/2.80c9c239.chunk.js.map",
-    "index.html": "react-native-mongodb-stitch/index.html",
-    "precache-manifest.57d2f602cc2da042e233be09415412ca.js": "react-native-mongodb-stitch/precache-manifest.57d2f602cc2da042e233be09415412ca.js",
-    "service-worker.js": "react-native-mongodb-stitch/service-worker.js",
-    "static/css/2.19f13041.chunk.css.map": "react-native-mongodb-stitch/static/css/2.19f13041.chunk.css.map",
-    "static/css/main.34de6062.chunk.css.map": "react-native-mongodb-stitch/static/css/main.34de6062.chunk.css.map"
+    "main.css": "/react-native-mongodb-stitch/static/css/main.34de6062.chunk.css",
+    "main.js": "/react-native-mongodb-stitch/static/js/main.53a32d7e.chunk.js",
+    "main.js.map": "/react-native-mongodb-stitch/static/js/main.53a32d7e.chunk.js.map",
+    "runtime~main.js": "/react-native-mongodb-stitch/static/js/runtime~main.09a1a849.js",
+    "runtime~main.js.map": "/react-native-mongodb-stitch/static/js/runtime~main.09a1a849.js.map",
+    "static/css/2.19f13041.chunk.css": "/react-native-mongodb-stitch/static/css/2.19f13041.chunk.css",
+    "static/js/2.80c9c239.chunk.js": "/react-native-mongodb-stitch/static/js/2.80c9c239.chunk.js",
+    "static/js/2.80c9c239.chunk.js.map": "/react-native-mongodb-stitch/static/js/2.80c9c239.chunk.js.map",
+    "index.html": "/react-native-mongodb-stitch/index.html",
+    "precache-manifest.e01619d0a0ef04a90bdda5bd4673c6f1.js": "/react-native-mongodb-stitch/precache-manifest.e01619d0a0ef04a90bdda5bd4673c6f1.js",
+    "service-worker.js": "/react-native-mongodb-stitch/service-worker.js",
+    "static/css/2.19f13041.chunk.css.map": "/react-native-mongodb-stitch/static/css/2.19f13041.chunk.css.map",
+    "static/css/main.34de6062.chunk.css.map": "/react-native-mongodb-stitch/static/css/main.34de6062.chunk.css.map"
   }
 }
