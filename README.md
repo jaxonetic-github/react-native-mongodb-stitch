@@ -9,7 +9,7 @@ React Native for the front end
    --redux saga, Native Module, Google Signin, Apple Maps, MongdDB Stitch integration
 
 ### Project Structure
-* `index.js/` - react-native-web entry
+* `.travis.yml` - Travis CI/CD into gh-pages 
 * `src/index.js/` - react-native-web entry
 * `src/services/` - essentially a dbo for the MongoStitchbackend
 * `src/redux` - Redux specific files for state, and sagas
