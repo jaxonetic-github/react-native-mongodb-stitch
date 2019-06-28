@@ -6,8 +6,7 @@
   "scripts": {
     "deploy":"git subtree push --prefix dist origin gh-pages",
     "start-web": "react-app-rewired start",
-    "build-web": "react-app-rewired build && cp -R build/ dist/ ",
-    "build": "react-app-rewired build && cp -R build/ dist/ ",
+    "build-web": "react-app-rewired build",
     "test-web": "react-app_rewired test",
     "eject-web": "react-scripts eject",
     "start": "node node_modules/react-native/local-cli/cli.js start",
