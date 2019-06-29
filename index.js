@@ -38,7 +38,6 @@ import MapView from './src/components/mapview';
 import ProfileView from './src/components/Profile/profileview';
 import EventView from './src/components/Event/eventView.js';
 
-import { createBrowserHistory, createMemoryHistory } from 'history';
 import { COMMON_DARK_BACKGROUND, COMMON_ICON_STYLE_SILVER, 
         ROUTE_PROFILE_VIEW,ROUTE_EVENT_VIEW, ROUTE_YOUTUBELIST_VIEW,ROUTE_ROOT,
          ROUTE_HOME, ROUTE_ACTIVITIES, ROUTE_TRUBRARY, ROUTE_MAPVIEW, 
@@ -48,48 +47,13 @@ import { COMMON_DARK_BACKGROUND, COMMON_ICON_STYLE_SILVER,
 import logger from 'redux-logger';
 import SideMenu from 'react-native-side-menu';
 
-const history = createMemoryHistory();
-////////////////////////////////////////////////////////////
-// then our route config
-const routes = [
-  {
-    path: "/",
-    component: Home
-  },
-  {
-    path: "/Home",
-    component: Home
-  },
-    {
-    path: "/Trubrary",
-    component: Trubrary
-  },
-  {
-    path: "/Activities",
-    component: Activities,
-    routes: [
-      {
-        path: "/Activities/ProfileView",
-        component: ProfileView
-      },
-      {
-        path: "/Activities/ProfileView/:id",
-        component: ProfileView
-      },
-      {
-        path: "/Activities/EventView/:id",
-        component: EventView
-      }
-    ]
-  }
-
-];
-
 const sagaMiddleware = createSagaMiddleware();
 
 //combine reducers
 const rootReducer = combineReducers({profiles: profilesReducer, events:eventsReducer, auth: authReducer, resourcesData:resourcesReducer, 
   sideBar:sideBarReducer,videoMediaPromotions:videoRefsReducer});
+
+//create redux store
 const store = createStore(rootReducer, initialStoreState,  applyMiddleware(sagaMiddleware, logger) );
 
 //YellowBox.ignoreWarnings(['Warning: componentWillReceiveProps','Warning: componentWillUpdate', 'Warning: componentWillMount']);
@@ -106,16 +70,16 @@ export default class Main extends React.Component {
     super();
   }
   
-  render() {
-   // const menu = <SideBar history={history}/>;
-    return(
-      <Root>
-      <Provider store={store} >
+render() {
+  const header = Platform.select({
+                    ios: <Header style={styles.headerStyle}><Left>{iconManager(ICON_TAG_MENU, styles.headerIconStyle)}</Left></Header>,
+                    android: <Header style={styles.headerStyle}>{iconManager(ICON_TAG_MENU, styles.headerIconStyle)}</Header> ,
+                  });
   
-<NativeRouter >
- <SideMenu menu={<SideBar/>}>
+  return(<Root><Provider store={store}><NativeRouter >
+    <SideMenu menu={<SideBar/>}>
      <Container>
-      <Header style={styles.headerStyle}><Left>{iconManager(ICON_TAG_MENU, styles.headerIconStyle)}</Left></Header>
+        {header}
        <Switch >
         <Route exact path={ROUTE_ROOT}  component={Home} />
         <Route path={ROUTE_HOME} component={Home}/>
@@ -130,19 +94,20 @@ export default class Main extends React.Component {
         <Route path={ROUTE_EVENT_VIEW+"/:id"} render={(props) => <EventView {...props}  />}/>} />
         <Route path={ROUTE_EVENT_VIEW} render={(props) => <EventView {...props}  />}/>} />
       </Switch>
-      </Container>
+    </Container>
       <BottomNav />
-      </SideMenu>
-       </NativeRouter>   
-      </Provider>
-      </Root>
+    </SideMenu>
+    </NativeRouter></Provider></Root>
     );
   }
 }
 
 
 const styles = StyleSheet.create({
-  headerIconStyle: COMMON_ICON_STYLE_SILVER,
+  headerIconStyle: Platform.select({
+      ios: {fontSize: 30, color: 'silver'},
+      android: {fontSize: 30, color: 'silver', position:'absolute',left:5, padding:10}
+    }),
   headerStyle: {backgroundColor:COMMON_DARK_BACKGROUND,height:45},
   
 });
