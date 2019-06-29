@@ -75,7 +75,7 @@ renderHeader = () =>{return(
   * Render
   */
   render() {
-    return (<Container style={{backgroundColor:COMMON_DARK_BACKGROUND}}><Content padding><Card><CardItem>
+    return (<Container style={{backgroundColor:COMMON_DARK_BACKGROUND}}><Content><Card><CardItem>
         <FlatList 
           ListHeaderComponent={this.renderHeader}
           data={this._listDataFilter(this.props.sideBarData)}
