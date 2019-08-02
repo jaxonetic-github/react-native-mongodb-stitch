@@ -56,7 +56,13 @@ The results of which can be viewed [here](https://jaxonetic-github.github.io/rea
 
 
 ### Docker Hub (Portable staging implementation)
-The webpack bundle for the react-native-web build can be pulled from -->  https://hub.docker.com/r/jaxonetic/tawy.
+The webpack bundle for the react-native-web build can be pulled from -->  https://hub.docker.com/r/jaxonetic/tawy. 
+
+```
+docker run -p 4840:80 jaxonetic/tawy
+```
+
+#####Todo: auto build images for CD docker images.  Currently CD is targets gh-pages(see Web section above)
 
 
 ### Vagrant (Portable Dev box)
