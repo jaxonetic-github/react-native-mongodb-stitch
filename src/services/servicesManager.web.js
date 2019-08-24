@@ -4,7 +4,7 @@ import {getRunningFunctionName,PROFILES_COLLECTION, EVENT_COLLECTION,
         FUNCTION_INSERTPROFILE,FUNCTION_INSERTEVENT, FUNCTION_QUERYPROFILE, FUNCTION_QUERYEVENTS, FUNCTION_UPDATEPROFILE,FUNCTION_UPDATEEVENT,
         FUNCTION_RETRIEVE_GOOGLE_WEBCLIENTID, FUNCTION_RETRIEVE_GOOGLE_IOSCLIENTID, FUNCTION_RETRIEVE_GOOGLE_APIKEY,
         GOOGLESIGNIN_OPTION_SCOPE, GOOGLESIGNIN_OPTION_RESPONSE_TYPE,REMOTE_RESOURCE_STRING} from  '../constants.js'
-import  { Stitch, RemoteMongoClient, AnonymousCredential, GoogleCredential,CustomCredential,UserPasswordCredential } from  'mongodb-stitch-browser-sdk';
+import  { Stitch, RemoteMongoClient, AnonymousCredential, GoogleCredential,CustomCredential,UserPasswordCredential,UserPasswordAuthProviderClient } from  'mongodb-stitch-browser-sdk';
 //import  { GoogleSignin } from 'react-native-google-signin';
 import  Geocoder from 'react-native-geocoding';
 /*import  {deleteManyEvents, deleteManyProfiles, deleteEvent, deleteProfile, 
@@ -39,6 +39,27 @@ import  CrudService from "./stitchCRUD_api.js"
     this.stitchCrudServices = new CrudService(this.db, ServicesManager.dbClient);
   }
 
+/**
+ * Initialize sub "services" like CRUD services
+ * @param credentialInfo = {email:this.state.email, passwd:this.state.password}
+ *
+ */
+  async emailAuth(credentialInfo){
+    
+    let client = await ServicesManager.dbClient(REMOTE_RESOURCE_STRING);
+    const emailPassClient = client.auth.getProviderClient(UserPasswordAuthProviderClient.factory);
+const confResults = await emailPassClient.registerWithEmail(credentialInfo.email, credentialInfo.passwd)
+   //= await emailPassClient.confirmUser(credentialInfo.email, credentialInfo.passwd);
+/*emailPassClient.registerWithEmail(credentialInfo.email, credentialInfo.passwd)
+  .then(() => {
+     console.log("Successfully sent account confirmation email!");
+  })
+  .catch(err => {
+     console.log("Error registering new user:", err);
+  });
+*/
+   console.log(confResults);
+  }
 
 /**
  * Privately retrieve the google keys required for google sign in and Geocoding API
@@ -85,7 +106,7 @@ async configureGoogleKeys(){
 * @param authCode (required) - the one-time/first-time serverAuthCode specified by google
 */
  async  googleSignIn(authCode) {
-
+console.log("googleSignin with authcode=", authCode);
   //parameter check
   if(!authCode) return null;
   try{

@@ -15,7 +15,7 @@ import { BrowserRouter,MemoryRouter, Route,HashRouter,Router } from "react-route
 
 import { initialStoreState } from './redux/state.js';
 import { Provider } from 'react-redux';
-import { rootSaga } from './redux/sagas/authSagas.js';
+import { rootSaga } from './redux/sagas/authSagas';
 import { createStore, applyMiddleware,combineReducers } from 'redux';
 import resourcesReducer from './redux/resourcesReducer.js';
 import videoRefsReducer from './redux/videoRefsReducer.js';

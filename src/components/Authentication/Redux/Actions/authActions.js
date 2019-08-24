@@ -1,4 +1,4 @@
-import {LOGIN_FAILURE,INTERNET_CONNECTIVITY_CHANGED_DETECTED, GOOGLE_SERVERAUTHCODE_RECEIVED, GOOGLE_SIGNIN_SUCCESS, GOOGLE_SIGNOUT,GOOGLE_SIGNIN_REQUEST,DB_CLIENT_INITIALIZED,DB_CLIENT_ALREADY_INITIALIZED, LOGIN_USER_REQUEST, LOGOUT_USER,LOGIN_SUCCESS } from '../../../../redux/types';
+import {EMAIL_AUTH_REQUEST, LOGIN_FAILURE,INTERNET_CONNECTIVITY_CHANGED_DETECTED, GOOGLE_SERVERAUTHCODE_RECEIVED, GOOGLE_SIGNIN_SUCCESS, GOOGLE_SIGNOUT,GOOGLE_SIGNIN_REQUEST,DB_CLIENT_INITIALIZED,DB_CLIENT_ALREADY_INITIALIZED, LOGIN_USER_REQUEST, LOGOUT_USER,LOGIN_SUCCESS } from '../../../../redux/types';
 
 /** User is attempting to log in */
 export function loginUserRequest(googleUserObject) {
@@ -29,6 +29,7 @@ export function loginFailed(err){
 }
 export function googleSignInRequest(googleInfo)
 {
+  console.log(googleInfo)
   return {type: GOOGLE_SIGNIN_REQUEST, payload:googleInfo }
 }
 export function googleSignOut()
@@ -46,3 +47,10 @@ export function googleServerAuthCodeReceived(serverAuthode){
 export function updateInternetConnectivity(isConnected){
   return {type:INTERNET_CONNECTIVITY_CHANGED_DETECTED, payload:isConnected}
 }
+
+export function emailPasswordRequest(authData)
+{
+  console.log(authData)
+  return {type: EMAIL_AUTH_REQUEST, payload:authData }
+}
+

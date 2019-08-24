@@ -13,7 +13,7 @@ import GoogleSignInComp from './Authentication/googleSignIn'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 //import { GoogleSignin, GoogleSigninButton } from 'react-native-google-signin';
-import {loginUserRequest} from './Authentication/Redux/Actions/authActions.js';
+import {loginUserRequest,emailPasswordRequest} from './Authentication/Redux/Actions/authActions.js';
 
 
 /**
@@ -37,9 +37,9 @@ import {loginUserRequest} from './Authentication/Redux/Actions/authActions.js';
 async componentDidUpdate() {
   if(this.props.auth.userId)
   {
-    this.props.navigation.navigate("Inner");
+ //   this.props.navigation.navigate("Inner");
   }
-
+console.log(this.props)
 }
 
 
@@ -128,9 +128,12 @@ async componentDidUpdate() {
       } 
    {(this.state.signInState === this.STATE_CREATE) &&
  <CardItem>
-        <Button disabled
+        <Button 
           title='Complete'
-          onPress={ ()=>this.setState({signInState:this.STATE_REQUEST})}
+          onPress={ ()=>{
+            console.log("signup,", this.state);
+            this.props.emailPasswordRequest({email:this.state.email, passwd:this.state.password});
+          }}
         />
 
          </CardItem>
@@ -179,7 +182,7 @@ const mapStateToProps = state => {
 
 
 function matchDispatchToProps(dispatch){
-  return bindActionCreators({ doLogin: loginUserRequest }, dispatch);
+  return bindActionCreators({ doLogin: loginUserRequest, emailPasswordRequest: emailPasswordRequest }, dispatch);
 }
 
 //export default withRouter(connect(mapStateToProps, matchDispatchToProps)(SignUp))

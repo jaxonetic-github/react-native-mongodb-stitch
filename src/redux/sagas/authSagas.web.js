@@ -8,7 +8,7 @@ import {REMOVE_LOCAL_EVENT,REMOVE_LOCAL_PROFILE, ADD_PROFILE_REQUEST,ADD_PROFILE
 FETCH_EVENT_FAILURE,LOGIN_SUCCESS,LOGIN_FAILURE, LOGIN_USER_REQUEST, LOGOUT_USER,
       GOOGLE_SIGNOUT, GOOGLE_SIGNIN_REQUEST,GOOGLE_SIGNIN_SUCCESS, UPDATE_PROFILE_REQUEST,UPDATE_EVENT_REQUEST, 
       ADD_PROFILE_TO_USERPROFILES, ADD_EVENTS_TO_USEREVENTS, ADD_EVENT_REQUEST, ADD_EVENT_SUCCESS, ADD_EVENT_FAILURE ,
-    GOOGLE_SERVERAUTHCODE_RECEIVED} from '../types.js';
+    GOOGLE_SERVERAUTHCODE_RECEIVED,EMAIL_AUTH_REQUEST} from '../types.js';
     
 import {loginFailed, loginSucceeded,loginUserRequest,dbClientInitialized, dbClientAlreadyInitialized } from '../../components/Authentication/Redux/Actions/authActions.js';
  
@@ -16,7 +16,7 @@ import { addEventSuccess,addEventFailure,removeLocalEvent,deleteEventSuccess,upd
 import { deleteProfileSuccess,updateProfileSuccess,updateProfileFailure,fetchProfileSuccess, removeLocalProfile, addProfile,fetchProfileFailure, addProfileSuccess,addProfileFailure,fetchProfileRequest,deleteProfileFailure } from '../../components/Profile/Redux/Actions/profile.js'
 
 import ServicesManager from '../../services/servicesManager'
-import {googleAuthenticationPress,googleSilentLogin} from './googleSaga'
+import {googleAuthenticationPress,googleSilentLogin} from './googleSaga.web'
 import {resourceData, REMOTE_RESOURCE_STRING} from '../../constants.js'
 
 
@@ -236,6 +236,21 @@ return profiles;
 }
 
 /**
+ * Authorize a user no the backend and update state with results()
+ * @param service:  A DAO object
+ */
+ export function* googleAuthorize(service, action) {
+ console.log(action);
+   try{
+      const user = yield call(service.googleSignIn, action.payload.code);
+      //yield put(loginSucceeded(user))
+      console.log("googleAuthorized user? ",user);
+      return user;
+    }catch(error){
+      yield put(loginFailed(error))
+  }
+}
+/**
  *  fetch App info and start configuration of google services
  *  @param service: a DAO object
  */
@@ -257,6 +272,17 @@ return profiles;
    yield call (service.logout);
 
   }
+
+  /**
+ *  fetch App info and start configuration of google services
+ *  @param service: a DAO object
+ */
+  export function* emailPasswdAuth(service, action) {
+   
+   //set up google services
+   yield call (service.emailAuth, action.payload);
+
+  }
 /**
 * actionWatcher : Spawns the generator fuctions that listens for actions
 * @param service: a DAO object
@@ -264,8 +290,9 @@ return profiles;
 export function* actionWatcher(service) {
      yield takeEvery(LOGIN_USER_REQUEST, authorizeUser,service);
   yield takeEvery(GOOGLE_SIGNOUT, logout,service);
+  yield takeEvery(EMAIL_AUTH_REQUEST, emailPasswdAuth, service)
   yield takeEvery(LOGIN_SUCCESS, _onAuthSucess, service);
-  yield takeEvery (GOOGLE_SIGNIN_REQUEST, googleAuthenticationPress,service,false )
+  yield takeEvery (GOOGLE_SIGNIN_REQUEST, googleAuthorize,service )
    yield takeEvery(ADD_PROFILE_REQUEST, insertProfile, service.stitchCrudServices);
    yield takeEvery(ADD_EVENT_REQUEST, insertEvent, service.stitchCrudServices);
    yield takeEvery(UPDATE_EVENT_REQUEST, updateEvent, service.stitchCrudServices);
@@ -302,9 +329,9 @@ export function *loadYoutubeLists() {
 export  function* rootSaga() {
   let authUser;
   const service =  new ServicesManager(REMOTE_RESOURCE_STRING);
-  console.log("rootsaga",service);
+  console.log(" Web rootsaga",service);
 yield service.initialize()
-console.log("post rootsaga",service.dbServices);
+console.log("Web post rootsaga",service.dbServices);
 //  yield service.authListen();
 
 try{

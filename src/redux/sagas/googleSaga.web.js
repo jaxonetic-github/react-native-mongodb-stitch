@@ -17,11 +17,14 @@ return null;
 /**
 * revokeAccess and signOut to force an updated authcode before calling 
 * DBService.googleSignIn whi
-*/
- export  function* googleAuthenticationPress(service) {
+
+ export  function* googleAuthenticationPress(service, action) {
+ console.log("googleAuthenticationPress action=", action);
+ const signin = yield service.googleSignIn(action.payload);
+
  return null
 }
-
+*/
 
  export function* _onPressLogout(service) {
    
