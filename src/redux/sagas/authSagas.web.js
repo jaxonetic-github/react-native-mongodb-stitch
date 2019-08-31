@@ -242,7 +242,7 @@ return profiles;
  export function* googleAuthorize(service, action) {
  console.log(action);
    try{
-      const user = yield call(service.googleSignIn, action.payload.code);
+      const user = yield call(service.googleFirebaseSignIn, action.payload);
       //yield put(loginSucceeded(user))
       console.log("googleAuthorized user? ",user);
       return user;

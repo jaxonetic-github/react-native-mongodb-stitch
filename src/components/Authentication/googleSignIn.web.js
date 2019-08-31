@@ -33,7 +33,7 @@ _signIn = async (response) => {
     return(
        <View style={styles.container}>
        <GoogleLogin
-    clientId="296133059037-s1j268jatnjbgrrkgtjv2sfn85qupakt.apps.googleusercontent.com"
+    clientId="296133059037-e0e00st9hmm6df7s11ptilm1rqsvqo5f.apps.googleusercontent.com"
     buttonText="Login"
     onSuccess={this._signIn}
     onFailure={this._signIn}

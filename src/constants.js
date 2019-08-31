@@ -1,7 +1,7 @@
 import React from 'react'
 import { Platform, View ,ActivityIndicator,FlatList, Text, TouchableOpacity,Tab,Tabs } from 'react-native';
 import {ListItem, Thumbnail, Title, Button, Header,Left,Icon,Body,Right} from 'native-base';
-import {FaBars, FaArrowCircleRight,FaArrowLeft,FaPlusCircle,FaMinusCircle,FaCalendar,FaMapMarker,FaCommentingO,FaPhoneSquare, FaSearch,FaGlobe,FaExternalLink,FaHourglass2,FaHome,  FaSearchengin, FaUser,FaRegBuilding,FaEdit,FaThList } from "react-icons/fa";
+import {FaBars, FaArrowCircleRight,FaArrowLeft,FaPlusCircle,FaMinusCircle,FaCalendar,FaMapMarker,FaPhoneSquare, FaSearch,FaGlobe,FaExternalLink,FaHourglass2,FaHome,  FaSearchengin, FaUser,FaRegBuilding,FaEdit,FaThList } from "react-icons/fa";
 import { GiHamburgerMenu } from 'react-icons/gi';
 
 import {MdSend} from 'react-icons/md'
@@ -22,6 +22,9 @@ export const FUNCTION_UPDATEEVENT = "updateEvents";
 export const FUNCTION_RETRIEVE_GOOGLE_WEBCLIENTID = "retrieveGoogleWebClientID";
 export const FUNCTION_RETRIEVE_GOOGLE_IOSCLIENTID = "retrieveGoogleIosClientID";
 export const FUNCTION_RETRIEVE_GOOGLE_APIKEY = "retrieveGoogleApiKey";
+export const FUNCTION_DELETE_PROFILE = "retrieveGoogleApiKey";
+
+
 
 //Needed for react-native-google-signin
 export const GOOGLESIGNIN_OPTION_SCOPE = "openid email profile";
@@ -121,7 +124,7 @@ export const iconManager =(iconTag, style)=>{
     case ICON_TAG_LOCATION: icon = webPlatform? <FaMapMarker style={style}/> : <Icon name={iconTag} style={style} />; break;
     case ICON_TAG_GLOBE: icon = webPlatform? <FaGlobe style={style}/> : <Icon name={iconTag} style={style} />; break;
     case ICON_TAG_CALENDAR: icon = webPlatform? <FaCalendar style={style}/> : <Icon name={iconTag} style={style} />; break;
-    case ICON_TAG_DESCRIPTION: icon = webPlatform? <FaCommentingO style={style}/> : <Icon name={iconTag} style={style} />; break;
+    case ICON_TAG_DESCRIPTION: icon = webPlatform? <MdSend style={style}/> : <Icon name={iconTag} style={style} />; break;
     case ICON_TAG_EDIT: icon = webPlatform ? <MdSend style={style} /> : <Icon name={iconTag} style={style}/>; break;
     case ICON_TAG_MENU: icon = webPlatform ? <FaBars style={style} /> : <Icon name={iconTag} style={style}/>; break;
     case ICON_TAG_PERSON: icon = webPlatform? <FaUser style={style} /> : <Icon name={iconTag} style={style} />; break;
