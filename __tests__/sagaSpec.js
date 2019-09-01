@@ -9,8 +9,8 @@ import eventsReducer from '../src/components/Event/Redux/Reducers/eventReducer.j
 
 import {
   rootSaga, insertProfile, insertEvent, fetchProfiles, fetchEvents, actionWatcher,
-} from '../src/redux/sagas/authSagas.js';
-import DBService from '../src/services/servicesManager.js';
+} from '../src/redux/sagas/authSagas';
+import DBService from '../src/services/servicesManager';
 import 'isomorphic-fetch'; // --> https://github.com/facebook/react-native/issues/11537
 import {
   ADD_PROFILE_REQUEST, ADD_PROFILE_SUCCESS, ADD_PROFILE_FAILURE,
@@ -19,7 +19,7 @@ import {
   FETCH_PROFILE_REQUEST, FETCH_PROFILE_SUCCESS, FETCH_EVENT_REQUEST, FETCH_EVENT_SUCCESS,
   ADD_PROFILE_TO_USERPROFILES,
 } from '../src/redux/types.js';
-import { googleAuthenticationPress } from '../src/redux/sagas/googleSaga.js';
+import { googleAuthenticationPress } from '../src/redux/sagas/googleSaga';
 
 import {
   TIME_OUT, JEST_TIME_OUT, STATE, TYPES, getDefaultEvent, getDefaultProfile,

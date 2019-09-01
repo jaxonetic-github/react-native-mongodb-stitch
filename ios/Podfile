@@ -1,40 +1,62 @@
 # Uncomment the next line to define a global platform for your project
 platform :ios, '12.0'
-
+require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
 target 'Tamari' do
   # Uncomment the next line if you're using Swift or would like to use dynamic frameworks
   #use_frameworks!
+ pod 'React', :path => '../node_modules/react-native/'
+  pod 'React-Core', :path => '../node_modules/react-native/React'
+  pod 'React-DevSupport', :path => '../node_modules/react-native/React'
+  pod 'React-RCTActionSheet', :path => '../node_modules/react-native/Libraries/ActionSheetIOS'
+  pod 'React-RCTAnimation', :path => '../node_modules/react-native/Libraries/NativeAnimation'
+  pod 'React-RCTBlob', :path => '../node_modules/react-native/Libraries/Blob'
+  pod 'React-RCTImage', :path => '../node_modules/react-native/Libraries/Image'
+  pod 'React-RCTLinking', :path => '../node_modules/react-native/Libraries/LinkingIOS'
+  pod 'React-RCTNetwork', :path => '../node_modules/react-native/Libraries/Network'
+  pod 'React-RCTSettings', :path => '../node_modules/react-native/Libraries/Settings'
+  pod 'React-RCTText', :path => '../node_modules/react-native/Libraries/Text'
+  pod 'React-RCTVibration', :path => '../node_modules/react-native/Libraries/Vibration'
+  pod 'React-RCTWebSocket', :path => '../node_modules/react-native/Libraries/WebSocket'
 
-  rn_path = '../node_modules/react-native'
-  rn_maps_path = '../node_modules/react-native-maps'
-  
+  pod 'React-cxxreact', :path => '../node_modules/react-native/ReactCommon/cxxreact'
+  pod 'React-jsi', :path => '../node_modules/react-native/ReactCommon/jsi'
+  pod 'React-jsiexecutor', :path => '../node_modules/react-native/ReactCommon/jsiexecutor'
+  pod 'React-jsinspector', :path => '../node_modules/react-native/ReactCommon/jsinspector'
+  pod 'yoga', :path => '../node_modules/react-native/ReactCommon/yoga'
+
+  pod 'DoubleConversion', :podspec => '../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec'
+  pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/glog.podspec'
+  pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
+
+  pod 'react-native-netinfo', :path => '../node_modules/@react-native-community/netinfo'
+
+  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+
   # Pods for Tamari
-    pod 'DoubleConversion'
-    pod 'glog'
-    pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
-  pod 'GoogleSignIn'
+   # pod 'DoubleConversion'
+  #  pod 'glog'
+    #pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
   
 
 #pod 'react-native-geocoder', :path => '../node_modules/react-native-geocoder'
 
-    pod 'React', :path => '../node_modules/react-native', :subspecs => [
-    'Core',
-    'CxxBridge',
-    'DevSupport',
-    'RCTText',
-    'RCTImage',
-    'RCTNetwork',
-    'RCTWebSocket',
-    'RCTSettings',
-    'RCTAnimation',
-    'RCTLinkingIOS',
+   # pod 'React', :path => '../node_modules/react-native', :subspecs => [
+   # 'Core',
+    #'CxxBridge',
+   # 'DevSupport',
+   # 'RCTText',
+   # 'RCTImage',
+   # 'RCTNetwork',
+   # 'RCTWebSocket',
+   # 'RCTSettings',
+   # 'RCTAnimation',
+   # 'RCTLinkingIOS',
     # Add any other subspecs you want to use in your project
     # Remove any subspecs you don't want to use in your project
-  ]
-pod 'yoga', :path => '../node_modules/react-native/ReactCommon/yoga'
+  #]
+#pod 'yoga', :path => '../node_modules/react-native/ReactCommon/yoga'
+  pod 'GoogleSignIn'
 
-    pod 'react-native-webview', :path => '../node_modules/react-native-webview'
-    pod 'react-native-maps', :path => '../node_modules/react-native-maps'
     #pod 'react-native-google-maps', path: rn_maps_path  # Remove this line if you don't want to support GoogleMaps on iOS
 #pod 'GoogleMaps'  # Remove this line if you don't want to support GoogleMaps on iOS
 #pod 'Google-Maps-iOS-Utils' # Remove this line if you don't want to support GoogleMaps on iOS
@@ -42,6 +64,5 @@ pod 'yoga', :path => '../node_modules/react-native/ReactCommon/yoga'
    
   
 
-    pod 'react-native-netinfo', :path => '../node_modules/@react-native-community/netinfo'
-
+  use_native_modules!
   end
